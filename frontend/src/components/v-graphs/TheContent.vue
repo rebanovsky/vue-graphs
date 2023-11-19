@@ -36,6 +36,12 @@
             </div>
             <div
               class="flex flex-col gap-[80px]"
+              v-if="selectGraph(item.name) === 'dot-plot'"
+            >
+              <DotGraphs />
+            </div>
+            <div
+              class="flex flex-col gap-[80px]"
               v-if="selectGraph(item.name) === 'bubble-chart'"
             >
               <BubbleCharts />
@@ -52,6 +58,7 @@ import { ref } from "vue";
 import LineCharts from "@/components/v-graphs/sections/LineCharts.vue";
 import BarCharts from "@/components/v-graphs/sections/BarCharts.vue";
 import PieCharts from "@/components/v-graphs/sections/PieCharts.vue";
+import DotGraphs from "@/components/v-graphs/sections/DotGraphs.vue";
 import BubbleCharts from "@/components/v-graphs/sections/BubbleCharts.vue";
 
 const props = defineProps({
@@ -66,6 +73,8 @@ const selectGraph = (itemName) => {
       return "bar-chart";
     case "pie-chart":
       return "pie-chart";
+    case "dot-plot":
+      return "dot-plot";
     case "bubble-chart":
       return "bubble-chart";
     case "treemap":

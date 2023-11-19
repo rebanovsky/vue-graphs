@@ -1,7 +1,7 @@
 <template>
   <div
     class="playground-component w-[100%] flex justify-between rounded-[14px]"
-    style="height: calc(100vh - 122px)"
+    style="height: calc(100vh - 124px)"
   >
     <div
       class="main-content w-full overflow-y-auto flex gap-[8px] h-[100%]"
@@ -16,9 +16,6 @@
       </div>
       <TheContent :sidenavItems="sidenavItems" />
     </div>
-  </div>
-  <div class="test-scroll" @scroll="onScrollTest" style="height: 300px; overflow-y: auto;">
-    <div style="height: 600px;">Scrollable content here</div>
   </div>
 </template>
 

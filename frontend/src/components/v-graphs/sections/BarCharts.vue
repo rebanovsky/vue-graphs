@@ -38,14 +38,14 @@
     </div>
     <div class="div">
       <div
-        class="graph-code-wrapper w-[240px] h-[220px] flex flex-col text-[14px]"
+        class="graph-code-wrapper w-[240px] h-[228px] flex flex-col text-[14px]"
       >
-        <div class="copy-wrapper w-[100%] h-[20px] flex justify-end">
+        <div class="copy-wrapper w-[100%] h-[28px] flex justify-end bg-slate-300 dark:bg-slate-700">
           <div
-            class="copy w-[20px] h-[20px] hover:bg-slate-50 flex justify-center items-center rounded-[2px] cursor-pointer transition ease duration-100"
+            class="copy w-[auto] px-[4px] h-[20px] text-[12px] hover:bg-slate-50 flex justify-center items-center rounded-[2px] cursor-pointer transition ease duration-100"
             @click="copyToClipboard"
           >
-            c
+            copy code
           </div>
         </div>
         <div
@@ -165,12 +165,16 @@ const copyToClipboard = async () => {
 </script>
 
 <style lang="scss" scoped>
-.graph-code-wrapper {
+.copy-wrapper {
+ border-radius: 8px 8px 0 0;
+ padding: 4px;
+}
+.graph-code {
   background-color: #282c34; /* Dark background like many code editors */
   color: #abb2bf; /* Light text color for readability */
   font-family: "Source Code Pro", monospace; /* Monospaced font for code */
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 0 0 8px 8px;
   white-space: pre-wrap; /* Preserve whitespaces and line breaks */
   overflow-x: auto; /* Enable horizontal scrolling if needed */
   line-height: 1.7;

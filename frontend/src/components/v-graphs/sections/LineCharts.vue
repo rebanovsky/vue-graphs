@@ -100,7 +100,7 @@
 import { ref } from "vue";
 import { line1, line2 } from "@/data/dummyMultiLine";
 import SingleLine from "@/components/v-graphs/graphs/SingleLine.vue";
-import MultiLine from "@/components/playground/MultiLine.vue";
+import MultiLine from "@/components/v-graphs/graphs/MultiLine.vue";
 import CandlestickChart from "@/components/playground/CandlestickChart.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";

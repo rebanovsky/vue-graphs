@@ -13,7 +13,7 @@
           isActive(item.name) ? 'scale-[1.005] text-slate-900 dark:text-slate-100' : '',
           item.name === currentSection ? 'text-slate-900' : '' // Add this line
         ]"
-        @click="() => toggleAccordion(item.name)"
+        @click.stop="() => toggleAccordion(item.name)"
       >
         <div
           class="dot h-[5px] w-[5px] rounded-[5px]"

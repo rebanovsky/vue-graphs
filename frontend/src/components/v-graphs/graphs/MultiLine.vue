@@ -1,7 +1,7 @@
 <template>
   <div
     ref="chart"
-    class="border-[1px] border-slate-300 rounded-[4px]"
+    class="chart-border rounded-[4px]"
   ></div>
 </template>
 

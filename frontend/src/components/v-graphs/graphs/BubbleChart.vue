@@ -1,15 +1,17 @@
 <template>
-  <div
-    class="bubbles-container chart-border"
-    :style="{ width: width + 'px', height: height + 'px' }"
-  >
-    <svg ref="svgRef" class="canvas">
-      <g class="x-axis-bubble" />
-      <g class="y-axis-bubble" />
-      <g class="grid-lines" />
-    </svg>
+  <div class="relative">
+    <div
+      class="bubbles-container chart-border"
+      :style="{ width: width + 'px', height: height + 'px' }"
+    >
+      <svg ref="svgRef" class="canvas">
+        <g class="x-axis-bubble" />
+        <g class="y-axis-bubble" />
+        <g class="grid-lines" />
+      </svg>
+    </div>
+    <div id="bubble-tooltip"></div>
   </div>
-  <div id="bubble-tooltip"></div>
 </template>
 
 <script>
@@ -26,8 +28,6 @@ export default {
 
     onMounted(() => {
       const svg = select(svgRef.value);
-
-      console.log("props.data: ", props.data);
 
       // Use the width and height props
       const { width, height } = { width: props.width, height: props.height };
@@ -109,7 +109,7 @@ export default {
           axisBottom(x)
             .ticks(5)
             .tickSize(0)
-            .tickFormat((d) => d + "%")
+            .tickFormat((d) => d === 0 ? "" : d + "%")
         );
 
       // Add Y axis
@@ -120,7 +120,7 @@ export default {
           axisLeft(y)
             .ticks(3)
             .tickSize(0)
-            .tickFormat((d) => d + "%")
+            .tickFormat((d) => d === 0 ? "" : d + "%")
         );
 
       // -1- Create a tooltip div that is hidden by default:
@@ -128,8 +128,10 @@ export default {
         .style("opacity", 0)
         .attr(
           "class",
-          "bg-slate-200 text-slate-700 border-[1px] border-boxborderlight shadow-boxshlight dark:bg-slate-800 dark:border-slate-600 dark:text-slate-300"
+          "bg-slate-200 text-slate-700 border-[1px] rounded border-boxborderlight shadow-boxshlight dark:bg-slate-800 dark:border-slate-600 dark:text-slate-300"
         );
+
+      const svgNode = svgRef.value; // Get the actual DOM node
 
       // -2- Create 3 functions to show / update (when mouse move but stay on same circle) / hide the tooltip
       const showTooltip = (event, d) => {
@@ -137,44 +139,58 @@ export default {
         tooltip
           .style("opacity", 1)
           .style("display", "block")
+          .attr('class', 'shadow-boxsh bg-slate-100 chart-border rounded')
           .html(
-            `<em class="text-[12px] font-medium">` +
+            `<em class="text-[14px] font-normal">` +
               `${d.securityName}` +
               `</em>` +
               `<br />` +
+              `<br />` +
               "performance:&nbsp;&nbsp;" +
-              `<em class="font-bold">` +
+              `<em class="font-semibold">` +
               `
               ${d.performancePercentage.toFixed(2)}%` +
               `</em>` +
               `<br />` +
               "ownership:&nbsp;&nbsp;" +
-              `<em class="font-bold">` +
+              `<em class="font-semibold">` +
               `
               ${d.ownership.toFixed(2)}%` +
               `<br />` +
               `</em>` +
               "portfolio weight:&nbsp;&nbsp;" +
-              `<em class="font-bold">` +
+              `<em class="font-semibold">` +
               `
               ${d.weight.toFixed(2)}%` +
               `<br/>` +
               `</em>` +
               "sector:&nbsp;&nbsp;" +
-              `<em class="font-bold">` +
+              `<em class="font-semibold">` +
               `
               ${d.sector}` +
               `</em>`
           );
+        moveTooltip(event);
       };
 
-      const moveTooltip = function (event, d) {
+      const moveTooltip = function (event) {
+        let tooltip = select("#bubble-tooltip");
+
+        // Get the bounding rectangle of the SVG
+        let svgRect = svgNode.getBoundingClientRect();
+
+        // Adjust these values based on the size of the tooltip, bubble, and SVG position
+        let offsetX = 20;
+        let offsetY = -30;
+
+        // Adjust the position based on the SVG position
         tooltip
-          .style("left", `${event.pageX}px`)
-          .style("top", `${event.pageY}px`);
+          .style("left", `${event.pageX - svgRect.left + offsetX}px`)
+          .style("top", `${event.pageY - svgRect.top + offsetY}px`);
       };
 
       const hideTooltip = (event, d) => {
+        let tooltip = select("#bubble-tooltip");
         tooltip.style("display", "none");
       };
 
@@ -220,11 +236,11 @@ export default {
 <style>
 #bubble-tooltip {
   position: absolute;
-  padding: 4px 6px;
-  transform: translate(8px, -112px);
+  padding: 14px;
   pointer-events: none;
-  font-size: 10px;
-  line-height: 18px;
+  font-size: 12px;
+  line-height: 24px;
+  white-space: nowrap;
 }
 
 .bubbles-container {
@@ -240,7 +256,7 @@ export default {
 
 .x-axis-bubble > g.tick > text {
   transform: translateY(2px);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
   font-family: Poppins;
 }
@@ -248,6 +264,6 @@ export default {
 .y-axis-bubble > g.tick > text {
   transform: translateX(-4px);
   font-family: Poppins;
-  font-size: 10px;
+  font-size: 12px;
 }
 </style>
