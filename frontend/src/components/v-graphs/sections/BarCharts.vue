@@ -1,7 +1,13 @@
 <template>
   <div class="flex gap-[20px]">
     <div class="graph-item">
-      <BarChart :data="earnings" height="200" width="400" />
+      <BarChart
+        :data="earnings"
+        :tooltip="true"
+        :animations="true"
+        height="200"
+        width="400"
+      />
     </div>
     <div class="graph-config rounded-[8px]">
       <div class="flex flex-col gap-[12px] w-[240px]">
@@ -30,7 +36,25 @@
         />
       </div>
     </div>
-    <div class="graph-code">CODE</div>
+    <div class="div">
+      <div
+        class="graph-code-wrapper w-[240px] h-[220px] flex flex-col text-[14px]"
+      >
+        <div class="copy-wrapper w-[100%] h-[20px] flex justify-end">
+          <div
+            class="copy w-[20px] h-[20px] hover:bg-slate-50 flex justify-center items-center rounded-[2px] cursor-pointer transition ease duration-100"
+            @click="copyToClipboard"
+          >
+            c
+          </div>
+        </div>
+        <div
+          class="graph-code w-[100%] h-[200px] flex items-center justify-center text-[14px]"
+        >
+          <div class="component">{{ barChartText }}</div>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="flex gap-[20px]">
     <div class="graph-item">
@@ -63,12 +87,11 @@
         />
       </div>
     </div>
-    <div class="graph-code">CODE</div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import BarChart from "@/components/v-graphs/graphs/BarChart.vue";
 import VerBar from "@/components/v-graphs/graphs/VerBar.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
@@ -125,6 +148,35 @@ const stockOptions = {
     { label: "NVDA", value: "NVDA" },
   ],
 };
+
+//CODE EDITOR
+const barChartText = ref(
+  '<BarChart\n  :data="earnings"\n  :tooltip="true"\n  :animations="true"\n  height="200"\n  width="400">'
+);
+
+//COPY function
+const copyToClipboard = async () => {
+  try {
+    await navigator.clipboard.writeText(barChartText.value);
+  } catch (err) {
+    console.error("Failed to copy: ", err);
+  }
+};
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.graph-code-wrapper {
+  background-color: #282c34; /* Dark background like many code editors */
+  color: #abb2bf; /* Light text color for readability */
+  font-family: "Source Code Pro", monospace; /* Monospaced font for code */
+  padding: 16px;
+  border-radius: 8px;
+  white-space: pre-wrap; /* Preserve whitespaces and line breaks */
+  overflow-x: auto; /* Enable horizontal scrolling if needed */
+  line-height: 1.7;
+}
+.component {
+  color: #e6c07b; /* Example color */
+  /* Additional styling if needed */
+}
+</style>

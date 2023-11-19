@@ -34,7 +34,7 @@
   </div>
   <div class="flex gap-[20px]">
     <div class="graph-item">
-      <PieChart :data="sectors" height="200" width="400" />
+      <DoughnutChart :data="sectors" height="200" width="400" />
     </div>
     <div class="graph-config rounded-[8px]">
       <div class="flex flex-col gap-[12px] w-[240px]">
@@ -70,6 +70,7 @@
 <script setup>
 import { ref } from "vue";
 import PieChart from "@/components/v-graphs/graphs/PieChart.vue";
+import DoughnutChart from "@/components/v-graphs/graphs/DoughnutChart.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 

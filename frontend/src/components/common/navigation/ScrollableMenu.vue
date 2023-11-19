@@ -10,9 +10,8 @@
         class="accordion-item flex items-center px-[20px]"
         :class="[
           'accordion-title hover:scale-[1.005] hover:text-slate-800 hover:dark:text-slate-300 transition ease text-[12px] px-[40px] text-slate-500',
-          isActive(item.name)
-            ? 'scale-[1.005] text-slate-900 dark:text-slate-100'
-            : '',
+          isActive(item.name) ? 'scale-[1.005] text-slate-900 dark:text-slate-100' : '',
+          item.name === currentSection ? 'text-slate-900' : '' // Add this line
         ]"
         @click="() => toggleAccordion(item.name)"
       >
@@ -27,29 +26,6 @@
         <div>
           {{ item.title }}
         </div>
-        <transition
-          name="accordion"
-          @before-enter="beforeEnter"
-          @enter="enter"
-          @before-leave="beforeLeave"
-          @leave="leave"
-        >
-          <div
-            v-if="isActive(item.name) && item.items && item.items.length"
-            class="accordion-content shadow-expboxsh"
-          >
-            <ul>
-              <li
-                v-for="(subItem, subIndex) in item.items"
-                :key="`item-${subIndex}`"
-                class="text-[11px] py-[8px] px-[16px] hover:bg-slate-50 cursor-pointer border-b-[0px] border-slate-200"
-                @click="navigateTo(item, subItem)"
-              >
-                {{ subItem }}
-              </li>
-            </ul>
-          </div>
-        </transition>
       </div>
     </div>
   </div>
@@ -57,13 +33,13 @@
 
 <script setup>
 import { ref, watchEffect } from "vue";
-import { useRouter, useRoute } from "vue-router";
 import { defineProps } from "vue";
 
 /// Define props
 const props = defineProps({
   title: String,
   items: Array,
+  currentSection: String,
 });
 
 const openName = ref(null);

@@ -1,7 +1,11 @@
 <template>
   <div class="flex gap-[20px]">
-    <div class="graph-item" v-if="bubbleData">
-      <BubbleChart :data="bubbleData" width="400" height="200" />
+    <div class="graph-item">
+      <DotGraph
+        :data="earnings1.AppleEarningsData"
+        :width="260"
+        :height="134"
+      />
     </div>
     <div class="graph-config rounded-[8px]">
       <div class="flex flex-col gap-[12px] w-[240px]">
@@ -36,46 +40,19 @@
 
 <script setup>
 import { ref } from "vue";
-import BubbleChart from "@/components/v-graphs/graphs/BubbleChart.vue";
+import { earnings1 } from "@/data/earningsDummy";
+import DotGraph from "@/components/v-graphs/graphs/DotGraph.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 
 // BARCHART DATA
-const bubbleData = ref([
-  {
-    performancePercentage: 10.5,
-    ownership: 10.3,
-    weight: 15.2,
-    sector: "Energy",
-    securityName: "Company A",
-    symbol: "COMPA",
-  },
-  {
-    performancePercentage: 5.7,
-    ownership: 25.1,
-    weight: 10.0,
-    sector: "Materials",
-    securityName: "Company B",
-    symbol: "COMPB",
-  },
-  {
-    performancePercentage: 15.2,
-    ownership: 20.5,
-    weight: 20.3,
-    sector: "Industrials",
-    securityName: "Company C",
-    symbol: "COMPC",
-  },
-  {
-    performancePercentage: -15.2,
-    ownership: 0.5,
-    weight: 10.3,
-    sector: "Technology",
-    securityName: "Company D",
-    symbol: "COMPD",
-  },
-  // ... other objects
-]);
+const sectors = [
+  { label: "Others", value: 10 },
+  { label: "Energy", value: 15 },
+  { label: "Finance", value: 25 },
+  { label: "Technology", value: 30 },
+  { label: "Healthcare", value: 20 },
+];
 
 const barTooltipState = ref("off");
 const barTooltip = {
