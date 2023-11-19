@@ -4,11 +4,6 @@
   >
     <div class="ih-app flex w-[100%]">
       <div
-        class="sidenav-wrapper w-[56px] flex border-r-[1px] border-slate-200 dark:border-slate-800 justify-center"
-      >
-        <TheSidenav />
-      </div>
-      <div
         class="content flex-1 flex-col w-[100%] border-[0px] pl-[20px] pr-[20px]"
       >
         <TheNavbar />
@@ -26,11 +21,10 @@
 </template>
 
 <script>
-import TheSidenav from "@/components/navigation/TheSidenav.vue";
 import TheNavbar from "@/components/navigation/TheNavbar.vue";
 
 export default {
-  components: { TheSidenav, TheNavbar },
+  components: { TheNavbar },
   setup() {
     return {};
   },

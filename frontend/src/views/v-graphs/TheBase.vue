@@ -10,8 +10,8 @@ export default defineComponent({
   components: { MainView },
   setup() {
     const navItems = ref([
-      { name: "HOME", path: "/playground/graphs" },
-      { name: "GRAPHS", path: "/playground/graphs-package" },
+      { name: "HOME", path: "/home" },
+      { name: "GRAPHS", path: "/graphs" },
     ]);
 
     return { navItems };

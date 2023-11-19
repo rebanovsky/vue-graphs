@@ -4,10 +4,8 @@
       class="navbar-wrapper h-[64px] w-[100%] flex justify-between items-center"
     >
       <div
-        class="cursor-pointer hover:bg-slate-200 transition ease duration-75 items-center mr-[8px] px-[10px] flex rounded-[8px] py-[4px] text-[14px] text-slate-500"
+        class="items-center mr-[8px] px-[10px] flex rounded-[8px] py-[4px] text-[14px] text-slate-500"
       >
-        <div class="red-dot h-[6px] w-[6px] mr-[8px] rounded bg-red-60"></div>
-        <div class="news-flash text-[12px]">FED Powell speaking</div>
       </div>
       <TheSearch />
       <div class="right side-object flex w-[240px] gap-[8px] items-center">
