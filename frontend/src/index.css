@@ -1,0 +1,20 @@
+/* @config "./tailwindcss-config.js";  */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .gridlines {
+    border-width: 1px;
+    border-style: dashed;
+    border-color: theme("colors.slate.300");
+    @apply dark:border-slate-700;
+  }
+  .chart-border {
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: theme("colors.slate.200");
+    @apply dark:border-slate-800;
+  }
+}

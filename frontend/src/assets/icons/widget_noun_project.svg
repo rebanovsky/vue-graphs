@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" x="0px" y="0px" class="text-slate-500">
+    <g data-name="Box, menu, square, ui, widget">
+        <rect x="10.5" y="10.5" width="33.29" height="33.29" rx="5.68"/>
+        <path d="M92.38,23.13,76.87,7.62a5.67,5.67,0,0,0-8,0L53.32,23.13a5.69,5.69,0,0,0,0,8L68.84,46.68h0a5.69,5.69,0,0,0,8,0L92.38,31.16A5.67,5.67,0,0,0,92.38,23.13Z"/>
+        <rect x="10.5" y="56.21" width="33.29" height="33.29" rx="5.68"/>
+        <rect x="56.21" y="56.21" width="33.29" height="33.29" rx="5.68"/>
+    </g>
+</svg>
