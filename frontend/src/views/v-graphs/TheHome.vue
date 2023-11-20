@@ -5,7 +5,7 @@
   >
     <!-- Introduction Section -->
     <div
-      class="container w-[800px] gridlines p-[20px] rounded-[8px] shadow-boxshlight flex flex-col gap-[28px]"
+      class="container w-[800px] gridlines p-[20px] rounded-[8px] shadow-boxshlight dark:shadow flex flex-col gap-[28px]"
     >
       <header>
         <h1 class="text-[20px] font-medium">Vue-Graphs</h1>
@@ -35,7 +35,7 @@
               </div>
               <div class="step-title">{{ step.stepTitle }}</div>
             </div>
-            <div class="step-content text-[12px] border-[1px] border-slate-300 p-[8px] rounded">
+            <div class="step-content text-[12px] border-[1px] cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700 p-[8px] rounded">
               {{ step.content }}
             </div>
           </div>
@@ -51,7 +51,7 @@
           :key="index"
         >
           <div
-            class="graph-box rounded-[8px] hover:border-harlequin-300 hover:text-harlequin-400 border-[1.25px] border-slate-300 transition ease duration-75 cursor-pointer w-[160px] h-[120px] p-[8px] text-[12px]"
+            class="graph-box hover:bg-harlequin-50 dark:hover:bg-harlequin-900 rounded-[8px] hover:border-harlequin-300 hover:text-harlequin-400 dark:hover:text-harlequin-300 border-[1.25px] border-slate-300 dark:border-slate-700 dark:hover:border-harlequin-300 transition ease duration-75 cursor-pointer w-[160px] h-[120px] p-[8px] text-[12px]"
           >
             {{ graph.name }}
           </div>
