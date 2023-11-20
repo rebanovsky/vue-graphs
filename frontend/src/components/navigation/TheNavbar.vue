@@ -9,8 +9,6 @@
       </div>
       <TheSearch />
       <div class="right side-object flex w-[240px] gap-[8px] items-center">
-        <div class="text-[12px] cursor-pointer" @click="signOut">Sign out</div>
-        <TheDropdown :items="accountItems" name="Account" />
         <ThemeToggler />
       </div>
     </div>

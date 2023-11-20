@@ -1,41 +1,61 @@
 <template>
   <div
-    class="playground-component w-[100%] p-[12px] flex justify-center gridlines rounded-[14px]"
+    class="playground-component w-[100%] p-[12px] text-[14px] flex justify-center gridlines rounded-[14px]"
     style="height: calc(100vh - 124px)"
   >
     <!-- Introduction Section -->
-    <div class="container w-[800px] gridlines flex flex-col gap-[20px]">
+    <div
+      class="container w-[800px] gridlines p-[20px] rounded-[8px] shadow-boxshlight flex flex-col gap-[28px]"
+    >
       <header>
-        <h1>Vue-Graphs</h1>
+        <h1 class="text-[20px] font-medium">Vue-Graphs</h1>
       </header>
 
-      <section class="introduction">
+      <section class="introduction leading-6 font-normal text-slate-500">
         <p>
-          Welcome to Vue-Graphs, a practical and efficient package for Vue 3,
-          designed to enhance your experience with D3.js. It simplifies the
-          process of creating interactive data visualizations, making it more
-          accessible and less time-consuming for developers.
+          A practical and efficient package for Vue 3, designed to enhance your
+          experience with D3.js. It simplifies the process of creating
+          interactive data visualizations, making it more accessible and less
+          time-consuming for developers.
         </p>
       </section>
 
-      <section class="features">
-        <h2>Key Features:</h2>
-        <ul>
-          <li>Pre-Built Graph Components</li>
-          <li>Customizable & Reactive Props</li>
-          <li>Seamless Data Integration</li>
-          <li>Enhanced Developer Experience</li>
-        </ul>
+      <section class="installation">
+        <div class="steps flex gap-[20px] justify-around">
+          <div
+            class="step flex flex-col items-center gap-[20px]"
+            v-for="(step, index) in steps"
+            :key="index"
+          >
+            <div class="step-header flex gap-[8px] items-center">
+              <div
+                class="step-nr border-[1px] border-harlequin-300 rounded-[20px] h-[24px] w-[24px] flex items-center justify-center"
+              >
+                {{ step.stepNr }}
+              </div>
+              <div class="step-title">{{ step.stepTitle }}</div>
+            </div>
+            <div class="step-content text-[12px] border-[1px] border-slate-300 p-[8px] rounded">
+              {{ step.content }}
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section class="quick-start">
-        <h2>Quick Start Guide:</h2>
-        <ol>
-          <li>Install Vue-Graphs</li>
-          <li>Select Your Graph</li>
-          <li>Customize</li>
-          <li>Bind Your Data</li>
-        </ol>
+      <section
+        class="graphs-wrapper flex flex-wrap justify-center gap-[32px] w-[100%] my-[40px]"
+      >
+        <div
+          class="graphs-container"
+          v-for="(graph, index) in graphs"
+          :key="index"
+        >
+          <div
+            class="graph-box rounded-[8px] hover:border-harlequin-300 hover:text-harlequin-400 border-[1.25px] border-slate-300 transition ease duration-75 cursor-pointer w-[160px] h-[120px] p-[8px] text-[12px]"
+          >
+            {{ graph.name }}
+          </div>
+        </div>
       </section>
 
       <footer>
@@ -45,7 +65,51 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const graphs = [
+  {
+    name: "Linechart",
+  },
+  {
+    name: "Barchart",
+  },
+  {
+    name: "Piechart",
+  },
+  {
+    name: "Area chart",
+  },
+  {
+    name: "Scatterplot",
+  },
+  {
+    name: "Heatmap",
+  },
+  {
+    name: "Bubblechart",
+  },
+  {
+    name: "Treemap",
+  },
+];
 
-<style lang="scss" scoped>
-</style>
+const steps = [
+  {
+    stepNr: "1",
+    stepTitle: "Installation",
+    content: "npm i vue-graphs",
+  },
+  {
+    stepNr: "2",
+    stepTitle: "Select and customize graph",
+    content: "docs",
+  },
+  {
+    stepNr: "3",
+    stepTitle: "Bind your data",
+    content: ':data="yourData"',
+  },
+];
+</script>
+
+<style lang="scss" scoped></style>

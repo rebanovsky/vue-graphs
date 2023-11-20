@@ -1,6 +1,6 @@
 <template>
   <div
-    class="content-navigation gridlines flex text-[12px] px-[8px] w-[100%] h-[32px] overflow-x-auto flex items-center rounded"
+    class="content-navigation gridlines flex text-[12px] px-[8px] w-[100%] h-[32px] overflow-x-auto flex items-center justify-center rounded"
   >
     <div class="setting-wrapper">
       <font-awesome-icon
@@ -9,7 +9,7 @@
         class="mx-[8px] text-[12px] text-slate-700 hover:bg-slate-300 transition ease duration-75 p-[6px] rounded cursor-pointer"
       />
     </div>
-    <div class="nav-items flex gap-[8px] p-[2px]">
+    <div class="nav-items flex gap-[8px] p-[2px] w-[800px]">
       <router-link
         v-for="(i, index) in items"
         :key="index"
