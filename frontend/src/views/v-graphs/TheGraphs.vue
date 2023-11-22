@@ -6,7 +6,7 @@
     <div
       class="main-content w-[100%] overflow-y-auto flex gap-[8px] h-[100%]"
     >
-      <div class="sidenav overflow-y-auto  border-[1px] border-harlequin-50 rounded-[8px]">
+      <div class="sidenav overflow-y-auto gridlines rounded-[8px]">
         <ScrollableMenu
           :title="title"
           :items="sidenavItems"

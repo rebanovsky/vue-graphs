@@ -1,46 +1,72 @@
 <template>
-  <div class="flex gap-[20px] gridlines">
-    <div class="code-block w-[200px] gridlines p-[20px]">
-      <div class="codeblock h-[100%] rounded-[8px] border-[1px] flex items-center justify-center border-slate-300">
-        SingLine
+  <div class="flex flex-col gap-[16px]">
+    <div class="code-block w-[200px] gridlines py-[4px]">
+      <div
+        class="codeblock h-[100%] rounded-[8px] text-[12px] font-medium text-slate-500 flex"
+      >
+        Single line
       </div>
     </div>
-    <div class="flex flex-col gap-[8px]">
-      <div class="single-line-header">
-        <div class="single-line-title">Title</div>
+
+    <div class="flex gap-[20px] gridlines">
+      <div class="flex flex-col gap-[8px]">
+        <div class="single-line-header">
+          <div class="single-line-title">Title</div>
+        </div>
+        <SingleLine :data="lineData" dateFormat="%Y-%m-%d" />
       </div>
-      <SingleLine :data="lineData" dateFormat="%Y-%m-%d" />
-    </div>
-    <div class="graph-config rounded-[8px]">
-      <div class="flex flex-col gap-[12px] w-[240px]">
-        <RadioButton
-          :title="barTooltip.title"
-          :options="barTooltip.config"
-          v-model="barTooltipState"
-          name="bar-tooltip"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <MultiSelect
-          v-model="selectedStocks"
-          :title="stockOptions.title"
-          :options="stockOptions.configs"
-        />
+      <div class="graph-config rounded-[8px]">
+        <div class="flex flex-col gap-[12px] w-[200px]">
+          <RadioButton
+            :title="barTooltip.title"
+            :options="barTooltip.config"
+            v-model="barTooltipState"
+            name="bar-tooltip"
+          />
+          <RadioButton
+            v-model="barVisualizationState"
+            :title="barAnimations.title"
+            :options="barAnimations.config"
+            name="bar-animations"
+          />
+          <RadioButton
+            v-model="barVisualizationState"
+            :title="barAnimations.title"
+            :options="barAnimations.config"
+            name="bar-animations"
+          />
+          <MultiSelect
+            v-model="selectedStocks"
+            :title="stockOptions.title"
+            :options="stockOptions.configs"
+          />
+        </div>
       </div>
-    </div>
-    <div class="code-block w-[200px] gridlines p-[20px]">
-      <div class="codeblock h-[100%] rounded-[8px] border-[1px] border-slate-300">
-        CODEBLOC
+      <div class="code-block w-[200px]">
+        <div
+          class="codeblock h-[100%] text-[12px] w-[auto] border font-mono rounded-[8px] p-[8px] "
+        >
+        <div class="copy-code">copy</div>
+          <div class="top flex">
+            {{ "<" }}
+            <div class="component-name text-[#f8d339]">SingleLine</div>
+          </div>
+          <div
+            class="props px-[16px] flex"
+            v-for="prop in singleLineProps"
+            :key="prop.name"
+          >
+            :
+            <div class="props-name text-[#f765f0]">
+              {{ prop.name }}
+            </div>
+            =
+            <div class="props-value  text-[#ffb648]">
+              {{ prop.value }}
+            </div>
+          </div>
+          <div class="bottom">{{ "/>" }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -168,8 +194,27 @@ const stockOptions = {
   ],
 };
 
-//MULTILINE
+//PROPS
+//SingleLine
+const singleLineProps = ref([
+  {
+    name: "toolbar",
+    value: "true",
+    type: "prop",
+  },
+  {
+    name: "animation",
+    value: "true",
+    type: "prop",
+  },
+  {
+    name: "line-color",
+    value: "#eff",
+    type: "prop",
+  },
+]);
 
+//MULTILINE
 const transformLineData = (lineData) => {
   return lineData.map((dataPoint) => ({
     x: dataPoint.Date,
