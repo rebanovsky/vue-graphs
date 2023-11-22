@@ -1,6 +1,16 @@
 <template>
-  <div class="flex gap-[20px]">
-    <SingleLine :data="lineData" dateFormat="%Y-%m-%d" />
+  <div class="flex gap-[20px] gridlines">
+    <div class="code-block w-[200px] gridlines p-[20px]">
+      <div class="codeblock h-[100%] rounded-[8px] border-[1px] flex items-center justify-center border-slate-300">
+        SingLine
+      </div>
+    </div>
+    <div class="flex flex-col gap-[8px]">
+      <div class="single-line-header">
+        <div class="single-line-title">Title</div>
+      </div>
+      <SingleLine :data="lineData" dateFormat="%Y-%m-%d" />
+    </div>
     <div class="graph-config rounded-[8px]">
       <div class="flex flex-col gap-[12px] w-[240px]">
         <RadioButton
@@ -28,9 +38,19 @@
         />
       </div>
     </div>
+    <div class="code-block w-[200px] gridlines p-[20px]">
+      <div class="codeblock h-[100%] rounded-[8px] border-[1px] border-slate-300">
+        CODEBLOC
+      </div>
+    </div>
   </div>
   <div class="flex gap-[20px]">
-    <MultiLine :data="chartData" date-format="%Y-%m-%d" />
+    <MultiLine
+      :data="chartData"
+      date-format="%Y-%m-%d"
+      width="400"
+      height="200"
+    />
     <div class="graph-config rounded-[8px]">
       <div class="flex flex-col gap-[12px] w-[240px]">
         <RadioButton

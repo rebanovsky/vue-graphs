@@ -9,9 +9,9 @@
         :key="item.name"
         class="accordion-item flex items-center px-[20px] gridlines"
         :class="[
-          'accordion-title hover:scale-[1.0125] hover:text-slate-800 hover:dark:text-slate-300 transition ease text-[12px] px-[40px] text-slate-500',
+          'accordion-title hover:scale-[1.0025] hover:text-slate-800 hover:dark:text-slate-300 transition ease text-[12px] px-[40px] text-slate-500',
           isActive(item.name)
-            ? 'scale-[1.0125] text-slate-900 dark:text-slate-100'
+            ? 'scale-[1.0025] text-slate-900 dark:text-slate-100'
             : '',
         ]"
         @click="() => toggleAccordion(item.name)"
@@ -58,7 +58,6 @@
 <script setup>
 import { ref, watchEffect } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { defineProps } from "vue";
 
 // Define props
 const props = defineProps({

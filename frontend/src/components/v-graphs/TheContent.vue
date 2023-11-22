@@ -1,20 +1,21 @@
 <template>
   <div
+    ref="scrollableElement"
     class="gridlines rounded-[8px] flex-1 items-center w-[100%] overflow-y-auto py-[10px]"
   >
     <div
       v-for="item in sidenavItems"
       :key="item.name"
       :id="item.name"
-      class="min-h-[360px] p-[20px] my-[20px] dark:shadow mx-[20px] rounded-[8px] flex justify-between"
+      class="min-h-[360px] p-[20px] my-[20px] dark:shadow mx-[20px] rounded-[8px] flex justify-center"
     >
       <div
         class="graph-wrapper h-[100%] p-[20px] gridlines rounded-[8px] w-[100%] flex gap-[12px] flex-col flex-1"
       >
-        <h2>{{ item.title }}</h2>
-        <div class="graph-content h-[100%]">
+        <div class="sticky-header">{{ activeSectionTitle }}</div>
+        <div class="graph-content h-[100%] flex justify-center w-[100%]">
           <div
-            class="item-content w-[400px] flex gap-[20px] flex-1 flex-col justify-center"
+            class="item-content flex gap-[20px] flex-1 flex-col items-center justify-center"
           >
             <div
               class="flex flex-col gap-[80px]"
@@ -23,13 +24,13 @@
               <LineCharts />
             </div>
             <div
-              class="flex flex-col gap-[80px]"
+              class="flex flex-col gap-[80px] items-center"
               v-if="selectGraph(item.name) === 'bar-chart'"
             >
               <BarCharts />
             </div>
             <div
-              class="flex flex-col gap-[80px]"
+              class="flex flex-col gap-[80px] items-center"
               v-if="selectGraph(item.name) === 'pie-chart'"
             >
               <PieCharts />
@@ -54,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import LineCharts from "@/components/v-graphs/sections/LineCharts.vue";
 import BarCharts from "@/components/v-graphs/sections/BarCharts.vue";
 import PieCharts from "@/components/v-graphs/sections/PieCharts.vue";
@@ -84,6 +85,50 @@ const selectGraph = (itemName) => {
   }
 };
 
+//SCROLL LOGIC
+const activeSection = ref(null);
+
+const checkActiveSection = () => {
+  let currentActive = null;
+  let smallestPositiveTop = Infinity;
+
+  props.sidenavItems.forEach((item) => {
+    const element = document.getElementById(item.name);
+    if (element) {
+      const rect = element.getBoundingClientRect();
+      const top = rect.top;
+
+      // Check if the element's top is within the viewport and closer to the top
+      if (top >= 0 && top < smallestPositiveTop) {
+        smallestPositiveTop = top;
+        currentActive = item.name;
+      }
+    }
+  });
+
+  // Update the active section
+  activeSection.value = currentActive;
+};
+const activeSectionTitle = computed(() => {
+  const activeItem = props.sidenavItems.find(
+    (item) => item.name === activeSection.value
+  );
+  return activeItem ? activeItem.title : "";
+});
+
+const scrollableElement = ref(null); // Add a ref to your template
+
+onMounted(() => {
+  if (scrollableElement.value) {
+    scrollableElement.value.addEventListener("scroll", checkActiveSection);
+  }
+});
+
+onUnmounted(() => {
+  if (scrollableElement.value) {
+    scrollableElement.value.removeEventListener("scroll", checkActiveSection);
+  }
+});
 // TREEMAP DATA
 const treeData = ref({
   name: "root",
@@ -135,5 +180,11 @@ const treeData = ref({
 
 .custom-select option {
   padding: 5px 10px; /* Padding for options */
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  /* Additional styling */
 }
 </style>

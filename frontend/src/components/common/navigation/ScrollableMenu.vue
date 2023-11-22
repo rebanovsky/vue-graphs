@@ -1,9 +1,9 @@
 <template>
-  <div class="side-menu overflow-y-auto rounded-[8px]">
+  <div class="side-menu overflow-y-auto rounded-[8px] py-[12px]">
     <div class="side-menu-title font-medium px-[16px] py-[12px]">
       {{ title }}
     </div>
-    <div class="w-[240px] flex flex-col">
+    <div class="w-[240px] flex flex-col py-[12px]">
       <div
         v-for="item in items"
         :key="item.name"
@@ -33,7 +33,6 @@
 
 <script setup>
 import { ref, watchEffect } from "vue";
-import { defineProps } from "vue";
 
 /// Define props
 const props = defineProps({

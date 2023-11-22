@@ -1,12 +1,12 @@
 <template>
   <div
-    class="playground-component w-[100%] flex justify-between rounded-[14px]"
+    class="playground-component  flex justify-between rounded-[14px]"
     style="height: calc(100vh - 124px)"
   >
     <div
-      class="main-content w-full overflow-y-auto flex gap-[8px] h-[100%]"
+      class="main-content w-[100%] overflow-y-auto flex gap-[8px] h-[100%]"
     >
-      <div class="sidenav overflow-y-auto gridlines rounded-[8px]">
+      <div class="sidenav overflow-y-auto  border-[1px] border-harlequin-50 rounded-[8px]">
         <ScrollableMenu
           :title="title"
           :items="sidenavItems"
