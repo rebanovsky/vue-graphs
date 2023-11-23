@@ -26,7 +26,7 @@ const props = defineProps({
   title: String,
 });
 
-const emit = defineEmits(["update:modelValue"]); // Define the emit function
+const emit = defineEmits(["update:modelValue"]);
 
 const selectedOptions = ref([...props.modelValue]);
 

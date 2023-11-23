@@ -6,9 +6,7 @@ module.exports = {
   darkMode: "class",
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   variants: { borderStyle: ["responsive"] },
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-  ],
+  plugins: [require("@tailwindcss/aspect-ratio")],
   theme: {
     colors: {
       background: "#F1F4F6",
@@ -24,7 +22,7 @@ module.exports = {
       darkaianswer: "rgb(18 24 40)",
       aitext: "#002f5a",
       darkaitext: "rgb(65 142 211);",
-      blueTest: '#384959',
+      blueTest: "#384959",
       box: "",
       box2: "",
       expbox: "#ebeef2",
@@ -115,17 +113,17 @@ module.exports = {
         200: "#00fc77",
         300: "#2bd81d",
         400: "#057605",
-        900: "#1c2e1a"
+        900: "#1c2e1a",
       },
       green: {
         100: "#caf8c5",
         200: "#00fc77",
         300: "#0dd400",
-        400: "#13c300"
+        400: "#13c300",
       },
       orange: {
-        200: 'ffa657',
-        300: '#ff9639'
+        200: "ffa657",
+        300: "#ff9639",
       },
       zinc: {
         50: "#fafafa",
@@ -218,7 +216,7 @@ module.exports = {
         "pos-100": "100% 100%",
       },
       rotate: {
-        'm180': '-180deg'
+        m180: "-180deg",
       },
     },
   },

@@ -9,7 +9,10 @@
         :key="option.id"
         :class="[
           'radio-option rounded-[4px] border-[1px] text-slate-500 border-slate-300 dark:border-slate-700 transition ease duration-75',
-          { '!text-blue-900 !border-blue-900 bg-blue-50 dark:bg-slate-900 dark:border-blue-00 dark:text-slate-200 dark:border-slate-200': option.value === modelValue },
+          {
+            '!text-blue-900 !border-blue-900 bg-blue-50 dark:bg-slate-900 dark:border-blue-00 dark:text-slate-200 dark:border-slate-200':
+              option.value === modelValue,
+          },
         ]"
         @click="() => updateModelValue(option.value)"
         class="px-[3px] py-[1px]"
@@ -30,7 +33,6 @@
 </template>
 
 <script setup>
-
 const props = defineProps({
   options: Array,
   modelValue: [String, Number],

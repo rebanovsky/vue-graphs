@@ -1,9 +1,14 @@
 <template>
+  <div class="single-line-header">
+    <div class="single-line-title">
+      <input type="text" class="bg-transparent" :placeholder="title" />
+    </div>
+  </div>
   <div ref="chart" class="chart-border"></div>
 </template>
 
 <script>
-import { ref, watch, onMounted } from "vue";
+import { ref, onMounted, watchEffect } from "vue";
 import * as d3 from "d3";
 
 export default {
@@ -25,10 +30,18 @@ export default {
       type: String,
       default: null,
     },
+    title: {
+      type: String,
+      default: "Title",
+    },
     dotColor: {
       type: String,
-      default: '#05D9FF',
-    }
+      default: "#05D9FF",
+    },
+    lineColor: {
+      type: String,
+      default: "#fff",
+    },
   },
   setup(props) {
     const chart = ref(null);
@@ -93,14 +106,15 @@ export default {
         .line()
         .x((d) => xScale(props.dateFormat ? parseDate(d.x) : d.x))
         .y((d) => yScale(d.y));
-
+      console.log("props.lineColor: ", props.lineColor);
       props.data.forEach((d) => {
         svg
           .append("path")
           .data([d.values])
           .attr("class", "line")
           .attr("d", line)
-          .attr("class", "stroke-slate-700 dark:stroke-slate-300")
+          .attr("style", `stroke: ${props.lineColor};`)
+          .attr("class", "transition ease dark:stroke-slate-300")
           .attr("fill", "none");
       });
 
@@ -165,7 +179,9 @@ export default {
           });
 
           if (closestPt) {
-            const cx = xScale(props.dateFormat ? parseDate(closestPt.x) : closestPt.x);
+            const cx = xScale(
+              props.dateFormat ? parseDate(closestPt.x) : closestPt.x
+            );
             // Append the primary hover circle (existing)
 
             // Append the new larger, semi-transparent black hover circle
@@ -189,7 +205,6 @@ export default {
               .attr("r", 4) // The size of the smaller circle
               .attr("class", `fill-[#3d97ff] dark:fill-[#49B7F7]`);
 
-
             // Append text label for the y value
             hoverCirclesGroup
               .append("text")
@@ -201,7 +216,7 @@ export default {
               .attr("alignment-baseline", "hanging") // Text alignment to hang from the y position
               .attr("dx", "5px") // Offset from the vertical line to avoid overlap
               .attr("dy", "5px"); // Offset from the top to be clearly visible
-                }
+          }
         });
 
         // Draw the vertical hover line.
@@ -225,7 +240,10 @@ export default {
     };
 
     onMounted(drawChart);
-    watch(props.data, drawChart);
+
+    watchEffect(() => {
+      drawChart();
+    });
 
     return {
       chart,
