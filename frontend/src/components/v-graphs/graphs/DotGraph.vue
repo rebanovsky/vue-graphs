@@ -10,7 +10,7 @@
     ></div>
     <div
       ref="graphContainer"
-      class="graph-container gridlines rounded-[8px]"
+      class="graph-container chart-border rounded-[8px]"
     ></div>
   </div>
 </template>

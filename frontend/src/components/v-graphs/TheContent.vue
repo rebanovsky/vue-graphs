@@ -12,22 +12,22 @@
       <div
         class="graph-wrapper h-[100%] p-[20px] gridlines rounded-[8px] w-[100%] flex gap-[12px] flex-col flex-1"
       >
-        <div class="sticky-header">{{ activeSectionTitle }}</div>
+        <div class="sticky-header"></div>
         <div class="graph-content h-[100%] flex justify-center w-[100%]">
           <div
             class="item-content flex gap-[20px] flex-1 flex-col items-center justify-center"
           >
             <div
-              class="flex flex-col gap-[80px]"
-              v-if="selectGraph(item.name) === 'line'"
-            >
-              <LineCharts />
-            </div>
-            <div
               class="flex flex-col gap-[80px] items-center"
               v-if="selectGraph(item.name) === 'bar-chart'"
             >
               <BarCharts />
+            </div>
+            <div
+              class="flex flex-col gap-[80px]"
+              v-if="selectGraph(item.name) === 'line'"
+            >
+              <LineCharts />
             </div>
             <div
               class="flex flex-col gap-[80px] items-center"
