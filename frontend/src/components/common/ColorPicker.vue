@@ -7,7 +7,7 @@
       <div
         class="border-[1px] border-slate-100 dark:border-slate-900 rounded-[20px]"
         :class="{
-          'border-slate-900 dark:border-slate-100': option.value === modelValue,
+          'border-slate-700 dark:!border-slate-300': option.value === modelValue,
         }"
         v-for="option in options"
         :key="option.id"

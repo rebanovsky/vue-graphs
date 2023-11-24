@@ -28,8 +28,9 @@ const basePath = "/playground/graph-items";
 const title = ref("Vue Graphs");
 
 const sidenavItems = ref([
-  { title: "Line Chart", name: "line-chart" },
   { title: "Bar Chart", name: "bar-chart" },
+  { title: "Line Chart", name: "line-chart" },
+
   { title: "Pie Chart", name: "pie-chart" },
   { title: "Dot Plot", name: "dot-plot" },
   { title: "Scatter Plot", name: "scatter-plot" },

@@ -5,12 +5,12 @@
         :data="earnings"
         :tooltip="true"
         :animations="true"
-        height="200"
-        width="400"
+        height="240"
+        width="480"
       />
     </div>
     <div class="graph-config rounded-[8px]">
-      <div class="flex flex-col gap-[12px] w-[240px]">
+      <div class="flex flex-col gap-[12px] w-[200px]">
         <RadioButton
           :title="barTooltip.title"
           :options="barTooltip.config"
@@ -37,31 +37,48 @@
       </div>
     </div>
     <div class="div">
-      <div
-        class="graph-code-wrapper w-[240px] h-[228px] flex flex-col text-[14px]"
-      >
-        <div class="copy-wrapper w-[100%] h-[28px] flex justify-end bg-slate-300 dark:bg-slate-700">
-          <div
-            class="copy w-[auto] px-[4px] h-[20px] text-[12px] hover:bg-slate-50 flex justify-center items-center rounded-[2px] cursor-pointer transition ease duration-100"
-            @click="copyToClipboard"
-          >
-            copy code
-          </div>
-        </div>
+      <div class="code-block w-[220px] flex justify-center">
         <div
-          class="graph-code w-[100%] h-[200px] flex items-center justify-center text-[14px]"
+          class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
         >
-          <div class="component">{{ barChartText }}</div>
+          <div class="copy-code">copy</div>
+          <div class="flex flex-col">
+            <div class="top flex">
+              {{ "<" }}
+              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
+                BarChart
+              </div>
+            </div>
+            <transition-group name="list" tag="div" class="flex flex-col">
+              <div
+                class="props px-[16px] flex"
+                v-for="prop in singleLineProps"
+                :key="prop.name"
+              >
+                :
+                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
+                  {{ prop.name }}
+                </div>
+                =
+                <div
+                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
+                >
+                  {{ prop.value }}
+                </div>
+              </div>
+              <div class="bottom">{{ "/>" }}</div>
+            </transition-group>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <div class="flex gap-[20px]">
     <div class="graph-item">
-      <VerBar :data="earnings" height="200" width="400" />
+      <VerBar :data="earnings" height="240" width="480" />
     </div>
     <div class="graph-config rounded-[8px]">
-      <div class="flex flex-col gap-[12px] w-[240px]">
+      <div class="flex flex-col gap-[12px] w-[200px]">
         <RadioButton
           :title="barTooltip.title"
           :options="barTooltip.config"
@@ -87,11 +104,47 @@
         />
       </div>
     </div>
+    <div class="div">
+      <div class="code-block w-[220px] flex justify-center">
+        <div
+          class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
+        >
+          <div class="copy-code">copy</div>
+          <div class="flex flex-col">
+            <div class="top flex">
+              {{ "<" }}
+              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
+                VerBar
+              </div>
+            </div>
+            <transition-group name="list" tag="div" class="flex flex-col">
+              <div
+                class="props px-[16px] flex"
+                v-for="prop in singleLineProps"
+                :key="prop.name"
+              >
+                :
+                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
+                  {{ prop.name }}
+                </div>
+                =
+                <div
+                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
+                >
+                  {{ prop.value }}
+                </div>
+              </div>
+              <div class="bottom">{{ "/>" }}</div>
+            </transition-group>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, reactive } from "vue";
 import BarChart from "@/components/v-graphs/graphs/BarChart.vue";
 import VerBar from "@/components/v-graphs/graphs/VerBar.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
@@ -150,9 +203,13 @@ const stockOptions = {
 };
 
 //CODE EDITOR
-const barChartText = ref(
-  '<BarChart\n  :data="earnings"\n  :tooltip="true"\n  :animations="true"\n  height="200"\n  width="400">'
-);
+const chartConfig = reactive({
+  lineData: [], // Initialize with default or empty data
+  tooltip: false,
+  selectedStocks: [],
+  colorSchema: "",
+  // Add other configurations as needed
+});
 
 //COPY function
 const copyToClipboard = async () => {
@@ -166,8 +223,8 @@ const copyToClipboard = async () => {
 
 <style lang="scss" scoped>
 .copy-wrapper {
- border-radius: 8px 8px 0 0;
- padding: 4px;
+  border-radius: 8px 8px 0 0;
+  padding: 4px;
 }
 .graph-code {
   background-color: #282c34; /* Dark background like many code editors */

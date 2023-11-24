@@ -3,8 +3,11 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch, watchEffect } from "vue";
 import * as d3 from "d3";
+import { useDark } from "@vueuse/core";
+
+const isDark = useDark();
 
 const props = defineProps({
   data: Array,
@@ -14,11 +17,6 @@ const props = defineProps({
 
 const chart = ref(null);
 
-onMounted(() => {
-  if (props.data && props.data.length) {
-    drawChart();
-  }
-});
 
 function roundedRect(x, y, width, height, radius) {
   return `  
@@ -54,10 +52,17 @@ function formatNumber(d) {
   return d.toString();
 }
 
-const customColors = [
-  "#00CCFF",
+const customLightColors = [
+  "#FB607F",
+  "#0070FF", // Indigo
+];
+
+const customDarkColors = [
+  "#00FFFF",
   "#FF0088", // Indigo
 ];
+
+const customColors = isDark.value ? customDarkColors : customLightColors;
 
 //ANIMATION DURATION AND DELAY CONSTANTS
 const barAnimationDuration = 800;
@@ -65,6 +70,10 @@ const textAnimationDuration = 200;
 const textAnimationDelay = barAnimationDuration;
 
 const drawChart = () => {
+  if (!chart.value) return;
+
+  d3.select(chart.value).selectAll("*").remove();
+
   const margin = { top: 20, right: 20, bottom: 30, left: 50 };
   const width = props.width - margin.left - margin.right;
   const height = props.height - margin.top - margin.bottom;
@@ -134,7 +143,7 @@ const drawChart = () => {
     .enter()
     .append("path")
     .attr("d", (d) => roundedRect(x1(d.entity), height, x1.bandwidth(), 0, 2))
-    .attr("fill", (d) => customColors[entityIndex(d) % customColors.length])
+    .attr("fill", (d) => isDark.value ? customLightColors[entityIndex(d) % customLightColors.length] : customDarkColors[entityIndex(d) % customDarkColors.length])
     .transition()
     .duration(barAnimationDuration)
     .attr("d", (d) =>
@@ -224,6 +233,12 @@ const drawChart = () => {
     .on("mouseover", handleMouseover)
     .on("mouseout", handleMouseout);
 };
+
+onMounted(drawChart);
+
+watch(() => {
+  drawChart();
+});
 </script>
 
 <style></style>

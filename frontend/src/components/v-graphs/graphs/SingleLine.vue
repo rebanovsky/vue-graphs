@@ -40,7 +40,10 @@ export default {
     },
     lineColor: {
       type: String,
-      default: "#fff",
+    },
+    tooltip: {
+      type: Boolean,
+      default: false
     },
   },
   setup(props) {
@@ -113,8 +116,8 @@ export default {
           .data([d.values])
           .attr("class", "line")
           .attr("d", line)
-          .attr("style", `stroke: ${props.lineColor};`)
-          .attr("class", "transition ease dark:stroke-slate-300")
+          .attr("style", `stroke: ${props.lineColor} !important;`)
+          .attr("class", "transition ease dark:stroke-slate-300 !stroke-slate-700")
           .attr("fill", "none");
       });
 
@@ -149,94 +152,102 @@ export default {
 
       svg.select(".domain").remove();
 
-      const hoverVerticalLineGroup = svg
-        .append("g")
-        .attr("class", "hover-vertical-line");
+      if (props.tooltip) {
+        const hoverVerticalLineGroup = svg
+          .append("g")
+          .attr("class", "hover-vertical-line");
 
-      // Then, create the hover circles group
-      const hoverCirclesGroup = svg.append("g").attr("class", "hover-circles");
+        // Then, create the hover circles group
+        const hoverCirclesGroup = svg
+          .append("g")
+          .attr("class", "hover-circles");
 
-      svg.on("mousemove", (event) => {
-        const [mx] = d3.pointer(event); // Get mouse x-coordinate relative to SVG
-        const mouseXValue = xScale.invert(mx); // Convert to data value
+        svg.on("mousemove", (event) => {
+          const [mx] = d3.pointer(event); // Get mouse x-coordinate relative to SVG
+          const mouseXValue = xScale.invert(mx); // Convert to data value
 
-        // Clear existing hover elements before drawing new ones.
-        hoverCirclesGroup.selectAll("circle").remove();
-        hoverCirclesGroup.selectAll("text").remove(); // Remove existing labels
+          // Clear existing hover elements before drawing new ones.
+          hoverCirclesGroup.selectAll("circle").remove();
+          hoverCirclesGroup.selectAll("text").remove(); // Remove existing labels
 
-        props.data.forEach((series) => {
-          let closestPt;
-          let closestDistance = Infinity;
+          props.data.forEach((series) => {
+            let closestPt;
+            let closestDistance = Infinity;
 
-          series.values.forEach((pt) => {
-            const dataXValue = props.dateFormat ? parseDate(pt.x) : pt.x;
-            const distance = Math.abs(dataXValue - mouseXValue);
+            series.values.forEach((pt) => {
+              const dataXValue = props.dateFormat ? parseDate(pt.x) : pt.x;
+              const distance = Math.abs(dataXValue - mouseXValue);
 
-            if (distance < closestDistance) {
-              closestDistance = distance;
-              closestPt = pt;
+              if (distance < closestDistance) {
+                closestDistance = distance;
+                closestPt = pt;
+              }
+            });
+
+            if (closestPt) {
+              const cx = xScale(
+                props.dateFormat ? parseDate(closestPt.x) : closestPt.x
+              );
+              // Append the primary hover circle (existing)
+
+              // Append the new larger, semi-transparent black hover circle
+              hoverCirclesGroup
+                .append("circle")
+                .attr(
+                  "cx",
+                  xScale(
+                    props.dateFormat ? parseDate(closestPt.x) : closestPt.x
+                  )
+                )
+                .attr("cy", yScale(closestPt.y))
+                .attr("r", 32) // The size of the larger circle
+                .attr("fill", "rgba(61, 151, 255, 0.1)"); // Semi-transparent black
+
+              hoverCirclesGroup
+                .append("circle")
+                .attr(
+                  "cx",
+                  xScale(
+                    props.dateFormat ? parseDate(closestPt.x) : closestPt.x
+                  )
+                )
+                .attr("cy", yScale(closestPt.y))
+                .attr("r", 4) // The size of the smaller circle
+                .attr("class", `fill-[#3d97ff] dark:fill-[#49B7F7]`);
+
+              // Append text label for the y value
+              hoverCirclesGroup
+                .append("text")
+                .attr("x", mx) // Position aligned with the mouse x on the vertical line
+                .attr("y", 0) // Position at the top of the SVG drawing area
+                .text(d3.format(".2f")(closestPt.y)) // Format the y value to 2 decimal places
+                .attr("class", "fill-slate-500 text-[14px] gridlines") // Text color
+                .attr("text-anchor", "left") // Text alignment to the left of the x position
+                .attr("alignment-baseline", "hanging") // Text alignment to hang from the y position
+                .attr("dx", "5px") // Offset from the vertical line to avoid overlap
+                .attr("dy", "5px"); // Offset from the top to be clearly visible
             }
           });
 
-          if (closestPt) {
-            const cx = xScale(
-              props.dateFormat ? parseDate(closestPt.x) : closestPt.x
-            );
-            // Append the primary hover circle (existing)
-
-            // Append the new larger, semi-transparent black hover circle
-            hoverCirclesGroup
-              .append("circle")
-              .attr(
-                "cx",
-                xScale(props.dateFormat ? parseDate(closestPt.x) : closestPt.x)
-              )
-              .attr("cy", yScale(closestPt.y))
-              .attr("r", 24) // The size of the larger circle
-              .attr("fill", "rgba(61, 151, 255, 0.1)"); // Semi-transparent black
-
-            hoverCirclesGroup
-              .append("circle")
-              .attr(
-                "cx",
-                xScale(props.dateFormat ? parseDate(closestPt.x) : closestPt.x)
-              )
-              .attr("cy", yScale(closestPt.y))
-              .attr("r", 4) // The size of the smaller circle
-              .attr("class", `fill-[#3d97ff] dark:fill-[#49B7F7]`);
-
-            // Append text label for the y value
-            hoverCirclesGroup
-              .append("text")
-              .attr("x", mx) // Position aligned with the mouse x on the vertical line
-              .attr("y", 0) // Position at the top of the SVG drawing area
-              .text(d3.format(".2f")(closestPt.y)) // Format the y value to 2 decimal places
-              .attr("class", "fill-slate-500 text-[14px] gridlines") // Text color
-              .attr("text-anchor", "left") // Text alignment to the left of the x position
-              .attr("alignment-baseline", "hanging") // Text alignment to hang from the y position
-              .attr("dx", "5px") // Offset from the vertical line to avoid overlap
-              .attr("dy", "5px"); // Offset from the top to be clearly visible
-          }
+          // Draw the vertical hover line.
+          hoverVerticalLineGroup.selectAll("line").remove();
+          hoverVerticalLineGroup
+            .append("line")
+            .attr("x1", mx)
+            .attr("x2", mx)
+            .attr("y1", 0)
+            .attr("y2", props.height)
+            .attr("class", "stroke-slate-400 dark:stroke-slate-600")
+            .attr("stroke-dasharray", "3,3");
         });
 
-        // Draw the vertical hover line.
-        hoverVerticalLineGroup.selectAll("line").remove();
-        hoverVerticalLineGroup
-          .append("line")
-          .attr("x1", mx)
-          .attr("x2", mx)
-          .attr("y1", 0)
-          .attr("y2", props.height)
-          .attr("class", "stroke-slate-400 dark:stroke-slate-600")
-          .attr("stroke-dasharray", "3,3");
-      });
-
-      // Hide the circles and line when the mouse is not over the chart.
-      svg.on("mouseleave", () => {
-        hoverCirclesGroup.selectAll("circle").remove();
-        hoverCirclesGroup.selectAll("text").remove();
-        hoverVerticalLineGroup.selectAll("line").remove();
-      });
+        // Hide the circles and line when the mouse is not over the chart.
+        svg.on("mouseleave", () => {
+          hoverCirclesGroup.selectAll("circle").remove();
+          hoverCirclesGroup.selectAll("text").remove();
+          hoverVerticalLineGroup.selectAll("line").remove();
+        });
+      }
     };
 
     onMounted(drawChart);

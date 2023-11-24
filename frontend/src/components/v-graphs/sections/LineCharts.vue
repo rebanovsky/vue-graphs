@@ -14,7 +14,8 @@
           :height="240"
           :data="lineData"
           dateFormat="%Y-%m-%d"
-          :line-color="lineColor"
+          :line-color="chartConfig.lineColor"
+          :tooltip="chartConfig.tooltip"
         />
       </div>
       <div class="graph-config rounded-[8px]">
@@ -22,16 +23,16 @@
           <RadioButton
             :title="barTooltip.title"
             :options="barTooltip.config"
-            v-model="barTooltipState"
-            name="bar-tooltip"
+            v-model="chartConfig.tooltip"
+            name="tooltip"
           />
           <MultiSelect
-            v-model="selectedStocks"
+            v-model="chartConfig.selectedStocks"
             :title="stockOptions.title"
             :options="stockOptions.configs"
           />
           <ColorPicker
-            v-model="lineColor"
+            v-model="chartConfig.lineColor"
             :options="colorOptions"
             title="Line Color"
           />
@@ -42,28 +43,32 @@
           class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
         >
           <div class="copy-code">copy</div>
-          <div class="flex flex-col">
+          <div class="flex flex-col relative">
             <div class="top flex">
               {{ "<" }}
               <div class="component-name text-[#e85700] dark:text-[#f8d339]">
                 SingleLine
               </div>
             </div>
-            <div
-              class="props px-[16px] flex"
-              v-for="prop in singleLineProps"
-              :key="prop.name"
-            >
-              :
-              <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                {{ prop.name }}
+            <transition-group name="list" tag="div" class="flex flex-col">
+              <div
+                class="props px-[16px] flex"
+                v-for="prop in singleLineProps"
+                :key="prop.name"
+              >
+                :
+                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
+                  {{ prop.name }}
+                </div>
+                =
+                <div
+                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
+                >
+                  {{ prop.value }}
+                </div>
               </div>
-              =
-              <div class="props-value text-[#c330ba] dark:text-[#ffb648]">
-                {{ prop.value }}
-              </div>
-            </div>
-            <div class="bottom">{{ "/>" }}</div>
+              <div class="bottom">{{ "/>" }}</div>
+            </transition-group>
           </div>
         </div>
       </div>
@@ -142,7 +147,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, reactive, watch, computed } from "vue";
 import { line1, line2 } from "@/data/dummyMultiLine";
 import SingleLine from "@/components/v-graphs/graphs/SingleLine.vue";
 import MultiLine from "@/components/v-graphs/graphs/MultiLine.vue";
@@ -168,8 +173,8 @@ const barTooltipState = ref("off");
 const barTooltip = {
   title: "Tooltip",
   config: [
-    { id: "barTooltipOn", label: "On", value: "on" },
-    { id: "barTooltipOff", label: "Off", value: "off" },
+    { id: "lineTooltipOn", label: "On", value: true },
+    { id: "lineTooltipOff", label: "Off", value: false },
   ],
 };
 
@@ -195,8 +200,6 @@ const stockOptions = {
 };
 
 //Line color
-const lineColor = ref("#fff"); // You can set the default color here
-
 const colorOptions = ref([
   { id: "color1", label: "Blue", value: "#0000FF" },
   { id: "color2", label: "Red", value: "#FF0000" },
@@ -205,23 +208,49 @@ const colorOptions = ref([
 
 //PROPS
 //SingleLine
-const singleLineProps = ref([
-  {
-    name: "toolbar",
-    value: "true",
-    type: "prop",
-  },
-  {
-    name: "animation",
-    value: "true",
-    type: "prop",
-  },
-  {
-    name: "line-color",
-    value: "#eff",
-    type: "prop",
-  },
-]);
+// const singleLineProps = ref([
+//   {
+//     name: "toolbar",
+//     value: "true",
+//     type: "prop",
+//   },
+//   {
+//     name: "animation",
+//     value: "true",
+//     type: "prop",
+//   },
+//   {
+//     name: "line-color",
+//     value: "#eff",
+//     type: "prop",
+//   },
+// ]);
+
+// Function to map barTooltipState value for display and filter
+const mapDisplayValue = (key, value) => {
+  if (key === "tooltip") {
+    return value === true ? true : null; // Return null for 'off'
+  }
+  return JSON.stringify(value);
+};
+
+// Computed property to transform chartConfig into array format for the template
+const singleLineProps = computed(() => {
+  return Object.entries(chartConfig)
+    .map(([key, value]) => ({
+      name: key,
+      value: mapDisplayValue(key, value),
+    }))
+    .filter((prop) => prop.value !== null); // Filter out entries with null value
+});
+
+const chartConfig = reactive({
+  lineData: [], // Initialize with default or empty data
+  tooltip: false,
+  selectedStocks: [],
+  lineColor: "#fff",
+  // Add other configurations as needed
+});
 
 //MULTILINE
 const transformLineData = (lineData) => {
@@ -246,4 +275,23 @@ const chartData = ref([
 const candleStickData = line1.slice(0, 50);
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+/* Enter and leave transitions */
+.list-move, /* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.25s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(4px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+  position: absolute;
+}
+</style>
