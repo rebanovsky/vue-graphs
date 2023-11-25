@@ -7,7 +7,7 @@
       v-for="item in sidenavItems"
       :key="item.name"
       :id="item.name"
-      class="min-h-[360px] p-[20px] my-[64px] dark:shadow mx-[20px] rounded-[8px] flex justify-center"
+      class="min-h-[360px] p-[20px] mb-[120px] dark:shadow mx-[20px] rounded-[8px] flex justify-center"
     >
       <div
         class="graph-wrapper h-[100%] p-[20px] gridlines rounded-[8px] w-[100%] flex gap-[12px] flex-col flex-1"
