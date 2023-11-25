@@ -1,40 +1,34 @@
 <template>
-  <div class="flex gap-[20px]">
-    <div class="graph-item">
-      <DotGraph
-        :data="earnings1.AppleEarningsData"
-        :width="480"
-        :height="240"
+  <!-- DotGraph.vue -->
+  <ChartContainer>
+    <template #title>DotGraph.vue</template>
+    <DotGraph :data="earnings1.AppleEarningsData" :width="480" :height="240" />
+    <template #config>
+      <RadioButton
+        :title="barTooltip.title"
+        :options="barTooltip.config"
+        v-model="barTooltipState"
+        name="bar-tooltip"
       />
-    </div>
-    <div class="graph-config rounded-[8px]">
-      <div class="flex flex-col gap-[12px] w-[200px]">
-        <RadioButton
-          :title="barTooltip.title"
-          :options="barTooltip.config"
-          v-model="barTooltipState"
-          name="bar-tooltip"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <MultiSelect
-          v-model="selectedStocks"
-          :title="stockOptions.title"
-          :options="stockOptions.configs"
-        />
-      </div>
-    </div>
-    <div class="code-block w-[220px] flex justify-center">
+      <RadioButton
+        v-model="barVisualizationState"
+        :title="barAnimations.title"
+        :options="barAnimations.config"
+        name="bar-animations"
+      />
+      <RadioButton
+        v-model="barVisualizationState"
+        :title="barAnimations.title"
+        :options="barAnimations.config"
+        name="bar-animations"
+      />
+      <MultiSelect
+        v-model="selectedStocks"
+        :title="stockOptions.title"
+        :options="stockOptions.configs"
+      />
+    </template>
+    <template #code-block>
       <div
         class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
       >
@@ -43,7 +37,7 @@
           <div class="top flex">
             {{ "<" }}
             <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-              DotPlot
+              DotGraph
             </div>
           </div>
           <transition-group name="list" tag="div" class="flex flex-col">
@@ -67,8 +61,8 @@
           </transition-group>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </ChartContainer>
 </template>
 
 <script setup>
@@ -77,6 +71,7 @@ import { earnings1 } from "@/data/earningsDummy";
 import DotGraph from "@/components/v-graphs/graphs/DotGraph.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
+import ChartContainer from "@/components/common/ChartContainer.vue";
 
 // BARCHART DATA
 const sectors = [

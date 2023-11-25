@@ -1,114 +1,104 @@
 <template>
-  <div class="flex flex-col gap-[16px]">
-    <div class="code-block w-[200px] gridlines py-[4px]">
+  <!-- SingleLine.vue -->
+  <ChartContainer>
+    <template #title>SingleLine.vue</template>
+    <SingleLine
+      :width="480"
+      :height="240"
+      :data="lineData"
+      dateFormat="%Y-%m-%d"
+      :line-color="chartConfig.lineColor"
+      :tooltip="chartConfig.tooltip"
+    />
+    <template #config>
+      <RadioButton
+        :title="barTooltip.title"
+        :options="barTooltip.config"
+        v-model="chartConfig.tooltip"
+        name="tooltip"
+      />
+      <MultiSelect
+        v-model="chartConfig.selectedStocks"
+        :title="stockOptions.title"
+        :options="stockOptions.configs"
+      />
+      <ColorPicker
+        v-model="chartConfig.lineColor"
+        :options="colorOptions"
+        title="Line Color"
+      />
+    </template>
+    <template #code-block>
       <div
-        class="codeblock h-[100%] rounded-[8px] text-[12px] font-medium text-slate-500 flex"
+        class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
       >
-        Single line
-      </div>
-    </div>
-    <div class="flex gap-[20px] gridlines">
-      <div class="flex flex-col gap-[8px]">
-        <SingleLine
-          :width="480"
-          :height="240"
-          :data="lineData"
-          dateFormat="%Y-%m-%d"
-          :line-color="chartConfig.lineColor"
-          :tooltip="chartConfig.tooltip"
-        />
-      </div>
-      <div class="graph-config rounded-[8px]">
-        <div class="flex flex-col gap-[12px] w-[200px]">
-          <RadioButton
-            :title="barTooltip.title"
-            :options="barTooltip.config"
-            v-model="chartConfig.tooltip"
-            name="tooltip"
-          />
-          <MultiSelect
-            v-model="chartConfig.selectedStocks"
-            :title="stockOptions.title"
-            :options="stockOptions.configs"
-          />
-          <ColorPicker
-            v-model="chartConfig.lineColor"
-            :options="colorOptions"
-            title="Line Color"
-          />
-        </div>
-      </div>
-      <div class="code-block w-[220px] flex justify-center">
-        <div
-          class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
-        >
-          <div class="copy-code">copy</div>
-          <div class="flex flex-col relative">
-            <div class="top flex">
-              {{ "<" }}
-              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                SingleLine
+        <div class="copy-code">copy</div>
+        <div class="flex flex-col relative">
+          <div class="top flex">
+            {{ "<" }}
+            <div class="component-name text-[#e85700] dark:text-[#f8d339]">
+              SingleLine
+            </div>
+          </div>
+          <transition-group name="list" tag="div" class="flex flex-col">
+            <div
+              class="props px-[16px] flex"
+              v-for="prop in singleLineProps"
+              :key="prop.name"
+            >
+              :
+              <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
+                {{ prop.name }}
+              </div>
+              =
+              <div
+                class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
+              >
+                {{ prop.value }}
               </div>
             </div>
-            <transition-group name="list" tag="div" class="flex flex-col">
-              <div
-                class="props px-[16px] flex"
-                v-for="prop in singleLineProps"
-                :key="prop.name"
-              >
-                :
-                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                  {{ prop.name }}
-                </div>
-                =
-                <div
-                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
-                >
-                  {{ prop.value }}
-                </div>
-              </div>
-              <div class="bottom">{{ "/>" }}</div>
-            </transition-group>
-          </div>
+            <div class="bottom">{{ "/>" }}</div>
+          </transition-group>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="flex gap-[20px]">
+    </template>
+  </ChartContainer>
+
+  <!-- MultiLine.vue -->
+  <ChartContainer>
+    <template #title>MultiLine.vue</template>
     <MultiLine
       :data="chartData"
       date-format="%Y-%m-%d"
       :width="480"
       :height="240"
     />
-    <div class="graph-config rounded-[8px]">
-      <div class="flex flex-col gap-[12px] w-[200px]">
-        <RadioButton
-          :title="barTooltip.title"
-          :options="barTooltip.config"
-          v-model="barTooltipState"
-          name="bar-tooltip"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <MultiSelect
-          v-model="selectedStocks"
-          :title="stockOptions.title"
-          :options="stockOptions.configs"
-        />
-      </div>
-    </div>
-    <div class="code-block w-[220px] flex justify-center">
+    <template #config>
+      <RadioButton
+        :title="barTooltip.title"
+        :options="barTooltip.config"
+        v-model="barTooltipState"
+        name="bar-tooltip"
+      />
+      <RadioButton
+        v-model="barVisualizationState"
+        :title="barAnimations.title"
+        :options="barAnimations.config"
+        name="bar-animations"
+      />
+      <RadioButton
+        v-model="barVisualizationState"
+        :title="barAnimations.title"
+        :options="barAnimations.config"
+        name="bar-animations"
+      />
+      <MultiSelect
+        v-model="selectedStocks"
+        :title="stockOptions.title"
+        :options="stockOptions.configs"
+      />
+    </template>
+    <template #code-block>
       <div
         class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
       >
@@ -141,43 +131,44 @@
           </transition-group>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="flex gap-[20px]">
+    </template>
+  </ChartContainer>
+
+  <!-- CandlestickChart.vue -->
+  <ChartContainer>
+    <template #title>CandlestickChart.vue</template>
     <CandlestickChart
       :data="candleStickData"
       title="Stock price"
       :width="420"
       :height="180"
     />
-    <div class="graph-config rounded-[8px]">
-      <div class="flex flex-col gap-[12px] w-[200px]">
-        <RadioButton
-          :title="barTooltip.title"
-          :options="barTooltip.config"
-          v-model="barTooltipState"
-          name="bar-tooltip"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <MultiSelect
-          v-model="selectedStocks"
-          :title="stockOptions.title"
-          :options="stockOptions.configs"
-        />
-      </div>
-    </div>
-    <div class="code-block w-[220px] flex justify-center">
+    <template #config>
+      <RadioButton
+        :title="barTooltip.title"
+        :options="barTooltip.config"
+        v-model="barTooltipState"
+        name="bar-tooltip"
+      />
+      <RadioButton
+        v-model="barVisualizationState"
+        :title="barAnimations.title"
+        :options="barAnimations.config"
+        name="bar-animations"
+      />
+      <RadioButton
+        v-model="barVisualizationState"
+        :title="barAnimations.title"
+        :options="barAnimations.config"
+        name="bar-animations"
+      />
+      <MultiSelect
+        v-model="selectedStocks"
+        :title="stockOptions.title"
+        :options="stockOptions.configs"
+      />
+    </template>
+    <template #code-block>
       <div
         class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
       >
@@ -210,8 +201,8 @@
           </transition-group>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </ChartContainer>
 </template>
 
 <script setup>
@@ -223,6 +214,7 @@ import CandlestickChart from "@/components/playground/CandlestickChart.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
+import ChartContainer from "@/components/common/ChartContainer.vue";
 
 // LINECHART DATA
 const formattedLineData = line1.map((item) => ({

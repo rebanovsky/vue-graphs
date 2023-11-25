@@ -1,36 +1,34 @@
 <template>
-  <div class="flex gap-[20px]">
-    <div class="graph-item">
-      <PieChart :data="sectors" height="240" width="480" />
-    </div>
-    <div class="graph-config rounded-[8px]">
-      <div class="flex flex-col gap-[12px] w-[200px]">
-        <RadioButton
-          :title="barTooltip.title"
-          :options="barTooltip.config"
-          v-model="barTooltipState"
-          name="bar-tooltip"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <MultiSelect
-          v-model="selectedStocks"
-          :title="stockOptions.title"
-          :options="stockOptions.configs"
-        />
-      </div>
-    </div>
-    <div class="code-block w-[220px] flex justify-center">
+  <!-- PieChart.vue -->
+  <ChartContainer>
+    <template #title>PieChart.vue</template>
+    <PieChart :data="sectors" height="240" width="480" />
+    <template #config>
+      <RadioButton
+      :title="barTooltip.title"
+      :options="barTooltip.config"
+      v-model="barTooltipState"
+      name="bar-tooltip"
+    />
+    <RadioButton
+      v-model="barVisualizationState"
+      :title="barAnimations.title"
+      :options="barAnimations.config"
+      name="bar-animations"
+    />
+    <RadioButton
+      v-model="barVisualizationState"
+      :title="barAnimations.title"
+      :options="barAnimations.config"
+      name="bar-animations"
+    />
+    <MultiSelect
+      v-model="selectedStocks"
+      :title="stockOptions.title"
+      :options="stockOptions.configs"
+    />
+    </template>
+    <template #code-block>
       <div
         class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
       >
@@ -63,40 +61,39 @@
           </transition-group>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="flex gap-[20px]">
-    <div class="graph-item">
-      <DoughnutChart :data="sectors" height="240" width="480" />
-    </div>
-    <div class="graph-config rounded-[8px]">
-      <div class="flex flex-col gap-[12px] w-[200px]">
-        <RadioButton
-          :title="barTooltip.title"
-          :options="barTooltip.config"
-          v-model="barTooltipState"
-          name="bar-tooltip"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <MultiSelect
-          v-model="selectedStocks"
-          :title="stockOptions.title"
-          :options="stockOptions.configs"
-        />
-      </div>
-    </div>
-    <div class="code-block w-[220px] flex justify-center">
+    </template>
+  </ChartContainer>
+
+  <!-- DoughnutChart.vue -->
+  <ChartContainer>
+    <template #title>DoughnutChart.vue</template>
+    <DoughnutChart :data="sectors" height="240" width="480" />
+    <template #config>
+      <RadioButton
+      :title="barTooltip.title"
+      :options="barTooltip.config"
+      v-model="barTooltipState"
+      name="bar-tooltip"
+    />
+    <RadioButton
+      v-model="barVisualizationState"
+      :title="barAnimations.title"
+      :options="barAnimations.config"
+      name="bar-animations"
+    />
+    <RadioButton
+      v-model="barVisualizationState"
+      :title="barAnimations.title"
+      :options="barAnimations.config"
+      name="bar-animations"
+    />
+    <MultiSelect
+      v-model="selectedStocks"
+      :title="stockOptions.title"
+      :options="stockOptions.configs"
+    />
+    </template>
+    <template #code-block>
       <div
         class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
       >
@@ -129,8 +126,8 @@
           </transition-group>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </ChartContainer>
 </template>
 
 <script setup>
@@ -139,6 +136,7 @@ import PieChart from "@/components/v-graphs/graphs/PieChart.vue";
 import DoughnutChart from "@/components/v-graphs/graphs/DoughnutChart.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
+import ChartContainer from "@/components/common/ChartContainer.vue";
 
 // BARCHART DATA
 const sectors = [

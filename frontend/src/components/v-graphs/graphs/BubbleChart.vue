@@ -139,7 +139,7 @@ export default {
         tooltip
           .style("opacity", 1)
           .style("display", "block")
-          .attr('class', 'shadow-boxsh bg-slate-100 chart-border rounded')
+          .attr('class', 'shadow-boxsh bg-slate-100 dark:bg-slate-900 dark:shadow dark:border-slate-700 chart-border rounded')
           .html(
             `<em class="text-[14px] font-normal">` +
               `${d.securityName}` +

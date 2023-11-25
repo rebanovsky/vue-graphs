@@ -1,5 +1,12 @@
 <template>
-  <div ref="chart" class="chart-border"></div>
+  <div class="gridlines">
+    <div class="single-line-header">
+      <div class="single-line-title">
+        <input type="text" class="bg-transparent" :placeholder="title" />
+      </div>
+    </div>
+    <div ref="chart" class="chart-border"></div>
+  </div>
 </template>
 
 <script setup>
@@ -13,10 +20,13 @@ const props = defineProps({
   data: Array,
   width: String,
   height: String,
+  title: {
+    type: String,
+    default: "Title",
+  },
 });
 
 const chart = ref(null);
-
 
 function roundedRect(x, y, width, height, radius) {
   return `  
@@ -53,13 +63,13 @@ function formatNumber(d) {
 }
 
 const customLightColors = [
-  "#FB607F",
+  "#FF0090",
   "#0070FF", // Indigo
 ];
 
 const customDarkColors = [
-  "#00FFFF",
-  "#FF0088", // Indigo
+  "#FF91A4",
+  "#318CE7", // Indigo
 ];
 
 const customColors = isDark.value ? customDarkColors : customLightColors;
@@ -79,16 +89,17 @@ const drawChart = () => {
   const height = props.height - margin.top - margin.bottom;
 
   function handleMouseover(event, d) {
-    const group = d;
-    console.log('event: ', event)
-    console.log("Mouseover on group:", group); // Debugging statement
-    svg.selectAll(`[data-group='${group}']`).style("opacity", 1);
+    svg
+      .selectAll(`.value-label`)
+      .filter((labelData) => labelData.entity === d.entity)
+      .style("opacity", 1); // Show label for hovered bar
   }
 
   function handleMouseout(event, d) {
-    const group = d.x;
-    console.log("Mouseout on group:", group); // Debugging statement
-    svg.selectAll(`[data-group='${group}']`).style("opacity", 0);
+    svg
+      .selectAll(`.value-label`)
+      .filter((labelData) => labelData.entity === d.entity)
+      .style("opacity", 0); // Hide label
   }
 
   // Create SVG
@@ -101,9 +112,9 @@ const drawChart = () => {
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
   // Process data
-  const x0 = d3.scaleBand().rangeRound([0, width]).paddingInner(0.3);
+  const x0 = d3.scaleBand().rangeRound([0, width]).paddingInner(0.4);
 
-  const x1 = d3.scaleBand().padding(0.1);
+  const x1 = d3.scaleBand().padding(0.2);
 
   const y = d3.scaleLinear().rangeRound([height, 0]);
 
@@ -143,7 +154,11 @@ const drawChart = () => {
     .enter()
     .append("path")
     .attr("d", (d) => roundedRect(x1(d.entity), height, x1.bandwidth(), 0, 2))
-    .attr("fill", (d) => isDark.value ? customLightColors[entityIndex(d) % customLightColors.length] : customDarkColors[entityIndex(d) % customDarkColors.length])
+    .attr("fill", (d) =>
+      isDark.value
+        ? customLightColors[entityIndex(d) % customLightColors.length]
+        : customDarkColors[entityIndex(d) % customDarkColors.length]
+    )
     .transition()
     .duration(barAnimationDuration)
     .attr("d", (d) =>
@@ -156,32 +171,39 @@ const drawChart = () => {
       )
     );
 
-  // Add text labels
-  svg
-    .selectAll("g")
-    .selectAll("text")
-    .data((d) =>
-      props.data.map((entity) => {
-        const dataPoint = entity.data.find((dd) => dd.x === d);
+  const textGroups = svg
+    .selectAll("g.value-group")
+    .data(groups)
+    .enter()
+    .append("g")
+    .attr("class", "value-group")
+    .attr("transform", (d) => `translate(${x0(d)},0)`);
+
+  textGroups
+    .selectAll(".value-label")
+    .data((group) =>
+      props.data.map((entityData) => {
+        const dataPoint = entityData.data.find((dd) => dd.x === group);
         return {
-          entity: entity.entity,
-          value: dataPoint ? dataPoint.y : "", // Same check here
+          entity: entityData.entity,
+          period: group,
+          value: dataPoint ? dataPoint.y : 0,
         };
       })
     )
     .enter()
     .append("text")
-    .text((d) => formatNumber(d.value))
+    .attr("class", "value-label")
+    .text((d) => {
+      console.log("Label data:", d);
+      return formatNumber(d.value);
+    })
     .attr("x", (d) => x1(d.entity) + x1.bandwidth() / 2)
-    .attr("y", (d) => y(d.value) - 5) // position slightly above the bar
+    .attr("y", (d) => y(d.value) - 5)
     .attr("text-anchor", "middle")
-    .attr("fill", "#666")
-    .attr("class", "text-xs")
-    .style("opacity", 0); // Start with opacity 0
-  // .transition()
-  // .delay(textAnimationDelay) // Delay to wait for bar animation
-  // .duration(textAnimationDuration) // Duration of text animation
-  // .style("opacity", 1); // Animate to opacity 1;
+    .attr("fill", "white")
+    .attr("font-size", "10px")
+    .style("opacity", 0);
 
   // Append Axes
   svg
@@ -224,12 +246,6 @@ const drawChart = () => {
   // Applying handlers to bars
   svg
     .selectAll("path")
-    .on("mouseover", handleMouseover)
-    .on("mouseout", handleMouseout);
-
-  // Applying handlers to text labels
-  svg
-    .selectAll("text")
     .on("mouseover", handleMouseover)
     .on("mouseout", handleMouseout);
 };

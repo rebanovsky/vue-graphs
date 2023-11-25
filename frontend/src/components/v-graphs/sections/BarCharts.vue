@@ -1,146 +1,139 @@
 <template>
-  <div class="flex gap-[20px]">
-    <div class="graph-item">
-      <BarChart
-        :data="earnings"
-        :tooltip="true"
-        :animations="true"
-        height="240"
-        width="480"
+  <!-- BarChart.vue -->
+  <ChartContainer>
+    <template #title>BarChart.vue</template>
+    <BarChart
+      :data="earnings"
+      :tooltip="true"
+      :animations="true"
+      height="240"
+      width="480"
+    />
+    <template #config>
+      <RadioButton
+        :title="barTooltip.title"
+        :options="barTooltip.config"
+        v-model="barTooltipState"
+        name="bar-tooltip"
       />
-    </div>
-    <div class="graph-config rounded-[8px]">
-      <div class="flex flex-col gap-[12px] w-[200px]">
-        <RadioButton
-          :title="barTooltip.title"
-          :options="barTooltip.config"
-          v-model="barTooltipState"
-          name="bar-tooltip"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <MultiSelect
-          v-model="selectedStocks"
-          :title="stockOptions.title"
-          :options="stockOptions.configs"
-        />
-      </div>
-    </div>
-    <div class="div">
-      <div class="code-block w-[220px] flex justify-center">
-        <div
-          class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
-        >
-          <div class="copy-code">copy</div>
-          <div class="flex flex-col">
-            <div class="top flex">
-              {{ "<" }}
-              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                BarChart
+      <RadioButton
+        v-model="barVisualizationState"
+        :title="barAnimations.title"
+        :options="barAnimations.config"
+        name="bar-animations"
+      />
+      <RadioButton
+        v-model="barVisualizationState"
+        :title="barAnimations.title"
+        :options="barAnimations.config"
+        name="bar-animations"
+      />
+      <MultiSelect
+        v-model="selectedStocks"
+        :title="stockOptions.title"
+        :options="stockOptions.configs"
+      />
+    </template>
+    <template #code-block>
+      <div
+        class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
+      >
+        <div class="copy-code">copy</div>
+        <div class="flex flex-col">
+          <div class="top flex">
+            {{ "<" }}
+            <div class="component-name text-[#e85700] dark:text-[#f8d339]">
+              BarChart
+            </div>
+          </div>
+          <transition-group name="list" tag="div" class="flex flex-col">
+            <div
+              class="props px-[16px] flex"
+              v-for="prop in singleLineProps"
+              :key="prop.name"
+            >
+              :
+              <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
+                {{ prop.name }}
+              </div>
+              =
+              <div
+                class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
+              >
+                {{ prop.value }}
               </div>
             </div>
-            <transition-group name="list" tag="div" class="flex flex-col">
-              <div
-                class="props px-[16px] flex"
-                v-for="prop in singleLineProps"
-                :key="prop.name"
-              >
-                :
-                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                  {{ prop.name }}
-                </div>
-                =
-                <div
-                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
-                >
-                  {{ prop.value }}
-                </div>
-              </div>
-              <div class="bottom">{{ "/>" }}</div>
-            </transition-group>
-          </div>
+            <div class="bottom">{{ "/>" }}</div>
+          </transition-group>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="flex gap-[20px]">
-    <div class="graph-item">
-      <VerBar :data="earnings" height="240" width="480" />
-    </div>
-    <div class="graph-config rounded-[8px]">
-      <div class="flex flex-col gap-[12px] w-[200px]">
-        <RadioButton
-          :title="barTooltip.title"
-          :options="barTooltip.config"
-          v-model="barTooltipState"
-          name="bar-tooltip"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <MultiSelect
-          v-model="selectedStocks"
-          :title="stockOptions.title"
-          :options="stockOptions.configs"
-        />
-      </div>
-    </div>
-    <div class="div">
-      <div class="code-block w-[220px] flex justify-center">
-        <div
-          class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
-        >
-          <div class="copy-code">copy</div>
-          <div class="flex flex-col">
-            <div class="top flex">
-              {{ "<" }}
-              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                VerBar
+    </template>
+  </ChartContainer>
+
+  <!-- VerBar.vue -->
+  <ChartContainer>
+    <template #title>VerBar.vue</template>
+    <VerBar :data="earnings" height="240" width="480" />
+    <template #config>
+      <RadioButton
+        :title="barTooltip.title"
+        :options="barTooltip.config"
+        v-model="barTooltipState"
+        name="bar-tooltip"
+      />
+      <RadioButton
+        v-model="barVisualizationState"
+        :title="barAnimations.title"
+        :options="barAnimations.config"
+        name="bar-animations"
+      />
+      <RadioButton
+        v-model="barVisualizationState"
+        :title="barAnimations.title"
+        :options="barAnimations.config"
+        name="bar-animations"
+      />
+      <MultiSelect
+        v-model="selectedStocks"
+        :title="stockOptions.title"
+        :options="stockOptions.configs"
+      />
+    </template>
+    <template #code-block>
+      <div
+        class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
+      >
+        <div class="copy-code">copy</div>
+        <div class="flex flex-col">
+          <div class="top flex">
+            {{ "<" }}
+            <div class="component-name text-[#e85700] dark:text-[#f8d339]">
+              VerBar
+            </div>
+          </div>
+          <transition-group name="list" tag="div" class="flex flex-col">
+            <div
+              class="props px-[16px] flex"
+              v-for="prop in singleLineProps"
+              :key="prop.name"
+            >
+              :
+              <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
+                {{ prop.name }}
+              </div>
+              =
+              <div
+                class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
+              >
+                {{ prop.value }}
               </div>
             </div>
-            <transition-group name="list" tag="div" class="flex flex-col">
-              <div
-                class="props px-[16px] flex"
-                v-for="prop in singleLineProps"
-                :key="prop.name"
-              >
-                :
-                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                  {{ prop.name }}
-                </div>
-                =
-                <div
-                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
-                >
-                  {{ prop.value }}
-                </div>
-              </div>
-              <div class="bottom">{{ "/>" }}</div>
-            </transition-group>
-          </div>
+            <div class="bottom">{{ "/>" }}</div>
+          </transition-group>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </ChartContainer>
 </template>
 
 <script setup>
@@ -149,6 +142,8 @@ import BarChart from "@/components/v-graphs/graphs/BarChart.vue";
 import VerBar from "@/components/v-graphs/graphs/VerBar.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
+import ChartContainer from "@/components/common/ChartContainer.vue";
+
 
 // BARCHART DATA
 const earnings = [

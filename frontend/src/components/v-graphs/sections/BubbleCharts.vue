@@ -1,36 +1,34 @@
 <template>
-  <div class="flex gap-[20px]">
-    <div class="graph-item" v-if="bubbleData">
-      <BubbleChart :data="bubbleData" width="480" height="240" />
-    </div>
-    <div class="graph-config rounded-[8px]">
-      <div class="flex flex-col gap-[12px] w-[200px]">
-        <RadioButton
-          :title="barTooltip.title"
-          :options="barTooltip.config"
-          v-model="barTooltipState"
-          name="bar-tooltip"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <MultiSelect
-          v-model="selectedStocks"
-          :title="stockOptions.title"
-          :options="stockOptions.configs"
-        />
-      </div>
-    </div>
-    <div class="code-block w-[220px] flex justify-center">
+  <!-- BubbleChart.vue -->
+  <ChartContainer>
+    <template #title>BubbleChart.vue</template>
+    <BubbleChart :data="bubbleData" width="480" height="240" />
+    <template #config>
+      <RadioButton
+        :title="barTooltip.title"
+        :options="barTooltip.config"
+        v-model="barTooltipState"
+        name="bar-tooltip"
+      />
+      <RadioButton
+        v-model="barVisualizationState"
+        :title="barAnimations.title"
+        :options="barAnimations.config"
+        name="bar-animations"
+      />
+      <RadioButton
+        v-model="barVisualizationState"
+        :title="barAnimations.title"
+        :options="barAnimations.config"
+        name="bar-animations"
+      />
+      <MultiSelect
+        v-model="selectedStocks"
+        :title="stockOptions.title"
+        :options="stockOptions.configs"
+      />
+    </template>
+    <template #code-block>
       <div
         class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
       >
@@ -63,8 +61,8 @@
           </transition-group>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </ChartContainer>
 </template>
 
 <script setup>
@@ -72,6 +70,7 @@ import { ref } from "vue";
 import BubbleChart from "@/components/v-graphs/graphs/BubbleChart.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
+import ChartContainer from "@/components/common/ChartContainer.vue";
 
 // BARCHART DATA
 const bubbleData = ref([
