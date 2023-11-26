@@ -58,6 +58,12 @@
             >
               <TheHeatmaps />
             </div>
+            <div
+              class="flex flex-col gap-[120px]"
+              v-if="selectGraph(item.name) === 'treemap'"
+            >
+              <TheTreemaps />
+            </div>
           </div>
         </div>
       </div>
@@ -73,6 +79,7 @@ import PieCharts from "@/components/v-graphs/sections/PieCharts.vue";
 import DotGraphs from "@/components/v-graphs/sections/DotGraphs.vue";
 import BubbleCharts from "@/components/v-graphs/sections/BubbleCharts.vue";
 import TheHeatmaps from "@/components/v-graphs/sections/TheHeatmaps.vue";
+import TheTreemaps from "@/components/v-graphs/sections/TheTreemaps.vue";
 
 const props = defineProps({
   sidenavItems: Array,
