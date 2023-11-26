@@ -1,7 +1,7 @@
 <template>
   <div
     ref="scrollableElement"
-    class="gridlines rounded-[8px] flex-1 items-center w-[100%] overflow-y-auto py-[10px]"
+    class="gridlines rounded-[8px] flex-1 items-center w-[100%] overflow-y-auto py-[10px] w-[100vw]"
   >
     <div
       v-for="item in sidenavItems"
@@ -12,7 +12,12 @@
       <div
         class="graph-wrapper h-[100%] p-[20px] gridlines rounded-[8px] w-[100%] flex gap-[12px] flex-col flex-1"
       >
-        <div class="sticky-header">{{ item.title }}</div>
+        <div class="sticky-header gridlines flex justify-center">
+          <div class="item-title flec justify-end w-[200px]">
+            {{ item.title }}
+          </div>
+          <div class="w-[924px]"></div>
+        </div>
         <div class="graph-content h-[100%] flex justify-center w-[100%]">
           <div
             class="item-content flex gap-[20px] flex-1 flex-col items-center justify-center"

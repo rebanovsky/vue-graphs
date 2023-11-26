@@ -185,7 +185,7 @@ module.exports = {
         boxshgreen: "0px 0px 12px 1px rgba(54, 255, 0, 1)",
         boxshlight: "0px 0px 12px 2px rgba(160, 160, 160, 0.1);",
         boxsh: "0px 6px 12px 0px rgba(17, 19, 25, 0.1)",
-        darkboxshlight: "0px 0px 16px 0px rgba(200,200,200,0.1);",
+        darkboxshlight: "0px 0px 10px 4px rgba(40, 40, 40, 0.1)",
         popupsh: "0px 0px 32px 0px rgba(0,0,0,0.15);",
         noshadow: "0px 0px 0px 0px rgba(0,0,0,0);",
         popupshdark: "0px 0px 36px 0px rgba(0,0,0,0.6);",

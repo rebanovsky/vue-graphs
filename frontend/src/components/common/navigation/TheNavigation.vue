@@ -1,13 +1,9 @@
 <template>
   <div
-    class="content-navigation gridlines flex text-[12px] px-[8px] w-[100%] h-[32px] overflow-x-auto flex items-center justify-center rounded"
+    class="content-navigation border-b-[0px] border-b-slate-200 flex text-[12px] px-[8px] w-[100%] h-[44px] overflow-x-auto flex items-center justify-center rounded"
   >
-    <div class="setting-wrapper">
-      <font-awesome-icon
-        v-if="isSettings"
-        icon="fa-solid fa-gear"
-        class="mx-[8px] text-[12px] text-slate-700 hover:bg-slate-300 transition ease duration-75 p-[6px] rounded cursor-pointer"
-      />
+    <div class="theme-toggler side-object flex gap-[8px] items-center">
+      <ThemeToggler />
     </div>
     <div class="nav-items flex gap-[8px] p-[2px] w-[800px]">
       <router-link
@@ -42,9 +38,12 @@
 </template>
 
 <script>
+import ThemeToggler from "@/components/widgets/ThemeToggler.vue";
 import { useRoute } from "vue-router";
 
+
 export default {
+  components: { ThemeToggler },
   props: {
     items: {
       type: Array,

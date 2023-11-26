@@ -4,9 +4,9 @@
   >
     <div class="ih-app flex w-[100%]">
       <div
-        class="content flex-1 flex-col w-[100%] border-[0px] pl-[20px] pr-[20px]"
+        class="content flex-1 flex-col w-[100%] border-[0px]"
       >
-        <TheNavbar />
+        <!-- <TheNavbar /> -->
         <router-view v-slot="{ Component }">
           <transition name="fade" mode="out-in">
             <component
