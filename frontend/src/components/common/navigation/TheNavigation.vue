@@ -1,11 +1,11 @@
 <template>
   <div
-    class="content-navigation border-b-[0px] border-b-slate-200 flex text-[12px] px-[8px] w-[100%] h-[44px] overflow-x-auto flex items-center justify-center rounded"
+    class="content-navigation border-b-[1px] border-b-slate-200 dark:border-b-slate-800 flex text-[12px] px-[8px] w-[100%] h-[50px] overflow-x-auto flex items-center justify-center"
   >
-    <div class="theme-toggler side-object flex gap-[8px] items-center">
+    <div class="theme-toggler side-object flex mx-[8px] items-center">
       <ThemeToggler />
     </div>
-    <div class="nav-items flex gap-[8px] p-[2px] w-[800px]">
+    <div class="nav-items flex gap-[12px] p-[2px] w-[910px]">
       <router-link
         v-for="(i, index) in items"
         :key="index"

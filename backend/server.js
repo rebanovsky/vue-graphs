@@ -87,6 +87,13 @@ app.post("/run-conversation", async (req, res) => {
   }
 });
 
+// // Load the JavaScript file as a module
+// const { geoJson } = require('/Users/fox/vue-graphs/frontend/src/data/geoJson.js');
+
+// // Use Node.js to write the object to a file as JSON
+// const fs = require('fs');
+// fs.writeFileSync('/Users/fox/vue-graphs/frontend/src/data/geoJson.json', JSON.stringify(geoJson, null, 2));
+
 mongoose
   .connect(DB, {
     useNewUrlParser: true,

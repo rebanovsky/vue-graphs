@@ -1,13 +1,12 @@
 <template>
   <div
     class="playground-component flex justify-center w-[100vw] rounded-[14px]"
-    style="height: calc(100vh - 124px)"
+    style="height: calc(100vh - 50px)"
   >
     <div class="main-content flex justify-center gap-[8px] h-[100%]">
       <!-- Flex Container -->
-      <div class="flex-container absolute flex mt-[200px] justify-center w-[auto]">
-        <!-- ScrollableMenu centered -->
-        <div class="sidenav overflow-y-auto rounded-[8px] translate-x-[-700px] z-[9999999] bg-slate-100 shadow-boxshlight dark:shadow-darkboxshlight border-slate-200 dark:border-slate-800 border-[1px]  dark:bg-slate-900">
+      <!-- <div class="flex-container absolute flex mt-[120px] justify-center w-[auto]">
+        <div class="sidenav overflow-y-auto rounded-[8px] translate-x-[-780px] z-[9999999] bg-slate-100 shadow-boxshlight dark:shadow-darkboxshlight border-slate-200 dark:border-slate-800 border-[1px]  dark:bg-slate-900">
           <ScrollableMenu
             :title="title"
             :items="sidenavItems"
@@ -15,7 +14,7 @@
             :current-section="currentSection"
           />
         </div>
-      </div>
+      </div> -->
 
       <TheContent :sidenavItems="sidenavItems" />
     </div>
@@ -31,11 +30,11 @@ const basePath = "/playground/graph-items";
 const title = ref("Vue Graphs");
 
 const sidenavItems = ref([
+  { title: "Heat Map", name: "heat-map" },
   { title: "Line Chart", name: "line-chart" },
   { title: "Bar Chart", name: "bar-chart" },
   { title: "Pie Chart", name: "pie-chart" },
   { title: "Dot Plot", name: "dot-plot" },
-  { title: "Heat Map", name: "heat-map" },
   { title: "Bubble Chart", name: "bubble-chart" },
   { title: "Treemap", name: "treemap" },
   // { title: "Scatter Plot", name: "scatter-plot" },

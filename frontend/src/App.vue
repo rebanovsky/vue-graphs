@@ -455,7 +455,6 @@ input#email-input:focus {
 }
 
 .side-object {
-  width: 240px;
   display: flex;
   justify-content: space-between;
 }

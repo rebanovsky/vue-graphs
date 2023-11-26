@@ -16,7 +16,7 @@
           <div class="item-title flec justify-end w-[200px]">
             {{ item.title }}
           </div>
-          <div class="w-[924px]"></div>
+          <div class="w-[724px]"></div>
         </div>
         <div class="graph-content h-[100%] flex justify-center w-[100%]">
           <div
@@ -52,6 +52,12 @@
             >
               <BubbleCharts />
             </div>
+            <div
+              class="flex flex-col gap-[120px]"
+              v-if="selectGraph(item.name) === 'heat-map'"
+            >
+              <TheHeatmaps />
+            </div>
           </div>
         </div>
       </div>
@@ -66,6 +72,7 @@ import BarCharts from "@/components/v-graphs/sections/BarCharts.vue";
 import PieCharts from "@/components/v-graphs/sections/PieCharts.vue";
 import DotGraphs from "@/components/v-graphs/sections/DotGraphs.vue";
 import BubbleCharts from "@/components/v-graphs/sections/BubbleCharts.vue";
+import TheHeatmaps from "@/components/v-graphs/sections/TheHeatmaps.vue";
 
 const props = defineProps({
   sidenavItems: Array,
@@ -83,6 +90,8 @@ const selectGraph = (itemName) => {
       return "dot-plot";
     case "bubble-chart":
       return "bubble-chart";
+    case "heat-map":
+      return "heat-map";
     case "treemap":
       return "treemap";
     default:

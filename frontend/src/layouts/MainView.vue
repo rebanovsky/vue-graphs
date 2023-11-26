@@ -3,7 +3,7 @@
     <!-- <div class="view-heading px-[18px] font-medium text-[24px] rounded-[8px] gridlines">{{ getCurrentHeading() }}</div> -->
     <TheNavigation
       :items="items"
-      class="flex-shrink-0 rounded-[8px]"
+      class="flex-shrink-0"
     />
     <router-view />
     <slot class="flex-1 overflow-y-auto"></slot>
