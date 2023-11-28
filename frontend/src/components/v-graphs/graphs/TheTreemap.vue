@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { watchEffect, ref } from "vue";
 import * as d3 from "d3";
 
 export default {
@@ -22,18 +22,22 @@ export default {
   setup(props) {
     const data = ref(props.inputData);
 
-    onMounted(() => {
+    watchEffect(() => {
+      // Process the new data
       const width = 400;
       const height = 180;
+      const root = d3.hierarchy(data.value).sum((d) => d.value);
+      d3.treemap().size([width, height]).padding(2)(root);
 
+      // Clear the existing graph just before creating the new one
+      d3.select("#treemap").selectAll("*").remove();
+
+      // Create new SVG element for the graph
       const svg = d3
         .select("#treemap")
         .append("svg")
         .attr("width", width)
         .attr("height", height);
-
-      const root = d3.hierarchy(data.value).sum((d) => d.value);
-      d3.treemap().size([width, height]).padding(2)(root);
 
       // Create a color scale for root children
       const colors = ["#57E2E5", "#FEC3A6", "#FFAC81", "#FF928B"]; // Change these colors to your preference

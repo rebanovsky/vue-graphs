@@ -2,7 +2,7 @@
   <!-- TheHeatmap.vue -->
   <ChartContainer>
     <template #title>TheHeatmap.vue</template>
-    <TheHeatmap :geo-json-data="theStates"/>
+    <TheHeatmap :geo-json-data="geoJson"/>
     <template #config>
       <RadioButton
         :title="barTooltip.title"
@@ -66,7 +66,7 @@ import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/common/ChartContainer.vue";
-import { theStates } from "@/data/regionalData"
+import { geoJson } from "@/data/geoJson"
 
 // LINECHART DATA
 const formattedLineData = line1.map((item) => ({

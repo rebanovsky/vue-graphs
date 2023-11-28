@@ -12,7 +12,7 @@
       <div
         class="graph-wrapper h-[100%] p-[20px] gridlines rounded-[8px] w-[100%] flex gap-[12px] flex-col flex-1"
       >
-        <div class="sticky-header gridlines flex justify-center">
+        <div class="sticky-header gridlines flex justify-center backdrop-blur-md h-[60px] items-center">
           <div class="item-title flec justify-end w-[200px]">
             {{ item.title }}
           </div>
