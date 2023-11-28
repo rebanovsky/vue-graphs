@@ -17,7 +17,7 @@
       />
       <input
         ref="searchRef"
-        class="dark:placeholder-slate-500 font-light text-[12px] h-[36px] px-[6px] w-[360px] mx-[5px] bg-slate-100 dark:bg-transparent placeholder-slate-400 transition ease"
+        class="dark:placeholder-slate-500 font-light text-[12px] h-[32px] px-[6px] w-[200px] mx-[5px] bg-slate-100 dark:bg-transparent placeholder-slate-400 transition ease"
         placeholder="Search"
         v-model="searchTerm"
         @input="fetchSuggestions"

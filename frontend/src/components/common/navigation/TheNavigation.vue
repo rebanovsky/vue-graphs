@@ -1,11 +1,11 @@
 <template>
   <div
-    class="content-navigation border-b-[1px] border-b-slate-200 dark:border-b-slate-800 flex text-[12px] px-[8px] w-[100%] h-[50px] overflow-x-auto flex items-center justify-center"
+    class="content-navigation border-b-[1px] border-b-slate-200 dark:border-b-slate-800 flex text-[12px] gap-[12px] w-[100%] h-[50px] overflow-x-auto flex items-center justify-center"
   >
     <div class="theme-toggler side-object flex mx-[8px] items-center">
       <ThemeToggler />
     </div>
-    <div class="nav-items flex gap-[12px] p-[2px] w-[910px]">
+    <div class="nav-items flex gap-[12px] p-[2px]">
       <router-link
         v-for="(i, index) in items"
         :key="index"
@@ -33,17 +33,18 @@
         {{ i.name }}
       </router-link>
     </div>
-    <div class="dummy"></div>
+    <div class="search"><TheSearch /></div>
+    <div class="dummy w-[400px]"></div>
   </div>
 </template>
 
 <script>
+import TheSearch from "@/components/navigation/TheSearch.vue";
 import ThemeToggler from "@/components/widgets/ThemeToggler.vue";
 import { useRoute } from "vue-router";
 
-
 export default {
-  components: { ThemeToggler },
+  components: { ThemeToggler, TheSearch },
   props: {
     items: {
       type: Array,

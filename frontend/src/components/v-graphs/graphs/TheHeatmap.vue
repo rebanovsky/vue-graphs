@@ -4,7 +4,7 @@
       {{ hoveredName }}
     </div>
     <div class="hovered-value w-[20px] flex items-end" v-if="hoveredValue">
-      {{ hoveredValue }}%
+      {{ hoveredValue }}
     </div>
   </div>
   <div
