@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-[20px] gridlines flex-1">
+  <div class="flex flex-col gap-[60px] gridlines flex-1 rounded-[8px] p-[12px] overflow-y-auto">
     <!-- SingleLine.vue -->
     <ChartContainer>
       <template #title>SingleLine.vue</template>

@@ -3,43 +3,56 @@
     <div class="side-menu-title font-medium px-[26px] py-[12px]">
       {{ title }}
     </div>
-    <div class="w-[200px] flex flex-col p-[4px] gap-[12px]">
+    <div class="w-[190px] flex flex-col p-[4px] gap-[8px]">
       <div v-for="item in items" :key="item.name">
         <div
-          class="accordion-item w-[auto] flex items-center px-[20px] border-b-[1px] border-slate-100 rounded-[0px] gap-[8px]"
-          :class="[
-            'accordion-title hover:border-slate-300 transition ease duration-100 text-[12px] px-[20px] text-slate-500',
-            isActive(item.name)
-              ? 'text-slate-900 dark:text-slate-100 border-b-[1px] border-slate-300'
-              : '',
-          ]"
+          class="flex items-center w-[180px] hover:text-slate-500 cursor-pointer border-[1px] border-slate-100 hover:border-slate-200 rounded-[8px] px-[8px]"
           @click="() => toggleAccordion(item.name)"
+          :class="[
+            isActive(item.name) ? 'border-slate-200' : '',
+          ]"
         >
-          {{ item.title }}
-        </div>
-        <transition
-          name="accordion"
-          @before-enter="beforeEnter"
-          @enter="enter"
-          @before-leave="beforeLeave"
-          @leave="leave"
-        >
+          <!-- <div
+            class="dot w-[4px] h-[4px] rounded-[4px]"
+            :class="[
+              isActive(item.name)
+                ? 'bg-slate-900 dark:bg-slate-100'
+                : 'bg-slate-100 dark:bg-slate-900',
+            ]"
+          ></div> -->
           <div
-            v-if="isActive(item.name) && item.items && item.items.length"
-            class="accordion-content shadow-expboxsh"
+            class="accordion-item w-[auto] flex items-center px-[20px] rounded-[0px] gap-[8px]"
+            :class="[
+              'accordion-title text-[12px] px-[20px] text-slate-500',
+              isActive(item.name) ? 'text-slate-900 dark:text-slate-100' : '',
+            ]"
           >
-            <ul>
-              <li
-                v-for="(subItem, subIndex) in item.items"
-                :key="`item-${subIndex}`"
-                class="text-[11px] py-[8px] px-[16px] hover:bg-slate-50 cursor-pointer border-b-[0px] border-slate-200"
-                @click="navigateTo(item, subItem)"
-              >
-                {{ subItem }}
-              </li>
-            </ul>
+            {{ item.title }}
           </div>
-        </transition>
+          <transition
+            name="accordion"
+            @before-enter="beforeEnter"
+            @enter="enter"
+            @before-leave="beforeLeave"
+            @leave="leave"
+          >
+            <div
+              v-if="isActive(item.name) && item.items && item.items.length"
+              class="accordion-content shadow-expboxsh"
+            >
+              <ul>
+                <li
+                  v-for="(subItem, subIndex) in item.items"
+                  :key="`item-${subIndex}`"
+                  class="text-[11px] py-[8px] px-[16px] hover:bg-slate-50 cursor-pointer border-b-[0px] border-slate-200"
+                  @click="navigateTo(item, subItem)"
+                >
+                  {{ subItem }}
+                </li>
+              </ul>
+            </div>
+          </transition>
+        </div>
       </div>
     </div>
   </div>
@@ -107,7 +120,6 @@ const leave = (el) => {
 
 <style lang="scss" scoped>
 .accordion-title {
-  cursor: pointer;
   padding: 10px;
 }
 
