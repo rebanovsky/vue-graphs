@@ -3,28 +3,18 @@
     <div class="side-menu-title font-medium px-[26px] py-[12px]">
       {{ title }}
     </div>
-    <div class="w-[240px] flex flex-col">
-      <div
-        v-for="item in items"
-        :key="item.name"
-        class="accordion-item flex items-center px-[20px] gridlines"
-        :class="[
-          'accordion-title hover:scale-[1.0025] hover:text-slate-800 hover:dark:text-slate-300 transition ease text-[12px] px-[40px] text-slate-500',
-          isActive(item.name)
-            ? 'scale-[1.0025] text-slate-900 dark:text-slate-100'
-            : '',
-        ]"
-        @click="() => toggleAccordion(item.name)"
-      >
+    <div class="w-[200px] flex flex-col p-[4px] gap-[12px]">
+      <div v-for="item in items" :key="item.name">
         <div
-          class="dot h-[5px] w-[5px] rounded-[5px]"
+          class="accordion-item w-[auto] flex items-center px-[20px] border-b-[1px] border-slate-100 rounded-[0px] gap-[8px]"
           :class="[
+            'accordion-title hover:border-slate-300 transition ease duration-100 text-[12px] px-[20px] text-slate-500',
             isActive(item.name)
-              ? 'bg-slate-900 dark:bg-slate-100'
-              : 'bg-slate-100 dark:bg-slate-900',
+              ? 'text-slate-900 dark:text-slate-100 border-b-[1px] border-slate-300'
+              : '',
           ]"
-        ></div>
-        <div>
+          @click="() => toggleAccordion(item.name)"
+        >
           {{ item.title }}
         </div>
         <transition

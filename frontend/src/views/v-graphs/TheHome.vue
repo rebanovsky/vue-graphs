@@ -1,11 +1,10 @@
 <template>
   <div
-    class="playground-component w-[100%] p-[12px] text-[14px] flex justify-center gridlines rounded-[14px]"
-    style="height: calc(100vh - 124px)"
+    class="playground-component p-[12px] text-[14px] flex justify-center gridlines rounded-[14px]"
   >
     <!-- Introduction Section -->
     <div
-      class="container w-[800px] gridlines p-[20px] rounded-[8px] shadow-boxshlight dark:shadow flex flex-col gap-[28px]"
+      class="container w-[800px] overflow-y-auto gridlines p-[20px] rounded-[8px] shadow-boxshlight dark:shadow flex flex-col gap-[28px]"
     >
       <header>
         <h1 class="text-[20px] font-medium">Vue-Graphs</h1>
@@ -35,7 +34,9 @@
               </div>
               <div class="step-title">{{ step.stepTitle }}</div>
             </div>
-            <div class="step-content text-[12px] border-[1px] cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700 p-[8px] rounded">
+            <div
+              class="step-content text-[12px] border-[1px] cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700 p-[8px] rounded"
+            >
               {{ step.content }}
             </div>
           </div>

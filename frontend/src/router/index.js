@@ -5,20 +5,58 @@ const routes = [
     path: "/",
     component: () => import("@/layouts/AppLayout.vue"),
     meta: { requiresAuth: true },
-    children: [{
+    children: [
+      {
         path: "/",
         name: "base",
-        component: () => import("@/views/v-graphs/TheBase.vue"),
+        component: () => import("@/views/TheBase.vue"),
         children: [
           {
             path: "graphs",
             name: "graphs",
             component: () => import("@/views/v-graphs/TheGraphs.vue"),
-          },
-          {
-            path: "home",
-            name: "home",
-            component: () => import("@/views/v-graphs/TheHome.vue"),
+            children: [
+              {
+                path: "home",
+                name: "home",
+                component: () => import("@/views/v-graphs/TheHome.vue"),
+              },
+              {
+                path: "line",
+                name: "line",
+                component: () => import("@/views/v-graphs/graphs/LineCharts.vue"),
+              },
+              {
+                path: "bar",
+                name: "bar",
+                component: () => import("@/views/v-graphs/graphs/BarCharts.vue"),
+              },
+              {
+                path: "pie",
+                name: "pie",
+                component: () => import("@/views/v-graphs/graphs/PieCharts.vue"),
+              },
+              {
+                path: "dot",
+                name: "dot",
+                component: () => import("@/views/v-graphs/graphs/DotGraphs.vue"),
+              },
+              {
+                path: "bubble",
+                name: "bubble",
+                component: () => import("@/views/v-graphs/graphs/BubbleCharts.vue"),
+              },
+              {
+                path: "heatmap",
+                name: "heatmap",
+                component: () => import("@/views/v-graphs/graphs/TheHeatmaps.vue"),
+              },
+              {
+                path: "tree",
+                name: "tree",
+                component: () => import("@/views/v-graphs/graphs/TheTreemaps.vue"),
+              },
+            ],
           },
         ],
       },
