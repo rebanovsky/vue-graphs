@@ -7,11 +7,13 @@
       <div class="sidenav overflow-y-auto gridlines rounded-[8px]">
         <SideMenu :title="title" :items="sidenavItems" :base-path="basePath" />
       </div>
-      <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
-          <component :is="Component" />
-        </transition>
-      </router-view>
+      <div class="flex w-[100%] flex-1 justify-center">
+        <router-view v-slot="{ Component }">
+          <transition name="fade" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </div>
     </div>
   </div>
 </template>

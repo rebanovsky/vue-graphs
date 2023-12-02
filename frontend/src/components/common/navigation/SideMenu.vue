@@ -6,20 +6,14 @@
     <div class="w-[190px] flex flex-col p-[4px] gap-[8px]">
       <div v-for="item in items" :key="item.name">
         <div
-          class="flex items-center w-[180px] hover:text-slate-500 cursor-pointer border-[1px] border-slate-100 hover:border-slate-200 rounded-[8px] px-[8px]"
+          class="flex items-center w-[180px] hover:text-slate-500 cursor-pointer border-[1px] border-slate-100 dark:border-slate-900 hover:border-slate-200 dark:hover:border-slate-800 rounded-[8px] px-[8px]"
           @click="() => toggleAccordion(item.name)"
           :class="[
-            isActive(item.name) ? 'border-slate-200' : '',
+            isActive(item.name)
+              ? 'border-slate-200 dark:!border-slate-800'
+              : '',
           ]"
         >
-          <!-- <div
-            class="dot w-[4px] h-[4px] rounded-[4px]"
-            :class="[
-              isActive(item.name)
-                ? 'bg-slate-900 dark:bg-slate-100'
-                : 'bg-slate-100 dark:bg-slate-900',
-            ]"
-          ></div> -->
           <div
             class="accordion-item w-[auto] flex items-center px-[20px] rounded-[0px] gap-[8px]"
             :class="[

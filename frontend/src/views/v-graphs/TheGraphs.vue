@@ -1,12 +1,12 @@
 <template>
-  <SubView title="" :sidenav-items="sidenavItems" base-path="/graphs" />
+  <SubView title="" :sidenav-items="sidenavItems" base-path="" />
 </template>
 
 <script setup>
 import SubView from "@/layouts/SubView.vue";
 
 const sidenavItems = [
-  { title: "Home", name: "home" },
+  { title: "Home", name: "" },
   { title: "Line Charts", name: "line" },
   { title: "Bar Charts", name: "bar" },
   { title: "Pie Charts", name: "pie" },

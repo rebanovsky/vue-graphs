@@ -12,12 +12,12 @@ const routes = [
         component: () => import("@/views/TheBase.vue"),
         children: [
           {
-            path: "graphs",
+            path: "/",
             name: "graphs",
             component: () => import("@/views/v-graphs/TheGraphs.vue"),
             children: [
               {
-                path: "home",
+                path: "/",
                 name: "home",
                 component: () => import("@/views/v-graphs/TheHome.vue"),
               },

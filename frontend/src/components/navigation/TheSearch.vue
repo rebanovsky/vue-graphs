@@ -6,7 +6,7 @@
       :class="
         isInputFocused ? 'border-slate-400 transition' : 'border-slate-300 dark:border-slate-700'
       "
-      class="ticker-searcher flex items-center border-[1px] px-[12px] rounded-[20px]"
+      class="ticker-searcher flex items-center border-b-[1px] px-[12px]"
     >
       <font-awesome-icon
         class="h-[12px] text-slate-400 dark:text-slate-600 transition"
