@@ -1,17 +1,18 @@
 <template>
-  <div class="flex flex-col gap-[60px] gridlines flex-1 rounded-[8px] p-[12px] overflow-y-auto">
+  <div class="flex flex-col gap-[80px]  flex-1 rounded-[8px] px-[12px] overflow-y-auto">
     <!-- SingleLine.vue -->
     <ChartContainer>
       <template #title>SingleLine.vue</template>
       <SingleLine
-        :width="480"
-        :height="240"
+        :width="400"
+        :height="200"
         :data="lineData"
         dateFormat="%Y-%m-%d"
         :line-color="chartConfig.lineColor"
         :tooltip="chartConfig.tooltip"
       />
       <template #config>
+
         <RadioButton
           :title="barTooltip.title"
           :options="barTooltip.config"
@@ -31,9 +32,9 @@
       </template>
       <template #code-block>
         <div
-          class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
+          class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%] font-mono rounded-[8px] p-[8px]"
         >
-          <div class="copy-code">copy</div>
+          <div class="copy-code w-[100%] flex">copy</div>
           <div class="flex flex-col relative">
             <div class="top flex">
               {{ "<" }}
@@ -63,6 +64,9 @@
           </div>
         </div>
       </template>
+      <template #props>
+        
+      </template>
     </ChartContainer>
 
     <!-- MultiLine.vue -->
@@ -71,8 +75,8 @@
       <MultiLine
         :data="chartData"
         date-format="%Y-%m-%d"
-        :width="480"
-        :height="240"
+        :width="400"
+        :height="200"
       />
       <template #config>
         <RadioButton
@@ -141,8 +145,8 @@
       <CandlestickChart
         :data="candleStickData"
         title="Stock price"
-        :width="420"
-        :height="180"
+        :width="340"
+        :height="120"
       />
       <template #config>
         <RadioButton

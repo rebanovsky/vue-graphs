@@ -1,12 +1,10 @@
 <template>
   <div class="side-menu overflow-y-auto rounded-[8px]">
-    <div class="side-menu-title font-medium px-[26px] py-[12px]">
-      {{ title }}
-    </div>
-    <div class="w-[190px] flex flex-col p-[4px] gap-[8px]">
+    <theme-toggler/>
+    <div class="w-[160px] flex flex-col p-[4px] gap-[8px]">
       <div v-for="item in items" :key="item.name">
         <div
-          class="flex items-center w-[180px] hover:text-slate-500 cursor-pointer border-[1px] border-slate-100 dark:border-slate-900 hover:border-slate-200 dark:hover:border-slate-800 rounded-[8px] px-[8px]"
+          class="flex items-center w-[150px] hover:text-slate-500 cursor-pointer border-[1px] border-slate-100 dark:border-slate-900 hover:border-slate-200 dark:hover:border-slate-800 rounded-[8px] px-[8px]"
           @click="() => toggleAccordion(item.name)"
           :class="[
             isActive(item.name)
@@ -53,6 +51,7 @@
 </template>
 
 <script setup>
+import ThemeToggler from "@/components/widgets/ThemeToggler.vue";
 import { ref, watchEffect } from "vue";
 import { useRouter, useRoute } from "vue-router";
 

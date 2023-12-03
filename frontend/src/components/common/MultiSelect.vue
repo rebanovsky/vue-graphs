@@ -1,5 +1,5 @@
 <template>
-  <div class="gridlines flex flex-col gap-[4px]">
+  <div class="flex flex-col gap-[4px]">
     <div class="config-title text-[11px]">
       {{ title }}
     </div>

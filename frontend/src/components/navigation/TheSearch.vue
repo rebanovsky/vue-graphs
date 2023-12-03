@@ -6,7 +6,7 @@
       :class="
         isInputFocused ? 'border-slate-400 transition' : 'border-slate-300 dark:border-slate-700'
       "
-      class="ticker-searcher flex items-center border-b-[1px] px-[12px]"
+      class="ticker-searcher flex items-center border-b-[1px] px-[8px]"
     >
       <font-awesome-icon
         class="h-[12px] text-slate-400 dark:text-slate-600 transition"
@@ -17,7 +17,7 @@
       />
       <input
         ref="searchRef"
-        class="dark:placeholder-slate-500 font-light text-[12px] h-[32px] px-[6px] w-[200px] mx-[5px] bg-slate-100 dark:bg-transparent placeholder-slate-400 transition ease"
+        class="dark:placeholder-slate-500 font-light text-[12px] h-[32px] px-[6px] w-[140px] mx-[5px] bg-slate-100 dark:bg-transparent placeholder-slate-400 transition ease"
         placeholder="Search"
         v-model="searchTerm"
         @input="fetchSuggestions"

@@ -1,9 +1,4 @@
 <template>
-  <div class="single-line-header">
-    <div class="single-line-title">
-      <input type="text" class="bg-transparent" :placeholder="title" />
-    </div>
-  </div>
   <div ref="chart" class="chart-border"></div>
 </template>
 
