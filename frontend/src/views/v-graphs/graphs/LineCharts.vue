@@ -4,15 +4,14 @@
     <ChartContainer>
       <template #title>SingleLine.vue</template>
       <SingleLine
-        :width="400"
-        :height="200"
+        :width="560"
+        :height="280"
         :data="lineData"
         dateFormat="%Y-%m-%d"
         :line-color="chartConfig.lineColor"
         :tooltip="chartConfig.tooltip"
       />
       <template #config>
-
         <RadioButton
           :title="barTooltip.title"
           :options="barTooltip.config"
@@ -32,7 +31,7 @@
       </template>
       <template #code-block>
         <div
-          class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%] font-mono rounded-[8px] p-[8px]"
+          class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%] font-mono"
         >
           <div class="copy-code w-[100%] flex">copy</div>
           <div class="flex flex-col relative">
@@ -44,7 +43,7 @@
             </div>
             <transition-group name="list" tag="div" class="flex flex-col">
               <div
-                class="props px-[16px] flex"
+                class="props pl-[16px] flex"
                 v-for="prop in singleLineProps"
                 :key="prop.name"
               >
@@ -63,9 +62,6 @@
             </transition-group>
           </div>
         </div>
-      </template>
-      <template #props>
-        
       </template>
     </ChartContainer>
 
@@ -117,7 +113,7 @@
             </div>
             <transition-group name="list" tag="div" class="flex flex-col">
               <div
-                class="props px-[16px] flex"
+                class="props pl-[16px] flex"
                 v-for="prop in singleLineProps"
                 :key="prop.name"
               >
@@ -187,7 +183,7 @@
             </div>
             <transition-group name="list" tag="div" class="flex flex-col">
               <div
-                class="props px-[16px] flex"
+                class="props pl-[16px] flex"
                 v-for="prop in singleLineProps"
                 :key="prop.name"
               >

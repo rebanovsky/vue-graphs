@@ -43,7 +43,7 @@
             </div>
             <transition-group name="list" tag="div" class="flex flex-col">
               <div
-                class="props px-[16px] flex"
+                class="props pl-[16px] flex"
                 v-for="prop in singleLineProps"
                 :key="prop.name"
               >
@@ -108,7 +108,7 @@
             </div>
             <transition-group name="list" tag="div" class="flex flex-col">
               <div
-                class="props px-[16px] flex"
+                class="props pl-[16px] flex"
                 v-for="prop in singleLineProps"
                 :key="prop.name"
               >

@@ -13,7 +13,7 @@
   }
   .chart-border {
     border-width: 1px;
-    border-radius: 8px;
+    border-radius: 12px;
     border-color: theme("colors.slate.200");
     @apply dark:border-slate-800;
   }

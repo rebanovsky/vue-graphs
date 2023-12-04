@@ -216,7 +216,7 @@ export default {
                 .attr("x", mx) // Position aligned with the mouse x on the vertical line
                 .attr("y", 0) // Position at the top of the SVG drawing area
                 .text(d3.format(".2f")(closestPt.y)) // Format the y value to 2 decimal places
-                .attr("class", "fill-slate-500 text-[14px] gridlines") // Text color
+                .attr("class", "fill-slate-500 text-[1em] gridlines") // Text color
                 .attr("text-anchor", "left") // Text alignment to the left of the x position
                 .attr("alignment-baseline", "hanging") // Text alignment to hang from the y position
                 .attr("dx", "5px") // Offset from the vertical line to avoid overlap
