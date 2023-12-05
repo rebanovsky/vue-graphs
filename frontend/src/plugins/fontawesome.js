@@ -78,9 +78,9 @@ import {
   faUpRightAndDownLeftFromCenter,
   faArrowTrendDown,
   faWandMagicSparkles,
-  faFileExcel
+  faFileExcel,
 } from "@fortawesome/free-solid-svg-icons";
-import { faGoogle, faFacebookF } from "@fortawesome/free-brands-svg-icons";
+import { faGoogle, faFacebookF, faGithub } from "@fortawesome/free-brands-svg-icons";
 
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 
@@ -170,4 +170,5 @@ library.add(
   faUpRightAndDownLeftFromCenter,
   faWandMagicSparkles,
   faFileExcel,
+  faGithub
 );

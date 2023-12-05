@@ -1,10 +1,13 @@
 <template>
+  <div class="flex justify-between">
+    <!-- Dummy Section -->
+    <div class="dummy w-[160px]"></div>
   <div
-    class="playground-component p-[12px] text-[14px] flex justify-center gridlines rounded-[14px]"
+    class="playground-component p-[12px] text-[14px] flex gap-[40px] justify-center gridlines rounded-[14px]"
   >
     <!-- Introduction Section -->
     <div
-      class="container w-[800px] overflow-y-auto gridlines p-[20px] rounded-[8px] shadow-boxshlight dark:shadow flex flex-col gap-[28px]"
+      class="container w-[800px] overflow-y-auto p-[20px] rounded-[8px] shadow-boxshlight dark:shadow flex flex-col gap-[28px]"
     >
       <header>
         <h1 class="text-[20px] font-medium">Vue-Graphs</h1>
@@ -64,6 +67,16 @@
       </footer>
     </div>
   </div>
+  <!-- Version History -->
+  <div class="version-history w-[160px] gridlines rounded-[8px] p-[8px]">
+    <div class="versions-wrapper">
+      <div class="version-header">Version</div>
+      <div class="versions">
+        <div class="version">V 0.99</div>
+      </div>
+    </div>
+  </div>
+</div>
 </template>
 
 <script setup>

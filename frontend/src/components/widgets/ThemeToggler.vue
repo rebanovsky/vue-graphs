@@ -1,7 +1,7 @@
 <template>
   <div class="w-[100%] flex items-center px-[22px]">
     <div
-      class="py-2 gap-[4px] flex text-[10px] items-center justify-between cursor-pointer"
+      class="py-2 gap-[8px] flex text-[10px] items-center justify-between cursor-pointer"
       @click="toggleDark"
     >
       <div class="theme-icon">
@@ -36,16 +36,16 @@ c-9.9,9.6-25.7,9.6-35.6,0l-36.2-36.2c-10.2-9.8-10.5-26-0.6-36.2c9.8-10.2,26-10.5
       </div>
       <div
         :class="[
-          isDark ? 'bg-slate-800' : 'bg-slate-200',
-          'relative inline-flex h-[16px] w-[34px] shrink-0  rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75',
+          isDark ? 'bg-slate-800' : 'bg-slate-300',
+          'relative inline-flex h-[18px] w-[36px] shrink-0  rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75',
         ]"
       >
         <span
           :class="[
             isDark
-              ? 'translate-x-[18px] bg-slate-300'
-              : 'translate-x-0 bg-slate-700',
-            'pointer-events-none inline-block h-[12px] w-[12px] transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out',
+              ? 'translate-x-[19px] bg-harlequin-400'
+              : 'translate-x-[1px] bg-harlequin-400',
+            'pointer-events-none translate-y-[1px] inline-block h-[12px] w-[12px] transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out',
           ]"
           aria-hidden="true"
         ></span>

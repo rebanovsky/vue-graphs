@@ -1,5 +1,5 @@
 <template>
-  <div class="side-menu overflow-y-auto rounded-[8px]">
+  <div class="side-menu overflow-y-auto rounded-[8px] py-[8px]">
     <theme-toggler/>
     <div class="w-[160px] flex flex-col p-[4px] gap-[8px]">
       <div v-for="item in items" :key="item.name">
@@ -15,7 +15,7 @@
           <div
             class="accordion-item w-[auto] flex items-center px-[20px] rounded-[0px] gap-[8px]"
             :class="[
-              'accordion-title text-[12px] px-[20px] text-slate-500',
+              'accordion-title text-[0.75em] px-[20px] text-slate-500',
               isActive(item.name) ? 'text-slate-900 dark:text-slate-100' : '',
             ]"
           >
