@@ -108,7 +108,7 @@ module.exports = {
         900: "#0068ff",
       },
       harlequin: {
-        50: "#f6faf6",
+        50: "#ebf2eb",
         100: "#caf8c5",
         200: "#00fc77",
         300: "#2bd81d",
