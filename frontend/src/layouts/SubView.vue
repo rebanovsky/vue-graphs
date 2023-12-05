@@ -3,7 +3,7 @@
     class="playground-component w-[100%] flex justify-between px-[12px] rounded-[14px]"
     style="height: calc(100vh - 78px)"
   >
-    <div class="main-content w-full overflow-y-auto flex justify-between">
+    <div class="main-content w-full overflow-y-auto flex justify-center">
       <div class="sidenav overflow-y-auto gridlines rounded-[8px]">
         <SideMenu :title="title" :items="sidenavItems" :base-path="basePath" />
       </div>

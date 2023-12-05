@@ -4,7 +4,7 @@
   >
     <div
       :class="
-        isInputFocused ? 'border-slate-400 transition' : 'border-slate-300 dark:border-slate-700'
+        isInputFocused ? 'border-slate-400 transition' : 'border-slate-100 dark:border-slate-900'
       "
       class="ticker-searcher flex items-center border-b-[1px] px-[8px]"
     >

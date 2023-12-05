@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-[8px] h-screen overflow-hidden">
+  <div class="flex flex-col gap-[0px] h-screen overflow-hidden">
     <!-- <div class="view-heading px-[18px] font-medium text-[24px] rounded-[8px] gridlines">{{ getCurrentHeading() }}</div> -->
     <TheNavigation
       class="flex-shrink-0"

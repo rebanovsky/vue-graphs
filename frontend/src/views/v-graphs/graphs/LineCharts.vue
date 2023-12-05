@@ -1,209 +1,216 @@
 <template>
-  <div class="flex flex-col gap-[80px]  flex-1 rounded-[8px] px-[12px] overflow-y-auto">
-    <!-- SingleLine.vue -->
-    <ChartContainer>
-      <template #title>SingleLine.vue</template>
-      <SingleLine
-        :width="560"
-        :height="280"
-        :data="lineData"
-        dateFormat="%Y-%m-%d"
-        :line-color="chartConfig.lineColor"
-        :tooltip="chartConfig.tooltip"
-      />
-      <template #config>
-        <RadioButton
-          :title="barTooltip.title"
-          :options="barTooltip.config"
-          v-model="chartConfig.tooltip"
-          name="tooltip"
+  <div class="flex w-[100%]">
+    <div
+      class="flex flex-col gap-[80px] flex-1 rounded-[8px] px-[12px] overflow-y-auto"
+    >
+      <!-- SingleLine.vue -->
+      <ChartContainer>
+        <template #title>SingleLine.vue</template>
+        <SingleLine
+          :width="560"
+          :height="280"
+          :data="lineData"
+          dateFormat="%Y-%m-%d"
+          :line-color="chartConfig.lineColor"
+          :tooltip="chartConfig.tooltip"
         />
-        <MultiSelect
-          v-model="chartConfig.selectedStocks"
-          :title="stockOptions.title"
-          :options="stockOptions.configs"
-        />
-        <ColorPicker
-          v-model="chartConfig.lineColor"
-          :options="colorOptions"
-          title="Line Color"
-        />
-      </template>
-      <template #code-block>
-        <div
-          class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%] font-mono"
-        >
-          <div class="copy-code w-[100%] flex">copy</div>
-          <div class="flex flex-col relative">
-            <div class="top flex">
-              {{ "<" }}
-              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                SingleLine
-              </div>
-            </div>
-            <transition-group name="list" tag="div" class="flex flex-col">
-              <div
-                class="props pl-[16px] flex"
-                v-for="prop in singleLineProps"
-                :key="prop.name"
-              >
-                :
-                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                  {{ prop.name }}
+        <template #config>
+          <RadioButton
+            :title="barTooltip.title"
+            :options="barTooltip.config"
+            v-model="chartConfig.tooltip"
+            name="tooltip"
+          />
+          <MultiSelect
+            v-model="chartConfig.selectedStocks"
+            :title="stockOptions.title"
+            :options="stockOptions.configs"
+          />
+          <ColorPicker
+            v-model="chartConfig.lineColor"
+            :options="colorOptions"
+            title="Line Color"
+          />
+        </template>
+        <template #code-block>
+          <div
+            class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%] font-mono"
+          >
+            <div class="copy-code w-[100%] flex">copy</div>
+            <div class="flex flex-col relative">
+              <div class="top flex">
+                {{ "<" }}
+                <div class="component-name text-[#e85700] dark:text-[#f8d339]">
+                  SingleLine
                 </div>
-                =
+              </div>
+              <transition-group name="list" tag="div" class="flex flex-col">
                 <div
-                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
+                  class="props pl-[16px] flex"
+                  v-for="prop in singleLineProps"
+                  :key="prop.name"
                 >
-                  {{ prop.value }}
+                  :
+                  <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
+                    {{ prop.name }}
+                  </div>
+                  =
+                  <div
+                    class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
+                  >
+                    {{ prop.value }}
+                  </div>
                 </div>
-              </div>
-              <div class="bottom">{{ "/>" }}</div>
-            </transition-group>
+                <div class="bottom">{{ "/>" }}</div>
+              </transition-group>
+            </div>
           </div>
-        </div>
-      </template>
-    </ChartContainer>
+        </template>
+      </ChartContainer>
 
-    <!-- MultiLine.vue -->
-    <ChartContainer>
-      <template #title>MultiLine.vue</template>
-      <MultiLine
-        :data="chartData"
-        date-format="%Y-%m-%d"
-        :width="400"
-        :height="200"
-      />
-      <template #config>
-        <RadioButton
-          :title="barTooltip.title"
-          :options="barTooltip.config"
-          v-model="barTooltipState"
-          name="bar-tooltip"
+      <!-- MultiLine.vue -->
+      <ChartContainer>
+        <template #title>MultiLine.vue</template>
+        <MultiLine
+          :data="chartData"
+          date-format="%Y-%m-%d"
+          :width="400"
+          :height="200"
         />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <MultiSelect
-          v-model="selectedStocks"
-          :title="stockOptions.title"
-          :options="stockOptions.configs"
-        />
-      </template>
-      <template #code-block>
-        <div
-          class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
-        >
-          <div class="copy-code">copy</div>
-          <div class="flex flex-col relative">
-            <div class="top flex">
-              {{ "<" }}
-              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                MultiLine
-              </div>
-            </div>
-            <transition-group name="list" tag="div" class="flex flex-col">
-              <div
-                class="props pl-[16px] flex"
-                v-for="prop in singleLineProps"
-                :key="prop.name"
-              >
-                :
-                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                  {{ prop.name }}
+        <template #config>
+          <RadioButton
+            :title="barTooltip.title"
+            :options="barTooltip.config"
+            v-model="barTooltipState"
+            name="bar-tooltip"
+          />
+          <RadioButton
+            v-model="barVisualizationState"
+            :title="barAnimations.title"
+            :options="barAnimations.config"
+            name="bar-animations"
+          />
+          <RadioButton
+            v-model="barVisualizationState"
+            :title="barAnimations.title"
+            :options="barAnimations.config"
+            name="bar-animations"
+          />
+          <MultiSelect
+            v-model="selectedStocks"
+            :title="stockOptions.title"
+            :options="stockOptions.configs"
+          />
+        </template>
+        <template #code-block>
+          <div
+            class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
+          >
+            <div class="copy-code">copy</div>
+            <div class="flex flex-col relative">
+              <div class="top flex">
+                {{ "<" }}
+                <div class="component-name text-[#e85700] dark:text-[#f8d339]">
+                  MultiLine
                 </div>
-                =
+              </div>
+              <transition-group name="list" tag="div" class="flex flex-col">
                 <div
-                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
+                  class="props pl-[16px] flex"
+                  v-for="prop in singleLineProps"
+                  :key="prop.name"
                 >
-                  {{ prop.value }}
+                  :
+                  <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
+                    {{ prop.name }}
+                  </div>
+                  =
+                  <div
+                    class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
+                  >
+                    {{ prop.value }}
+                  </div>
                 </div>
-              </div>
-              <div class="bottom">{{ "/>" }}</div>
-            </transition-group>
+                <div class="bottom">{{ "/>" }}</div>
+              </transition-group>
+            </div>
           </div>
-        </div>
-      </template>
-    </ChartContainer>
+        </template>
+      </ChartContainer>
 
-    <!-- CandlestickChart.vue -->
-    <ChartContainer>
-      <template #title>CandlestickChart.vue</template>
-      <CandlestickChart
-        :data="candleStickData"
-        title="Stock price"
-        :width="340"
-        :height="120"
-      />
-      <template #config>
-        <RadioButton
-          :title="barTooltip.title"
-          :options="barTooltip.config"
-          v-model="barTooltipState"
-          name="bar-tooltip"
+      <!-- CandlestickChart.vue -->
+      <ChartContainer>
+        <template #title>CandlestickChart.vue</template>
+        <CandlestickChart
+          :data="candleStickData"
+          title="Stock price"
+          :width="340"
+          :height="120"
         />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <RadioButton
-          v-model="barVisualizationState"
-          :title="barAnimations.title"
-          :options="barAnimations.config"
-          name="bar-animations"
-        />
-        <MultiSelect
-          v-model="selectedStocks"
-          :title="stockOptions.title"
-          :options="stockOptions.configs"
-        />
-      </template>
-      <template #code-block>
-        <div
-          class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
-        >
-          <div class="copy-code">copy</div>
-          <div class="flex flex-col relative">
-            <div class="top flex">
-              {{ "<" }}
-              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                CandlestickChart
-              </div>
-            </div>
-            <transition-group name="list" tag="div" class="flex flex-col">
-              <div
-                class="props pl-[16px] flex"
-                v-for="prop in singleLineProps"
-                :key="prop.name"
-              >
-                :
-                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                  {{ prop.name }}
+        <template #config>
+          <RadioButton
+            :title="barTooltip.title"
+            :options="barTooltip.config"
+            v-model="barTooltipState"
+            name="bar-tooltip"
+          />
+          <RadioButton
+            v-model="barVisualizationState"
+            :title="barAnimations.title"
+            :options="barAnimations.config"
+            name="bar-animations"
+          />
+          <RadioButton
+            v-model="barVisualizationState"
+            :title="barAnimations.title"
+            :options="barAnimations.config"
+            name="bar-animations"
+          />
+          <MultiSelect
+            v-model="selectedStocks"
+            :title="stockOptions.title"
+            :options="stockOptions.configs"
+          />
+        </template>
+        <template #code-block>
+          <div
+            class="codeblock h-[100%] text-[12px] flex flex-col gap-[8px] w-[100%] gridlines font-mono rounded-[8px] p-[8px]"
+          >
+            <div class="copy-code">copy</div>
+            <div class="flex flex-col relative">
+              <div class="top flex">
+                {{ "<" }}
+                <div class="component-name text-[#e85700] dark:text-[#f8d339]">
+                  CandlestickChart
                 </div>
-                =
+              </div>
+              <transition-group name="list" tag="div" class="flex flex-col">
                 <div
-                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
+                  class="props pl-[16px] flex"
+                  v-for="prop in singleLineProps"
+                  :key="prop.name"
                 >
-                  {{ prop.value }}
+                  :
+                  <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
+                    {{ prop.name }}
+                  </div>
+                  =
+                  <div
+                    class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
+                  >
+                    {{ prop.value }}
+                  </div>
                 </div>
-              </div>
-              <div class="bottom">{{ "/>" }}</div>
-            </transition-group>
+                <div class="bottom">{{ "/>" }}</div>
+              </transition-group>
+            </div>
           </div>
-        </div>
-      </template>
-    </ChartContainer>
+        </template>
+      </ChartContainer>
+    </div>
+    <div
+      class="dummy w-[200px] gridlines rounded-[12px] p-[12px]"
+    ></div>
   </div>
 </template>
 

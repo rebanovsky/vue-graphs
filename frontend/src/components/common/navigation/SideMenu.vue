@@ -1,10 +1,9 @@
 <template>
   <div class="side-menu overflow-y-auto rounded-[8px] py-[8px]">
-    <theme-toggler/>
-    <div class="w-[160px] flex flex-col p-[4px] gap-[8px]">
+    <div class="w-[200px] flex items-center flex-col p-[4px] gap-[8px]">
       <div v-for="item in items" :key="item.name">
         <div
-          class="flex items-center w-[150px] hover:text-slate-500 cursor-pointer border-[1px] border-slate-100 dark:border-slate-900 hover:border-slate-200 dark:hover:border-slate-800 rounded-[8px] px-[8px]"
+          class="flex items-center w-[170px] hover:text-slate-500 cursor-pointer border-[1px] border-slate-100 dark:border-slate-900 hover:border-slate-200 dark:hover:border-slate-800 rounded-[8px] px-[8px]"
           @click="() => toggleAccordion(item.name)"
           :class="[
             isActive(item.name)
@@ -15,7 +14,7 @@
           <div
             class="accordion-item w-[auto] flex items-center px-[20px] rounded-[0px] gap-[8px]"
             :class="[
-              'accordion-title text-[0.75em] px-[20px] text-slate-500',
+              'accordion-title text-[0.8em] px-[20px] text-slate-500',
               isActive(item.name) ? 'text-slate-900 dark:text-slate-100' : '',
             ]"
           >
@@ -51,7 +50,6 @@
 </template>
 
 <script setup>
-import ThemeToggler from "@/components/widgets/ThemeToggler.vue";
 import { ref, watchEffect } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
