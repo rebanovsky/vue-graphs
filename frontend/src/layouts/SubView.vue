@@ -4,7 +4,7 @@
     style="height: calc(100vh - 78px)"
   >
     <div class="main-content w-full overflow-y-auto flex justify-center">
-      <div class="sidenav overflow-y-auto gridlines rounded-[8px]">
+      <div class="sidenav overflow-y-auto gridlines rounded-[12px]">
         <SideMenu :title="title" :items="sidenavItems" :base-path="basePath" />
       </div>
       <div class="flex w-[100%] flex-1 justify-center overflow-x-auto">

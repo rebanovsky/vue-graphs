@@ -1,5 +1,5 @@
 <template>
-  <div ref="chart" class="chart-border"></div>
+  <div ref="chart"></div>
 </template>
 
 <script>
@@ -38,12 +38,30 @@ export default {
     },
     tooltip: {
       type: Boolean,
-      default: false
+      default: false,
+    },
+    gridlines: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {
     const chart = ref(null);
     const parseDate = props.dateFormat ? d3.timeParse(props.dateFormat) : null;
+
+    const animateLine = () => {
+      const paths = d3.select(chart.value).selectAll('.line');
+      paths.each(function () {
+        const totalLength = this.getTotalLength();
+        d3.select(this)
+          .attr("stroke-dasharray", `${totalLength} ${totalLength}`)
+          .attr("stroke-dashoffset", totalLength)
+          .transition()
+          .duration(420) // Duration of the transition in milliseconds
+          .ease(d3.easeCubicInOut)
+          .attr("stroke-dashoffset", 0);
+      });
+    };
 
     const drawChart = () => {
       if (!chart.value) return;
@@ -90,30 +108,45 @@ export default {
       function make_y_gridlines() {
         return d3
           .axisLeft(yScale)
-          .ticks(2) // Adjust this for the number of gridlines you want
+          .ticks(2)
           .tickSize(-props.width)
           .tickFormat("");
       }
 
-      svg
-        .append("g")
-        .call(make_y_gridlines().tickSize(-props.width).tickFormat(""))
-        .attr("class", "text-slate-200 dark:text-slate-800");
+      if (props.gridlines) {
+        svg
+          .append("g")
+          .call(make_y_gridlines().tickSize(-props.width).tickFormat(""))
+          .attr("class", "text-slate-200 dark:text-slate-800");
+      }
 
       const line = d3
         .line()
         .x((d) => xScale(props.dateFormat ? parseDate(d.x) : d.x))
         .y((d) => yScale(d.y));
-      console.log("props.lineColor: ", props.lineColor);
+
       props.data.forEach((d) => {
-        svg
+        const path = svg
           .append("path")
           .data([d.values])
           .attr("class", "line")
           .attr("d", line)
           .attr("style", `stroke: ${props.lineColor} !important;`)
-          .attr("class", "transition ease dark:stroke-slate-300 !stroke-slate-700")
-          .attr("fill", "none");
+          .attr(
+            "class",
+            "transition ease dark:stroke-slate-300 !stroke-slate-700"
+          )
+          .attr("fill", "none")
+          .each(function () {
+            const totalLength = this.getTotalLength();
+            d3.select(this)
+              .attr("stroke-dasharray", `${totalLength} ${totalLength}`)
+              .attr("stroke-dashoffset", totalLength)
+              .transition()
+              .duration(420) // Set the duration of the transition in milliseconds
+              .ease(d3.easeCubicInOut)
+              .attr("stroke-dashoffset", 0);
+          });
       });
 
       if (props.dateFormat) {
@@ -253,6 +286,7 @@ export default {
 
     return {
       chart,
+      animateLine
     };
   },
 };

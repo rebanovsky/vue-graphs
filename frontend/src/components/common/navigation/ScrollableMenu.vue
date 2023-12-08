@@ -11,7 +11,7 @@
         :class="[
           'accordion-title hover:scale-[1.005] hover:text-slate-800 hover:dark:text-slate-300 transition ease text-[12px] px-[40px] text-slate-500',
           isActive(item.name) ? 'scale-[1.005] text-slate-900 dark:text-slate-100' : '',
-          item.name === currentSection ? 'text-slate-900' : '' // Add this line
+          item.name === currentSection ? 'text-slate-900' : ''
         ]"
         @click.stop="() => toggleAccordion(item.name)"
       >
@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from "vue";
+import { ref } from "vue";
 
 /// Define props
 const props = defineProps({
@@ -43,14 +43,12 @@ const props = defineProps({
 
 const openName = ref(null);
 
-watchEffect(() => {
-  // Update the openName based on other conditions if needed
-});
-
 const toggleAccordion = (name) => {
   if (props.items.find((item) => item.name === name).hasOwnProperty("items")) {
+    console.log('jou')
     openName.value = openName.value === name ? null : name;
   } else {
+    console.log('je')
     navigateTo(name);
   }
 };
@@ -64,22 +62,6 @@ const navigateTo = (name) => {
   if (section) {
     section.scrollIntoView({ behavior: "smooth" });
   }
-};
-
-const beforeEnter = (el) => {
-  el.style.height = "0";
-};
-
-const enter = (el) => {
-  el.style.height = el.scrollHeight + "px";
-};
-
-const beforeLeave = (el) => {
-  el.style.height = el.scrollHeight + "px";
-};
-
-const leave = (el) => {
-  el.style.height = "0";
 };
 </script>
 

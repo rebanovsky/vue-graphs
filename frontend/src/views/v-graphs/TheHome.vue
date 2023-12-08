@@ -5,19 +5,19 @@
     >
       <!-- Introduction Section -->
       <div
-        class="container w-[800px] overflow-y-auto p-[20px] rounded-[8px] shadow-boxshlight dark:shadow flex flex-col gap-[20px]"
+        class="container w-[800px] overflow-y-auto p-[20px] rounded-[12px] gridlines flex flex-col gap-[20px]"
       >
         <header>
           <h1 class="text-[20px] font-medium">Vue-Graphs</h1>
         </header>
 
         <section class="introduction leading-6 font-normal text-slate-500">
-          <p>
+          <!-- <p>
             A practical and efficient package for Vue 3, designed to enhance
             your experience with D3.js. It simplifies the process of creating
             interactive data visualizations, making it more accessible and less
             time-consuming for developers.
-          </p>
+          </p> -->
         </section>
 
         <section class="installation my-[20px]">
@@ -27,7 +27,7 @@
               v-for="(step, index) in steps"
               :key="index"
             >
-              <div class="flex flex-col items-center">
+              <div class="flex flex-col gap-[12px] items-center">
                 <div class="step-header flex gap-[8px] items-center">
                   <div
                     class="step-nr border-[1px] border-harlequin-300 rounded-[20px] h-[24px] w-[24px] flex items-center justify-center"
@@ -42,7 +42,14 @@
                   {{ step.content }}
                 </div>
               </div>
-              <div v-if="index < steps.length - 1" class="arrow text-[24px] tracking-7 text-slate-400">></div>
+              <div class="w-[14px]">
+                <div
+                  v-if="index < steps.length - 1"
+                  class="arrow text-[24px] tracking-7 text-slate-400"
+                >
+                  >
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -55,9 +62,51 @@
               :key="index"
             >
               <div
-                class="graph-box hover:bg-harlequin-50 dark:hover:bg-harlequin-900 rounded-[8px] hover:border-harlequin-300 hover:text-harlequin-300 dark:hover:text-harlequin-300 border-[1.25px] border-slate-300 dark:border-slate-700 dark:hover:border-harlequin-300 transition ease duration-75 cursor-pointer w-[120px] h-[120px] p-[8px] text-[12px]"
+                class="graph-box hover:bg-harlequin-50 flex flex-col gap-[2px] dark:hover:bg-harlequin-900 rounded-[8px] hover:border-harlequin-300 hover:text-harlequin-500 dark:hover:text-harlequin-300 border-[1.25px] border-slate-300 dark:border-slate-700 dark:hover:border-harlequin-300 transition ease duration-75 cursor-pointer w-[120px] h-[120px] p-[8px] text-[12px]"
+                @mouseover="handleHover"
               >
                 {{ graph.name }}
+                <div
+                  class="w-[100%] h-[100%] flex items-center justify-center gridlines"
+                  v-if="graph.name == 'Linechart'"
+                >
+                  <SingleLine
+                    ref="singleLineChartRef"
+                    :width="100"
+                    :height="60"
+                    :data="lineData"
+                    dateFormat="%Y-%m-%d"
+                    :line-color="''"
+                  />
+                </div>
+                <div
+                  class="w-[100%] h-[100%] flex items-center justify-center gridlines"
+                  v-if="graph.name == 'Barchart'"
+                ></div>
+                <div
+                  class="w-[100%] h-[100%] flex items-center justify-center gridlines"
+                  v-if="graph.name == 'Piechart'"
+                ></div>
+                <div
+                  class="w-[100%] h-[100%] flex items-center justify-center gridlines"
+                  v-if="graph.name == 'Area chart'"
+                ></div>
+                <div
+                  class="w-[100%] h-[100%] flex items-center justify-center gridlines"
+                  v-if="graph.name == 'Scatterplot'"
+                ></div>
+                <div
+                  class="w-[100%] h-[100%] flex items-center justify-center gridlines"
+                  v-if="graph.name == 'Heatmap'"
+                ></div>
+                <div
+                  class="w-[100%] h-[100%] flex items-center justify-center gridlines"
+                  v-if="graph.name == 'Bubblechart'"
+                ></div>
+                <div
+                  class="w-[100%] h-[100%] flex items-center justify-center gridlines"
+                  v-if="graph.name == 'Treemap'"
+                ></div>
               </div>
             </div>
           </div>
@@ -89,6 +138,33 @@
 </template>
 
 <script setup>
+import SingleLine from "@/components/v-graphs/graphs/SingleLine.vue";
+import { line1 } from "@/data/dummyMultiLine";
+import { ref } from "vue";
+
+// LINECHART DATA
+const formattedLineData = line1.map((item) => ({
+  x: item.Date,
+  y: item.Close,
+}));
+
+const lineData = ref([
+  {
+    color: "#061826",
+    values: formattedLineData,
+  },
+]);
+
+//Linechart refs
+  const singleLineChartRef = ref(null);
+
+  const handleHover = () => {
+    if (singleLineChartRef.value) {
+      singleLineChartRef.value.animateLine();
+    }
+  };
+
+// List of graphs
 const graphs = [
   {
     name: "Linechart",

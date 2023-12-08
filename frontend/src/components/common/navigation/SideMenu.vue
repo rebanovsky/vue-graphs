@@ -1,14 +1,18 @@
 <template>
-  <div class="side-menu overflow-y-auto rounded-[8px] py-[8px]">
-    <div class="w-[200px] flex items-center flex-col p-[4px] gap-[8px]">
+  <div
+    class="side-menu overflow-y-auto rounded-[8px] py-[8px] h-[100%] flex flex-col justify-between"
+  >
+    <div
+      class="w-[200px] flex items-center flex-col h-[100%] p-[4px] gap-[8px]"
+    >
       <div v-for="item in items" :key="item.name">
         <div
-          class="flex items-center w-[170px] hover:text-slate-500 cursor-pointer border-[1px] border-slate-100 dark:border-slate-900 hover:border-slate-200 dark:hover:border-slate-800 rounded-[8px] px-[8px]"
+          class="flex items-center w-[170px] hover:text-slate-500 cursor-pointer border-[1px] border-slate-100 dark:border-slate-900  dark:hover:border-slate-800 rounded-[8px] px-[8px]"
           @click="() => toggleAccordion(item.name)"
           :class="[
             isActive(item.name)
-              ? 'border-slate-200 dark:!border-slate-800'
-              : '',
+              ? 'border-slate-400 bg-slate-50 dark:!border-slate-800'
+              : 'hover:border-slate-200',
           ]"
         >
           <div
@@ -45,6 +49,9 @@
           </transition>
         </div>
       </div>
+    </div>
+    <div class="gridlines mx-[12px] text-[10px] text-slate-500 ">
+      created by <em class="font-medium">Mark Andreas Rebane</em>
     </div>
   </div>
 </template>
