@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { ref, onMounted, watchEffect } from "vue";
+import { ref, onMounted, watchEffect, watch } from "vue";
 import * as d3 from "d3";
 
 export default {
@@ -44,24 +44,39 @@ export default {
       type: Boolean,
       default: false,
     },
+    animation: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     const chart = ref(null);
     const parseDate = props.dateFormat ? d3.timeParse(props.dateFormat) : null;
 
     const animateLine = () => {
-      const paths = d3.select(chart.value).selectAll('.line');
+      if (!props.animation) return;
+
+      const paths = d3.select(chart.value).selectAll(".line");
       paths.each(function () {
         const totalLength = this.getTotalLength();
         d3.select(this)
           .attr("stroke-dasharray", `${totalLength} ${totalLength}`)
           .attr("stroke-dashoffset", totalLength)
           .transition()
-          .duration(420) // Duration of the transition in milliseconds
+          .duration(420)
           .ease(d3.easeCubicInOut)
           .attr("stroke-dashoffset", 0);
       });
     };
+
+    watch(
+      () => props.animation,
+      (newVal) => {
+        if (newVal) {
+          drawChart()
+        }
+      }
+    );
 
     const drawChart = () => {
       if (!chart.value) return;
@@ -143,7 +158,7 @@ export default {
               .attr("stroke-dasharray", `${totalLength} ${totalLength}`)
               .attr("stroke-dashoffset", totalLength)
               .transition()
-              .duration(420) // Set the duration of the transition in milliseconds
+              .duration(600) // Set the duration of the transition in milliseconds
               .ease(d3.easeCubicInOut)
               .attr("stroke-dashoffset", 0);
           });
@@ -286,7 +301,7 @@ export default {
 
     return {
       chart,
-      animateLine
+      animateLine,
     };
   },
 };

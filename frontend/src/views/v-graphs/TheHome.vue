@@ -63,7 +63,8 @@
             >
               <div
                 class="graph-box hover:bg-harlequin-50 flex flex-col gap-[2px] dark:hover:bg-harlequin-900 rounded-[8px] hover:border-harlequin-300 hover:text-harlequin-500 dark:hover:text-harlequin-300 border-[1.25px] border-slate-300 dark:border-slate-700 dark:hover:border-harlequin-300 transition ease duration-75 cursor-pointer w-[120px] h-[120px] p-[8px] text-[12px]"
-                @mouseover="handleHover"
+                @mouseover="isAnimate = true"
+                @mouseleave="isAnimate = false"
               >
                 {{ graph.name }}
                 <div
@@ -71,7 +72,7 @@
                   v-if="graph.name == 'Linechart'"
                 >
                   <SingleLine
-                    ref="singleLineChartRef"
+                    :animation="isAnimate"
                     :width="100"
                     :height="60"
                     :data="lineData"
@@ -82,7 +83,14 @@
                 <div
                   class="w-[100%] h-[100%] flex items-center justify-center gridlines"
                   v-if="graph.name == 'Barchart'"
-                ></div>
+                >
+                <BarChart
+                :data="earnings"
+                :tooltip="true"
+                :animations="true"
+                height="240"
+                width="480"
+              /></div>
                 <div
                   class="w-[100%] h-[100%] flex items-center justify-center gridlines"
                   v-if="graph.name == 'Piechart'"
@@ -155,14 +163,9 @@ const lineData = ref([
   },
 ]);
 
-//Linechart refs
-  const singleLineChartRef = ref(null);
+// animation check
 
-  const handleHover = () => {
-    if (singleLineChartRef.value) {
-      singleLineChartRef.value.animateLine();
-    }
-  };
+const isAnimate = ref(false)
 
 // List of graphs
 const graphs = [

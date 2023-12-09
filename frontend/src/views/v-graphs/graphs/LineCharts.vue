@@ -11,23 +11,37 @@
           :height="280"
           :data="lineData"
           dateFormat="%Y-%m-%d"
-          :line-color="chartConfig.lineColor"
-          :tooltip="chartConfig.tooltip"
+          :line-color="singleLineConfig.lineColor"
+          :tooltip="singleLineConfig.tooltip"
+          :gridlines="singleLineConfig.gridlines"
+          :animations="singleLineConfig.animations"
         />
         <template #config>
           <RadioButton
-            :title="barTooltip.title"
-            :options="barTooltip.config"
-            v-model="chartConfig.tooltip"
+            :title="radioConfigs.tooltip.title"
+            :options="radioConfigs.tooltip.config"
+            v-model="singleLineConfig.tooltip"
             name="tooltip"
           />
+          <RadioButton
+            :title="radioConfigs.gridlines.title"
+            :options="radioConfigs.gridlines.config"
+            v-model="singleLineConfig.gridlines"
+            name="gridlines"
+          />
+          <RadioButton
+            :title="radioConfigs.animations.title"
+            :options="radioConfigs.animations.config"
+            v-model="singleLineConfig.animations"
+            name="animations"
+          />
           <MultiSelect
-            v-model="chartConfig.selectedStocks"
+            v-model="singleLineConfig.selectedStocks"
             :title="stockOptions.title"
             :options="stockOptions.configs"
           />
           <ColorPicker
-            v-model="chartConfig.lineColor"
+            v-model="singleLineConfig.lineColor"
             :options="colorOptions"
             title="Line Color"
           />
@@ -69,7 +83,7 @@
       </ChartContainer>
 
       <!-- MultiLine.vue -->
-      <ChartContainer>
+      <!-- <ChartContainer>
         <template #title>MultiLine.vue</template>
         <MultiLine
           :data="chartData"
@@ -136,10 +150,10 @@
             </div>
           </div>
         </template>
-      </ChartContainer>
+      </ChartContainer> -->
 
       <!-- CandlestickChart.vue -->
-      <ChartContainer>
+      <!-- <ChartContainer>
         <template #title>CandlestickChart.vue</template>
         <CandlestickChart
           :data="candleStickData"
@@ -206,11 +220,9 @@
             </div>
           </div>
         </template>
-      </ChartContainer>
+      </ChartContainer> -->
     </div>
-    <div
-      class="dummy w-[200px] gridlines rounded-[12px] p-[12px]"
-    ></div>
+    <div class="dummy w-[200px] gridlines rounded-[12px] p-[12px]"></div>
   </div>
 </template>
 
@@ -238,23 +250,30 @@ const lineData = ref([
   },
 ]);
 
-const barTooltipState = ref("off");
-const barTooltip = {
-  title: "Tooltip",
-  config: [
-    { id: "lineTooltipOn", label: "On", value: true },
-    { id: "lineTooltipOff", label: "Off", value: false },
-  ],
-};
-
 //Visualizations
 const barVisualizationState = ref("off");
-const barAnimations = {
-  title: "Animations",
-  config: [
-    { id: "barAnimationsOn", label: "On", value: "on" },
-    { id: "barAnimationsOff", label: "Off", value: "off" },
-  ],
+const radioConfigs = {
+  animations: {
+    title: "Animations",
+    config: [
+      { id: "animationsOn", label: "On", value: "on" },
+      { id: "animationsOff", label: "Off", value: "off" },
+    ],
+  },
+  gridlines: {
+    title: "Gridlines",
+    config: [
+      { id: "gridlineOn", label: "On", value: "on" },
+      { id: "gridlineOff", label: "Off", value: "off" },
+    ],
+  },
+  tooltip: {
+    title: "Tooltip",
+    config: [
+      { id: "tooltipOn", label: "On", value: "on" },
+      { id: "tooltipOff", label: "Off", value: "off" },
+    ],
+  },
 };
 
 // Adding/removing stocks
@@ -272,7 +291,6 @@ const stockOptions = {
 const colorOptions = ref([
   { id: "color1", label: "Blue", value: "#0000FF" },
   { id: "color2", label: "Red", value: "#FF0000" },
-  // Add more colors as needed
 ]);
 
 //PROPS
@@ -298,34 +316,34 @@ const colorOptions = ref([
 // Function to map barTooltipState value for display and filter
 const mapDisplayValue = (key, value) => {
   if (key === "tooltip") {
-    return value === true ? true : null; // Return null for 'off'
+    return value === true ? true : null;
   }
   return JSON.stringify(value);
 };
 
-// Computed property to transform chartConfig into array format for the template
 const singleLineProps = computed(() => {
-  return Object.entries(chartConfig)
+  return Object.entries(singleLineConfig)
     .map(([key, value]) => ({
       name: key,
       value: mapDisplayValue(key, value),
     }))
-    .filter((prop) => prop.value !== null); // Filter out entries with null value
+    .filter((prop) => prop.value !== null);
 });
 
-const chartConfig = reactive({
-  lineData: [], // Initialize with default or empty data
+const singleLineConfig = reactive({
+  lineData: [],
   tooltip: false,
+  animations: false,
   selectedStocks: [],
   lineColor: "#fff",
-  // Add other configurations as needed
+  gridlines: false,
 });
 
 //MULTILINE
 const transformLineData = (lineData) => {
   return lineData.map((dataPoint) => ({
     x: dataPoint.Date,
-    y: dataPoint.Normalized_Close, // Assuming you want the Close value || Close || Open
+    y: dataPoint.Normalized_Close,
   }));
 };
 
@@ -345,8 +363,7 @@ const candleStickData = line1.slice(0, 50);
 </script>
 
 <style lang="scss" scoped>
-/* Enter and leave transitions */
-.list-move, /* apply transition to moving elements */
+.list-move,
 .list-enter-active,
 .list-leave-active {
   transition: all 0.25s ease;
@@ -358,8 +375,6 @@ const candleStickData = line1.slice(0, 50);
   transform: translateX(4px);
 }
 
-/* ensure leaving items are taken out of layout flow so that moving
-   animations can be calculated correctly. */
 .list-leave-active {
   position: absolute;
 }
