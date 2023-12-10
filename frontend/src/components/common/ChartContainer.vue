@@ -1,6 +1,6 @@
 <template>
   <div
-    class="chart-container flex w-[auto] shadow-boxshlight dark:shadow dark:bg-slate-800 flex-col gap-[20px] p-[32px] rounded-[12px]"
+    class="chart-container flex w-[auto] shadow-boxshlight overflow-y-auto my-[8px] dark:shadow dark:bg-slate-800 flex-col gap-[20px] p-[32px] rounded-[12px]"
   >
     <div class="chart-title flex py-[4px] ">
       <div class="h-[100%] text-[14px] gridlines text-slate-500 flex">
@@ -22,7 +22,7 @@
               </div>
 
               <div
-                class="chart-properties text-[14px] w-[auto] p-[12px] rounded-[8px]"
+                class="chart-properties text-[12px] w-[auto] p-[12px] rounded-[8px]"
               >
                 <div class="props-table flex flex-col">
                   <div
@@ -55,7 +55,7 @@
           <div class="flex flex-col gap-[20px]">
             <div class="config-header flex text-[14px]">
               <div
-                class="flex flex-col gap-[12px] gridlines w-[200px] p-[12px] h-[300px] overflow-y-auto"
+                class="flex flex-col gap-[12px] gridlines w-[200px] p-[12px] h-[280px] overflow-y-auto"
               >
                 <slot name="config"></slot>
               </div>

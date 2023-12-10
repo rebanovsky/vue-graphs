@@ -29,7 +29,7 @@ const routes = [
                     path: "linechart",
                     name: "linechart",
                     component: () =>
-                      import("@/views/v-graphs/graphs/LineCharts.vue"),
+                      import("@/views/v-graphs/graphs/TheLine.vue"),
                   },
                 ],
               },

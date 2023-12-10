@@ -1,26 +1,11 @@
 <template>
-  <div
-    class="side-menu overflow-y-auto rounded-[8px] py-[8px] h-[100%] flex flex-col justify-between"
-  >
-    <div
-      class="w-[200px] flex items-center flex-col h-[100%] p-[4px] gap-[8px]"
-    >
-      <div v-for="item in items" :key="item.name">
-        <div
-          class="flex flex-col justify-center w-[170px] py-[4px] hover:text-slate-500 cursor-pointer border-[1px] border-slate-100 dark:border-slate-900 dark:hover:border-slate-800 rounded-[8px] px-[4px]"
-          @click="() => toggleAccordion(item.name)"
-          :class="[
-            isActive(item.name)
-              ? 'border-slate-300 bg-slate-50 dark:bg-slate-800 dark:!border-slate-800'
-              : 'hover:border-slate-200',
-          ]"
-        >
+  <div class="side-menu overflow-y-auto flex flex-col justify-between h-[100%]">
+    <div>
+      <div class="w-[240px] flex flex-col">
+        <div v-for="(item, index) in items" :key="index" class="accordion-item">
           <div
-            class="accordion-item w-[auto] flex items-center px-[12px] rounded-[0px] gap-[8px]"
-            :class="[
-              'accordion-title text-[0.8em] px-[12px] text-slate-500',
-              isActive(item.name) ? 'text-slate-900 dark:text-slate-100' : '',
-            ]"
+            class="accordion-title hover:bg-slate-50 text-[12px] px-[16px]"
+            @click="toggleAccordion(item, index)"
           >
             {{ item.title }}
           </div>
@@ -31,12 +16,16 @@
             @before-leave="beforeLeave"
             @leave="leave"
           >
-            <div v-if="isActive(item.name) && item.submenu">
-              <ul class="px-[20px] text-[12px] gap-[8px] flex flex-col">
+            <div
+              v-if="isActive(index) && item.items && item.items.length"
+              class="accordion-content shadow-expboxsh"
+            >
+              <ul>
                 <li
-                  v-for="subItem in item.submenu"
-                  :key="subItem.name"
-                  @click="navigateTo(item, subItem)"
+                  v-for="(subItem, subIndex) in item.items"
+                  :key="`item-${subIndex}`"
+                  class="text-[12px] py-[12px] px-[16px] hover:bg-slate-50 cursor-pointer border-b-[1px] border-slate-200"
+                  @click="navigateTo(item.name, subItem.name)"
                 >
                   {{ subItem.title }}
                 </li>
@@ -46,77 +35,84 @@
         </div>
       </div>
     </div>
-    <div class="gridlines mx-[12px] text-[10px] text-slate-500">
+    <div class="gridlines mx-[12px] text-[10px] text-slate-500 py-[12px]">
       created by <em class="font-medium">Mark Andreas Rebane</em>
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref, watchEffect } from "vue";
-import { useRouter, useRoute } from "vue-router";
+<script>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-// Define props
-const props = defineProps({
-  title: String,
-  items: Array,
-  basePath: String,
-});
+export default {
+  props: {
+    title: String,
+    items: Array,
+    basePath: String,
+  },
+  setup(props) {
+    const router = useRouter();
+    const openIndex = ref(null);
 
-const router = useRouter();
-const route = useRoute();
-const openName = ref(null);
+    const toggleAccordion = (item, index) => {
+      if (item.items && item.items.length) {
+        openIndex.value = openIndex.value === index ? null : index;
+      } else {
+        navigateTo(item.name);
+      }
+    };
 
-watchEffect(() => {
-  openName.value = route.name;
-});
+    const isActive = (index) => {
+      return openIndex.value === index;
+    };
 
-const isActive = (name) => {
-  return openName.value === name;
-};
+    const navigateTo = (itemName, subItemName = "") => {
+      let path = `${props.basePath}/${itemName}`;
+      if (subItemName) {
+        path += `/${subItemName}`;
+      }
+      router.push(path);
+    };
 
-const toggleAccordion = (name) => {
-  const item = props.items.find((i) => i.name === name);
-  if (item && item.submenu) {
-    openName.value = openName.value === name ? null : name;
-  } else {
-    navigateTo(item);
-  }
-};
+    const beforeEnter = (el) => {
+      el.style.height = "0";
+    };
 
-const navigateTo = (item, subItem) => {
-  let path;
-  if (subItem) {
-    path = `${props.basePath}/${item.name}/${subItem.name}`;
-  } else {
-    path = `${props.basePath}/${item.name}`;
-  }
-  router.push(path);
-};
+    const enter = (el) => {
+      el.style.height = el.scrollHeight + "px";
+    };
 
-const beforeEnter = (el) => {
-  el.style.height = "0";
-};
+    const beforeLeave = (el) => {
+      el.style.height = el.scrollHeight + "px";
+    };
 
-const enter = (el) => {
-  el.style.height = el.scrollHeight + "px";
-};
+    const leave = (el) => {
+      el.style.height = "0";
+    };
 
-const beforeLeave = (el) => {
-  el.style.height = el.scrollHeight + "px";
-};
-
-const leave = (el) => {
-  el.style.height = "0";
+    return {
+      toggleAccordion,
+      isActive,
+      navigateTo,
+      beforeEnter,
+      enter,
+      beforeLeave,
+      leave,
+    };
+  },
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .accordion-title {
+  cursor: pointer;
   padding: 10px;
+  border-bottom: 1px solid #eee;
 }
 
 .accordion-content {
+  padding: 0px;
   overflow: hidden;
 }
 
