@@ -1,5 +1,5 @@
 <template>
-  <div ref="chart"></div>
+  <div ref="chart" class="gridlines"></div>
 </template>
 
 <script>
@@ -48,6 +48,9 @@ export default {
       type: Boolean,
       default: false,
     },
+    xAxis: {
+      type: Boolean,
+    }
   },
   setup(props) {
     const chart = ref(null);
@@ -179,7 +182,7 @@ export default {
         xAxis
           .select(".domain")
           .style("stroke", "rgb(210, 220, 231)")
-          .style("stroke-width", "0px");
+          .style("stroke-width", "1px");
       } else {
         const xAxis = svg
           .append("g")
@@ -190,10 +193,13 @@ export default {
         xAxis
           .select(".domain")
           .style("stroke", "rgb(173, 181, 189)")
-          .style("stroke-width", "0px");
+          .style("stroke-width", "1px");
       }
 
-      svg.select(".domain").remove();
+      if (!props.xAxis) {
+        svg.select(".domain").remove();
+      }
+
 
       if (props.tooltip) {
         const hoverVerticalLineGroup = svg

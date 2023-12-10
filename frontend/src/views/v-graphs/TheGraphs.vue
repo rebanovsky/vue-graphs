@@ -7,7 +7,15 @@ import SubView from "@/layouts/SubView.vue";
 
 const sidenavItems = [
   { title: "Home", name: "" },
-  { title: "Line Charts", name: "line" },
+  {
+    title: "Line Charts",
+    name: "line",
+    submenu: [
+      { name: "linechart", title: "linechart" },
+      { name: "multiline", title: "multiline" },
+      { name: "candlestick", title: "candlestick" },
+    ],
+  },
   { title: "Bar Charts", name: "bar" },
   { title: "Pie Charts", name: "pie" },
   { title: "Dot Plots", name: "dot" },

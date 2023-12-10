@@ -1,89 +1,93 @@
 <template>
-  <div class="flex w-[100%]">
-    <div
-      class="flex flex-col gap-[80px] flex-1 rounded-[8px] px-[12px] overflow-y-auto"
-    >
-      <!-- SingleLine.vue -->
-      <ChartContainer>
-        <template #title>SingleLine.vue</template>
-        <SingleLine
-          :width="560"
-          :height="280"
-          :data="lineData"
-          dateFormat="%Y-%m-%d"
-          :line-color="singleLineConfig.lineColor"
-          :tooltip="singleLineConfig.tooltip"
-          :gridlines="singleLineConfig.gridlines"
-          :animations="singleLineConfig.animations"
-        />
-        <template #config>
-          <RadioButton
-            :title="radioConfigs.tooltip.title"
-            :options="radioConfigs.tooltip.config"
-            v-model="singleLineConfig.tooltip"
-            name="tooltip"
+  <!-- SingleLine.vue -->
+  <ChartContainer title="SingleLine.vue" :props="props">
+    <SingleLine
+      width="560"
+      height="280"
+      :data="lineData"
+      dateFormat="%Y-%m-%d"
+      :line-color="singleLineConfig.lineColor"
+      :tooltip="singleLineConfig.tooltip"
+      :gridlines="singleLineConfig.gridlines"
+      :animations="singleLineConfig.animations"
+    />
+    <template #config>
+      <RadioButton
+        :title="radioConfigs.tooltip.title"
+        :options="radioConfigs.tooltip.config"
+        v-model="singleLineConfig.tooltip"
+        name="tooltip"
+      />
+      <RadioButton
+        :title="radioConfigs.gridlines.title"
+        :options="radioConfigs.gridlines.config"
+        v-model="singleLineConfig.gridlines"
+        name="gridlines"
+      />
+      <RadioButton
+        :title="radioConfigs.animations.title"
+        :options="radioConfigs.animations.config"
+        v-model="singleLineConfig.animations"
+        name="animations"
+      />
+      <MultiSelect
+        v-model="singleLineConfig.selectedStocks"
+        :title="stockOptions.title"
+        :options="stockOptions.configs"
+      />
+      <ColorPicker
+        v-model="singleLineConfig.lineColor"
+        :options="colorOptions"
+        title="Line Color"
+      />
+    </template>
+    <template #code-block>
+      <div
+        class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%] font-mono"
+      >
+        <div
+          class="copy-code w-[100%] flex justify-end border-b-[1px] border-b-slate-300 dark:border-b-slate-800 pb-[8px]"
+        >
+          <SvgIcon
+            name="copy"
+            dynamicClass="hover:fill-slate-900 cursor-pointer p-[2px] dark:hover:!fill-slate-200"
           />
-          <RadioButton
-            :title="radioConfigs.gridlines.title"
-            :options="radioConfigs.gridlines.config"
-            v-model="singleLineConfig.gridlines"
-            name="gridlines"
-          />
-          <RadioButton
-            :title="radioConfigs.animations.title"
-            :options="radioConfigs.animations.config"
-            v-model="singleLineConfig.animations"
-            name="animations"
-          />
-          <MultiSelect
-            v-model="singleLineConfig.selectedStocks"
-            :title="stockOptions.title"
-            :options="stockOptions.configs"
-          />
-          <ColorPicker
-            v-model="singleLineConfig.lineColor"
-            :options="colorOptions"
-            title="Line Color"
-          />
-        </template>
-        <template #code-block>
-          <div
-            class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%] font-mono"
-          >
-            <div class="copy-code w-[100%] flex">copy</div>
-            <div class="flex flex-col relative">
-              <div class="top flex">
-                {{ "<" }}
-                <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                  SingleLine
+        </div>
+        <div class="flex gridlines h-[100%] items-center justify-center">
+          <div class="flex flex-col relative">
+            <div class="top flex">
+              {{ "<" }}
+              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
+                SingleLine
+              </div>
+            </div>
+            <transition-group name="list" tag="div" class="flex flex-col">
+              <div
+                class="props pl-[16px] flex max-w-[180px]"
+                v-for="prop in singleLineProps"
+                :key="prop.name"
+              >
+                :
+                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
+                  {{ prop.name }}
+                </div>
+                =
+                <div
+                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
+                >
+                  {{ prop.value }}
                 </div>
               </div>
-              <transition-group name="list" tag="div" class="flex flex-col">
-                <div
-                  class="props pl-[16px] flex"
-                  v-for="prop in singleLineProps"
-                  :key="prop.name"
-                >
-                  :
-                  <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                    {{ prop.name }}
-                  </div>
-                  =
-                  <div
-                    class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
-                  >
-                    {{ prop.value }}
-                  </div>
-                </div>
-                <div class="bottom">{{ "/>" }}</div>
-              </transition-group>
-            </div>
+              <div class="bottom">{{ "/>" }}</div>
+            </transition-group>
           </div>
-        </template>
-      </ChartContainer>
+        </div>
+      </div>
+    </template>
+  </ChartContainer>
 
-      <!-- MultiLine.vue -->
-      <!-- <ChartContainer>
+  <!-- MultiLine.vue -->
+  <!-- <ChartContainer>
         <template #title>MultiLine.vue</template>
         <MultiLine
           :data="chartData"
@@ -152,8 +156,8 @@
         </template>
       </ChartContainer> -->
 
-      <!-- CandlestickChart.vue -->
-      <!-- <ChartContainer>
+  <!-- CandlestickChart.vue -->
+  <!-- <ChartContainer>
         <template #title>CandlestickChart.vue</template>
         <CandlestickChart
           :data="candleStickData"
@@ -221,9 +225,6 @@
           </div>
         </template>
       </ChartContainer> -->
-    </div>
-    <div class="dummy w-[200px] gridlines rounded-[12px] p-[12px]"></div>
-  </div>
 </template>
 
 <script setup>
@@ -236,6 +237,7 @@ import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/common/ChartContainer.vue";
+import SvgIcon from "@/components/utils/SvgIcon.vue";
 
 // LINECHART DATA
 const formattedLineData = line1.map((item) => ({
@@ -249,6 +251,80 @@ const lineData = ref([
     values: formattedLineData,
   },
 ]);
+
+// PROPS
+const props = [
+  {
+    name: "data",
+    type: "Array",
+    default: "null",
+    description:
+      "The dataset for the line chart, consisting of an array of data points.",
+  },
+  {
+    name: "width",
+    type: "Number",
+    default: "400",
+    description: "Specifies the width of the chart in pixels.",
+  },
+  {
+    name: "height",
+    type: "Number",
+    default: "200",
+    description: "Specifies the height of the chart in pixels.",
+  },
+  {
+    name: "dateFormat",
+    type: "String",
+    default: "null",
+    description:
+      "Defines the format for date values in the dataset. If null, no formatting is applied.",
+  },
+  {
+    name: "title",
+    type: "String",
+    default: '"Title"',
+    description: "The title of the line chart.",
+  },
+  {
+    name: "dotColor",
+    type: "String",
+    default: '"#05D9FF"',
+    description: "The color of the dots on the line chart.",
+  },
+  {
+    name: "lineColor",
+    type: "String",
+    default: "null",
+    description:
+      "The color of the line in the chart. If not specified, a default color is used.",
+  },
+  {
+    name: "tooltip",
+    type: "Boolean",
+    default: "false",
+    description: "Determines whether tooltips are shown on hover.",
+  },
+  {
+    name: "gridlines",
+    type: "Boolean",
+    default: "false",
+    description: "Controls the visibility of gridlines in the chart.",
+  },
+  {
+    name: "animation",
+    type: "Boolean",
+    default: "false",
+    description: "Controls whether animation is used on load.",
+  },
+  {
+    name: "xAxis",
+    type: "Boolean",
+    default: "null",
+    description:
+      "Controls the visibility of the X-axis. If not specified, default behavior is applied.",
+  },
+];
 
 //Visualizations
 const barVisualizationState = ref("off");

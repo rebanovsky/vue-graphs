@@ -84,13 +84,14 @@
                   class="w-[100%] h-[100%] flex items-center justify-center gridlines"
                   v-if="graph.name == 'Barchart'"
                 >
-                <BarChart
-                :data="earnings"
-                :tooltip="true"
-                :animations="true"
-                height="240"
-                width="480"
-              /></div>
+                  <!-- <BarChart
+                    :data="earnings"
+                    :tooltip="true"
+                    :animations="true"
+                    height="240"
+                    width="480"
+                  /> -->
+                </div>
                 <div
                   class="w-[100%] h-[100%] flex items-center justify-center gridlines"
                   v-if="graph.name == 'Piechart'"
@@ -165,7 +166,7 @@ const lineData = ref([
 
 // animation check
 
-const isAnimate = ref(false)
+const isAnimate = ref(false);
 
 // List of graphs
 const graphs = [

@@ -1,10 +1,10 @@
 <template>
   <div
     class="playground-component w-[100%] flex justify-between px-[12px] rounded-[14px]"
-    style="height: calc(100vh - 78px)"
+    style="height: calc(100vh - 90px)"
   >
     <div class="main-content w-full overflow-y-auto flex justify-center">
-      <div class="sidenav overflow-y-auto gridlines rounded-[12px]">
+      <div class="sidenav overflow-y-auto gridlines rounded-[12px]" style="height: calc(100vh - 90px)">
         <SideMenu :title="title" :items="sidenavItems" :base-path="basePath" />
       </div>
       <div class="flex w-[100%] flex-1 justify-center overflow-x-auto">

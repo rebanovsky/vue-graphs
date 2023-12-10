@@ -45,10 +45,8 @@ const openName = ref(null);
 
 const toggleAccordion = (name) => {
   if (props.items.find((item) => item.name === name).hasOwnProperty("items")) {
-    console.log('jou')
     openName.value = openName.value === name ? null : name;
   } else {
-    console.log('je')
     navigateTo(name);
   }
 };

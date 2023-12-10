@@ -1,7 +1,7 @@
 <template>
   <div
     ref="svgContainer"
-    class="svg-icon flex items-center justify-center"
+    class="svg-icon flex items-center justify-center gridlines"
     :class="[width, height]"
   ></div>
 </template>
@@ -41,7 +41,7 @@ const getSvgContent = (name, dynamicClass) => {
 
   switch (name) {
     case "home":
-      return ` 
+      return `
         <svg
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -61,7 +61,7 @@ const getSvgContent = (name, dynamicClass) => {
           `;
     case "data":
       return `
-          <svg 
+          <svg
               class="${finalClass}"
               xmlns:x="http://ns.adobe.com/Extensibility/1.0/"
               xmlns:i="http://ns.adobe.com/AdobeIllustrator/10.0/"
@@ -184,8 +184,8 @@ const getSvgContent = (name, dynamicClass) => {
         `;
     case "config":
       return `
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 32 32" x="0px" y="0px"
           class="${finalClass}">
             <g>
@@ -195,12 +195,12 @@ const getSvgContent = (name, dynamicClass) => {
         `;
     case "dashboard":
       return `
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          data-name="Layer 1" 
-          viewBox="0 0 93 93" 
-          x="0px" 
-          y="0px" 
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          data-name="Layer 1"
+          viewBox="0 0 93 93"
+          x="0px"
+          y="0px"
           class="${finalClass}">
             <path class="cls-1" d="M71.21,42.094A20.3,20.3,0,1,0,50.9,21.792a20.322,20.322,0,0,0,20.307,20.3ZM5.184,91.511H38.363a3.692,3.692,0,0,0,3.685-3.692V54.641a3.692,3.692,0,0,0-3.685-3.692H5.184A3.694,3.694,0,0,0,1.49,54.641V87.819a3.694,3.694,0,0,0,3.694,3.692Zm0-49.438H38.363a3.692,3.692,0,0,0,3.685-3.691V5.2a3.692,3.692,0,0,0-3.685-3.691H5.184A3.694,3.694,0,0,0,1.49,5.2v33.18a3.694,3.694,0,0,0,3.694,3.691ZM87.8,91.511a3.7,3.7,0,0,0,3.693-3.692V54.641A3.7,3.7,0,0,0,87.8,50.949H54.621a3.7,3.7,0,0,0-3.694,3.692V87.819a3.7,3.7,0,0,0,3.694,3.692Z"/>
         </svg>
@@ -215,7 +215,16 @@ const getSvgContent = (name, dynamicClass) => {
         `;
     case "markets":
       return `
-      <svg class="${finalClass}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" version="1.1" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;" viewBox="0 0 333.33 333.33" x="0px" y="0px" fill-rule="evenodd" clip-rule="evenodd"><g><path class="fil0" d="M40.74 151.44c-7.83,0 -14.94,-3.19 -20.12,-8.35 -5.16,-5.17 -8.34,-12.28 -8.34,-20.11 0,-7.83 3.19,-14.94 8.35,-20.11 5.17,-5.16 12.28,-8.34 20.11,-8.34l173.27 0 -10.91 -9.06c-6.01,-5 -9.44,-11.98 -10.1,-19.2 -0.66,-7.21 1.43,-14.69 6.43,-20.7 5,-6.01 11.98,-9.44 19.2,-10.1 7.21,-0.66 14.69,1.43 20.7,6.43l69.52 57.76c3.73,2.59 6.81,6.07 8.93,10.11 2.09,3.97 3.27,8.47 3.27,13.22 0,7.85 -3.19,14.98 -8.33,20.12 -5.15,5.15 -12.27,8.34 -20.12,8.34l-251.85 0zm251.85 30.44c7.85,0 14.97,3.19 20.12,8.34 5.15,5.15 8.33,12.27 8.33,20.12 0,7.83 -3.19,14.94 -8.35,20.11 -5.17,5.16 -12.28,8.34 -20.1,8.34l-173.27 0 10.91 9.06c6.01,5 9.44,11.98 10.1,19.2 0.66,7.21 -1.43,14.69 -6.43,20.7l-0.35 0.41c-4.97,5.76 -11.79,9.04 -18.85,9.69 -7.21,0.66 -14.69,-1.43 -20.7,-6.43l-69.52 -57.76c-3.73,-2.59 -6.81,-6.07 -8.93,-10.11 -2.09,-3.96 -3.27,-8.48 -3.27,-13.22 0,-7.83 3.19,-14.94 8.35,-20.12 5.17,-5.16 12.28,-8.34 20.11,-8.34l251.85 0z"/></g></svg>    
+      <svg class="${finalClass}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" version="1.1" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;" viewBox="0 0 333.33 333.33" x="0px" y="0px" fill-rule="evenodd" clip-rule="evenodd"><g><path class="fil0" d="M40.74 151.44c-7.83,0 -14.94,-3.19 -20.12,-8.35 -5.16,-5.17 -8.34,-12.28 -8.34,-20.11 0,-7.83 3.19,-14.94 8.35,-20.11 5.17,-5.16 12.28,-8.34 20.11,-8.34l173.27 0 -10.91 -9.06c-6.01,-5 -9.44,-11.98 -10.1,-19.2 -0.66,-7.21 1.43,-14.69 6.43,-20.7 5,-6.01 11.98,-9.44 19.2,-10.1 7.21,-0.66 14.69,1.43 20.7,6.43l69.52 57.76c3.73,2.59 6.81,6.07 8.93,10.11 2.09,3.97 3.27,8.47 3.27,13.22 0,7.85 -3.19,14.98 -8.33,20.12 -5.15,5.15 -12.27,8.34 -20.12,8.34l-251.85 0zm251.85 30.44c7.85,0 14.97,3.19 20.12,8.34 5.15,5.15 8.33,12.27 8.33,20.12 0,7.83 -3.19,14.94 -8.35,20.11 -5.17,5.16 -12.28,8.34 -20.1,8.34l-173.27 0 10.91 9.06c6.01,5 9.44,11.98 10.1,19.2 0.66,7.21 -1.43,14.69 -6.43,20.7l-0.35 0.41c-4.97,5.76 -11.79,9.04 -18.85,9.69 -7.21,0.66 -14.69,-1.43 -20.7,-6.43l-69.52 -57.76c-3.73,-2.59 -6.81,-6.07 -8.93,-10.11 -2.09,-3.96 -3.27,-8.48 -3.27,-13.22 0,-7.83 3.19,-14.94 8.35,-20.12 5.17,-5.16 12.28,-8.34 20.11,-8.34l251.85 0z"/></g></svg>
+       `;
+    case "copy":
+      return `
+      <svg xmlns="http://www.w3.org/2000/svg" class="${finalClass}" viewBox="0 0 36 36" x="0px" y="0px">
+        <g>
+          <path d="M5.35309,12.00284H20.64417a3.353,3.353,0,0,1,3.353,3.353V30.647A3.353,3.353,0,0,1,20.64423,34H5.35315a3.35309,3.35309,0,0,1-3.35309-3.35309v-15.291A3.353,3.353,0,0,1,5.35309,12.00284Z"/>
+          <path d="M30.64691,2H15.3559a3.36147,3.36147,0,0,0-3.35309,3.35309v4.647H20.6441a5.36862,5.36862,0,0,1,5.35584,5.35578v8.64129h4.647a3.36136,3.36136,0,0,0,3.353-3.353V5.35312A3.36142,3.36142,0,0,0,30.64691,2Z"/>
+        </g>
+      </svg>
        `;
     default:
       return "";
@@ -248,5 +257,4 @@ watchEffect(() => {
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
