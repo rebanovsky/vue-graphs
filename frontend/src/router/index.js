@@ -7,27 +7,33 @@ const routes = [
     meta: { requiresAuth: true },
     children: [
       {
-        path: "/",
+        path: "", // This is the base path ('/')
         name: "base",
         component: () => import("@/views/TheBase.vue"),
         children: [
           {
-            path: "/",
+            path: "graphs", // This will be '/graphs'
             name: "graphs",
             component: () => import("@/views/v-graphs/TheGraphs.vue"),
             children: [
               {
-                path: "/",
+                path: "home", // This will be '/graphs/home'
                 name: "home",
                 component: () => import("@/views/v-graphs/TheHome.vue"),
               },
               {
-                path: "line",
+                path: "line", // This will be '/graphs/line'
                 name: "line",
                 children: [
                   {
-                    path: "linechart",
+                    path: "linechart", // This will be '/graphs/line/linechart'
                     name: "linechart",
+                    component: () =>
+                      import("@/views/v-graphs/graphs/TheLine.vue"),
+                  },
+                  {
+                    path: "multiline",
+                    name: "multiline",
                     component: () =>
                       import("@/views/v-graphs/graphs/TheLine.vue"),
                   },

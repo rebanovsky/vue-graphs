@@ -3,12 +3,13 @@
     <div class="config-title">
       {{ title }}
     </div>
-    <div class="radio-group flex gap-[8px] items-center">
+    <div class="radio-group flex items-center">
       <div
-        v-for="option in options"
+        v-for="(option, index) in options"
         :key="option.id"
         :class="[
-          'radio-option rounded-[4px] border-[1px] text-slate-500 border-slate-300 dark:border-slate-700 transition ease duration-75',
+          'radio-option text-slate-500 dark:text-slate-200 transition ease duration-75',
+          roundedClass(index, options.length),
           {
             '!text-blue-900 !border-blue-900 bg-blue-50 dark:bg-slate-900 dark:border-blue-00 dark:text-slate-200 dark:border-slate-200':
               option.value === modelValue,
@@ -35,7 +36,7 @@
 <script setup>
 const props = defineProps({
   options: Array,
-  modelValue: [String, Number],
+  modelValue: [String, Number, Boolean],
   name: String,
   disabled: Boolean,
   title: String,
@@ -48,6 +49,13 @@ const updateModelValue = (newValue) => {
     emit("update:modelValue", newValue);
   }
 };
+
+const roundedClass = (index, length) => {
+  if (length === 1) return "rounded-[4px]";
+  if (index === 0) return "rounded-l-[4px]";
+  if (index === length - 1) return "rounded-r-[4px]";
+  return "";
+};
 </script>
 
 <style scoped>
@@ -58,7 +66,17 @@ const updateModelValue = (newValue) => {
   height: 0;
 }
 
-.radio-option label {
-  cursor: pointer;
+/* Add left border only to the first radio button */
+.radio-option:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
+
+/* Add right border only to the last radio button */
+.radio-option:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
 </style>
+

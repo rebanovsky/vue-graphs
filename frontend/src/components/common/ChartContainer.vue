@@ -2,7 +2,7 @@
   <div
     class="chart-container flex w-[auto] shadow-boxshlight overflow-y-auto my-[8px] dark:shadow dark:bg-slate-800 flex-col gap-[20px] p-[32px] rounded-[12px]"
   >
-    <div class="chart-title flex py-[4px] ">
+    <div class="chart-title flex py-[4px]">
       <div class="h-[100%] text-[14px] gridlines text-slate-500 flex">
         {{ title }}
       </div>
@@ -16,9 +16,14 @@
             <div
               class="props-wrapper w-[560px] gridlines flex flex-col gap-[8px]"
             >
-              <div class="props-data-header flex gap-[12px] px-[12px] text-[12px] text-slate-500">
-                <div class="props-title bg-slate-300 text-slate-900 rounded p-[4px] cursor-pointer">props</div>
-                <div class="data-title rounded p-[4px] cursor-pointer">data</div>
+              <div
+                class="props-data-header flex gap-[12px] px-[12px] text-[12px] text-slate-500"
+              >
+                <RadioButton
+                  :options="options"
+                  v-model="appendix"
+                  name="name"
+                />
               </div>
 
               <div
@@ -55,7 +60,7 @@
           <div class="flex flex-col gap-[20px]">
             <div class="config-header flex text-[14px]">
               <div
-                class="flex flex-col gap-[12px] gridlines w-[200px] p-[12px] h-[280px] overflow-y-auto"
+                class="flex flex-col gap-[20px] gridlines w-[200px] p-[12px] h-[280px] overflow-y-auto"
               >
                 <slot name="config"></slot>
               </div>
@@ -75,6 +80,10 @@
 </template>
 
 <script setup>
+import { nanoid } from 'nanoid'
+import { ref } from 'vue';
+import RadioButton from './RadioButton.vue';
+
 defineProps({
   dataFile: {
     type: String,
@@ -88,6 +97,21 @@ defineProps({
     type: Array,
   },
 });
+
+const appendix = ref('props');
+
+const options = [
+  {
+    id: nanoid(10), 
+    value: 'props',
+    label: 'Props'
+  },
+  {
+    id: nanoid(10), 
+    value: 'data',
+    label: 'Data'
+  }
+]
 </script>
 
 <style lang="scss" scoped></style>

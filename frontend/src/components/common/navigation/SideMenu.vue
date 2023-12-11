@@ -1,7 +1,7 @@
 <template>
   <div class="side-menu overflow-y-auto flex flex-col justify-between h-[100%]">
     <div>
-      <div class="w-[240px] flex flex-col">
+      <div class="w-[200px] flex flex-col">
         <div v-for="(item, index) in items" :key="index" class="accordion-item">
           <div
             class="accordion-title hover:bg-slate-50 dark:hover:bg-slate-800 border-b-[1px] border-slate-200 dark:border-slate-800 text-[12px] px-[16px]"

@@ -7,27 +7,27 @@
       :data="lineData"
       dateFormat="%Y-%m-%d"
       :line-color="config.lineColor"
-      :tooltip="config.tooltip"
-      :gridlines="gridlinesValue"
-      :animations="config.animations"
+      :tooltip="tooltipBoolean"
+      :gridlines="gridlinesBoolean"
+      :animations="animationsBoolean"
     />
     <template #config>
       <RadioButton
-        title="Tooltip"
+        v-model="config.tooltip"
         :options="radioConfigs.tooltip.config"
-        v-model="tooltipValue"
+        title="Tooltip"
         name="tooltip"
       />
       <RadioButton
-        title="Gridlines"
+        v-model="config.gridlines"
         :options="radioConfigs.gridlines.config"
-        v-model="gridlinesValue"
+        title="Gridlines"
         name="gridlines"
       />
       <RadioButton
-        title="Animations"
+        v-model="config.animations"
         :options="radioConfigs.animations.config"
-        v-model="animationsValue"
+        title="Animations"
         name="animations"
       />
       <MultiSelect
@@ -54,17 +54,17 @@
           />
         </div>
         <div class="flex gridlines h-[100%] items-center justify-center">
-          <div class="flex flex-col relative">
+          <div class="flex flex-col relative" v-if="chartProps.length > 0">
             <div class="top flex">
               {{ "<" }}
               <div class="component-name text-[#e85700] dark:text-[#f8d339]">
                 SingleLine
               </div>
             </div>
-            <transition-group name="list" tag="div" class="flex flex-col">
+            <transition-group name="list" tag="div">
               <div
                 class="props pl-[16px] flex max-w-[180px]"
-                v-for="prop in singleLineProps"
+                v-for="prop in chartProps"
                 :key="prop.name"
               >
                 :
@@ -88,7 +88,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch, computed } from "vue";
+import { ref, reactive, computed } from "vue";
 import { line1 } from "@/data/dummyMultiLine";
 import SingleLine from "@/components/v-graphs/graphs/SingleLine.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
@@ -96,6 +96,7 @@ import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/common/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
+import { nanoid } from "nanoid";
 
 // LINECHART DATA
 const formattedLineData = line1.map((item) => ({
@@ -115,48 +116,29 @@ const radioConfigs = {
   animations: {
     title: "Animations",
     config: [
-      { id: "animationsOn", label: "On", value: "on" },
-      { id: "animationsOff", label: "Off", value: "off" },
+      { id: nanoid(10), label: "On", value: "on" },
+      { id: nanoid(10), label: "Off", value: "off" },
     ],
   },
   gridlines: {
     title: "Gridlines",
     config: [
-      { id: "gridlineOn", label: "On", value: "on" },
-      { id: "gridlineOff", label: "Off", value: "off" },
+      { id: nanoid(10), label: "On", value: "on" },
+      { id: nanoid(10), label: "Off", value: "off" },
     ],
   },
   tooltip: {
     title: "Tooltip",
     config: [
-      { id: "tooltipOn", label: "On", value: "on" },
-      { id: "tooltipOff", label: "Off", value: "off" },
+      { id: nanoid(10), label: "On", value: "on" },
+      { id: nanoid(10), label: "Off", value: "off" },
     ],
   },
 };
 
-// Example for tooltip
-const tooltipValue = computed({
-  get: () => config.tooltip.toString(),
-  set: (value) => {
-    config.tooltip = value === "on";
-  },
-});
-
-// Similar for gridlines and animations
-const gridlinesValue = computed({
-  get: () => config.gridlines.toString(),
-  set: (value) => {
-    config.gridlines = value === "on";
-  },
-});
-
-const animationsValue = computed({
-  get: () => config.animations.toString(),
-  set: (value) => {
-    config.animations = value === "on";
-  },
-});
+const tooltipBoolean = computed(() => config.tooltip === "on");
+const gridlinesBoolean = computed(() => config.gridlines === "on");
+const animationsBoolean = computed(() => config.animations === "on");
 
 // Adding/removing stocks
 const stockOptions = {
@@ -171,8 +153,8 @@ const stockOptions = {
 const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
 
 const mapDisplayValue = (key, value) => {
-  if (key === "tooltip" || key == "animations") {
-    return value === true ? true : null;
+  if (key === "tooltip" || key === "gridlines" || key === "animations") {
+    return value === "on" ? "on" : null;
   }
   return JSON.stringify(value);
 };
@@ -186,17 +168,13 @@ const config = reactive({
   animations: "off",
 });
 
-const singleLineProps = computed(() => {
+const chartProps = computed(() => {
   return Object.entries(config)
     .map(([key, value]) => ({
       name: key,
       value: mapDisplayValue(key, value),
     }))
     .filter((prop) => prop.value !== null);
-});
-
-watch(singleLineProps, (val) => {
-  console.log("val: ", val);
 });
 
 // PROPS
@@ -221,7 +199,7 @@ const props = [
     description: "Specifies the height of the chart in pixels.",
   },
   {
-    name: "date-format",
+    name: "dateFormat",
     type: "String",
     default: "null",
     description:
@@ -234,13 +212,13 @@ const props = [
     description: "The title of the line chart.",
   },
   {
-    name: "dot-color",
+    name: "dotColor",
     type: "String",
     default: '"#05D9FF"',
     description: "The color of the dots on the line chart.",
   },
   {
-    name: "line-color",
+    name: "lineColor",
     type: "String",
     default: "null",
     description:
@@ -265,7 +243,7 @@ const props = [
     description: "Controls whether animation is used on load.",
   },
   {
-    name: "x-axis",
+    name: "xAxis",
     type: "Boolean",
     default: "null",
     description:
@@ -284,7 +262,7 @@ const props = [
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateX(4px);
+  transform: translateY(-6px);
 }
 
 .list-leave-active {

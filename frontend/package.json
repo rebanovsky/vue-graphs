@@ -30,6 +30,7 @@
     "langchain": "^0.0.90",
     "markdown-it": "^13.0.1",
     "mongoose": "^6.8.1",
+    "nanoid": "^5.0.4",
     "npm": "^9.6.7",
     "openai": "^3.2.1",
     "postcss": "^8.4.19",
