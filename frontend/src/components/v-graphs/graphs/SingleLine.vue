@@ -302,6 +302,7 @@ export default {
     onMounted(drawChart);
 
     watchEffect(() => {
+      console.log(props.gridlines)
       drawChart();
     });
 

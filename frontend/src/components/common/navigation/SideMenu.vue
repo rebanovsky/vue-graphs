@@ -4,7 +4,7 @@
       <div class="w-[240px] flex flex-col">
         <div v-for="(item, index) in items" :key="index" class="accordion-item">
           <div
-            class="accordion-title hover:bg-slate-50 text-[12px] px-[16px]"
+            class="accordion-title hover:bg-slate-50 dark:hover:bg-slate-800 border-b-[1px] border-slate-200 dark:border-slate-800 text-[12px] px-[16px]"
             @click="toggleAccordion(item, index)"
           >
             {{ item.title }}
@@ -24,7 +24,7 @@
                 <li
                   v-for="(subItem, subIndex) in item.items"
                   :key="`item-${subIndex}`"
-                  class="text-[12px] py-[12px] px-[16px] hover:bg-slate-50 cursor-pointer border-b-[1px] border-slate-200"
+                  class="text-[12px] py-[12px] px-[16px] hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer border-b-[1px] border-slate-200 dark:border-slate-800"
                   @click="navigateTo(item.name, subItem.name)"
                 >
                   {{ subItem.title }}
@@ -108,7 +108,6 @@ export default {
 .accordion-title {
   cursor: pointer;
   padding: 10px;
-  border-bottom: 1px solid #eee;
 }
 
 .accordion-content {

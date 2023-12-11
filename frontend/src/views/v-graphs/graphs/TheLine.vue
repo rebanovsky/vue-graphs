@@ -8,26 +8,26 @@
       dateFormat="%Y-%m-%d"
       :line-color="config.lineColor"
       :tooltip="config.tooltip"
-      :gridlines="config.gridlines"
+      :gridlines="gridlinesValue"
       :animations="config.animations"
     />
     <template #config>
       <RadioButton
-        :title="radioConfigs.tooltip.title"
+        title="Tooltip"
         :options="radioConfigs.tooltip.config"
-        v-model="config.tooltip"
+        v-model="tooltipValue"
         name="tooltip"
       />
       <RadioButton
-        :title="radioConfigs.gridlines.title"
+        title="Gridlines"
         :options="radioConfigs.gridlines.config"
-        v-model="config.gridlines"
+        v-model="gridlinesValue"
         name="gridlines"
       />
       <RadioButton
-        :title="radioConfigs.animations.title"
+        title="Animations"
         :options="radioConfigs.animations.config"
-        v-model="config.animations"
+        v-model="animationsValue"
         name="animations"
       />
       <MultiSelect
@@ -65,7 +65,7 @@
               <div
                 class="props pl-[16px] flex max-w-[180px]"
                 v-for="prop in singleLineProps"
-                :key="prop.id"
+                :key="prop.name"
               >
                 :
                 <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
@@ -78,20 +78,18 @@
                   {{ prop.value }}
                 </div>
               </div>
-              <div class="bottom">{{ "/>" }}</div>
             </transition-group>
+            <div class="bottom">{{ "/>" }}</div>
           </div>
         </div>
       </div>
     </template>
   </ChartContainer>
-
-
- </template>
+</template>
 
 <script setup>
 import { ref, reactive, watch, computed } from "vue";
-import { line1, line2 } from "@/data/dummyMultiLine";
+import { line1 } from "@/data/dummyMultiLine";
 import SingleLine from "@/components/v-graphs/graphs/SingleLine.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
@@ -111,6 +109,95 @@ const lineData = ref([
     values: formattedLineData,
   },
 ]);
+
+//Radio configs
+const radioConfigs = {
+  animations: {
+    title: "Animations",
+    config: [
+      { id: "animationsOn", label: "On", value: "on" },
+      { id: "animationsOff", label: "Off", value: "off" },
+    ],
+  },
+  gridlines: {
+    title: "Gridlines",
+    config: [
+      { id: "gridlineOn", label: "On", value: "on" },
+      { id: "gridlineOff", label: "Off", value: "off" },
+    ],
+  },
+  tooltip: {
+    title: "Tooltip",
+    config: [
+      { id: "tooltipOn", label: "On", value: "on" },
+      { id: "tooltipOff", label: "Off", value: "off" },
+    ],
+  },
+};
+
+// Example for tooltip
+const tooltipValue = computed({
+  get: () => config.tooltip.toString(),
+  set: (value) => {
+    config.tooltip = value === "on";
+  },
+});
+
+// Similar for gridlines and animations
+const gridlinesValue = computed({
+  get: () => config.gridlines.toString(),
+  set: (value) => {
+    config.gridlines = value === "on";
+  },
+});
+
+const animationsValue = computed({
+  get: () => config.animations.toString(),
+  set: (value) => {
+    config.animations = value === "on";
+  },
+});
+
+// Adding/removing stocks
+const stockOptions = {
+  title: "Add/remove Bars",
+  configs: [
+    { label: "AAPL", value: "AAPL" },
+    { label: "MSFT", value: "MSFT" },
+    { label: "NVDA", value: "NVDA" },
+  ],
+};
+
+const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
+
+const mapDisplayValue = (key, value) => {
+  if (key === "tooltip" || key == "animations") {
+    return value === true ? true : null;
+  }
+  return JSON.stringify(value);
+};
+
+const config = reactive({
+  lineData: [],
+  selectedStocks: [],
+  lineColor: "#fff",
+  tooltip: "off",
+  gridlines: "off",
+  animations: "off",
+});
+
+const singleLineProps = computed(() => {
+  return Object.entries(config)
+    .map(([key, value]) => ({
+      name: key,
+      value: mapDisplayValue(key, value),
+    }))
+    .filter((prop) => prop.value !== null);
+});
+
+watch(singleLineProps, (val) => {
+  console.log("val: ", val);
+});
 
 // PROPS
 const props = [
@@ -185,70 +272,6 @@ const props = [
       "Controls the visibility of the X-axis. If not specified, default behavior is applied.",
   },
 ];
-
-//Radio configs
-const radioConfigs = {
-  animations: {
-    title: "Animations",
-    config: [
-      { id: "animationsOn", label: "On", value: "on" },
-      { id: "animationsOff", label: "Off", value: "off" },
-    ],
-  },
-  gridlines: {
-    title: "Gridlines",
-    config: [
-      { id: "gridlineOn", label: "On", value: "on" },
-      { id: "gridlineOff", label: "Off", value: "off" },
-    ],
-  },
-  tooltip: {
-    title: "Tooltip",
-    config: [
-      { id: "tooltipOn", label: "On", value: "on" },
-      { id: "tooltipOff", label: "Off", value: "off" },
-    ],
-  },
-};
-
-// Adding/removing stocks
-const stockOptions = {
-  title: "Add/remove Bars",
-  configs: [
-    { label: "AAPL", value: "AAPL" },
-    { label: "MSFT", value: "MSFT" },
-    { label: "NVDA", value: "NVDA" },
-  ],
-};
-
-const colorOptions = ref([
-  { id: "color1", label: "Blue", value: "#0000FF" },
-]);
-
-const mapDisplayValue = (key, value) => {
-  if (key === "tooltip") {
-    return value === true ? true : null;
-  }
-  return JSON.stringify(value);
-};
-
-const singleLineProps = computed(() => {
-  return Object.entries(config)
-    .map(([key, value]) => ({
-      name: key,
-      value: mapDisplayValue(key, value),
-    }))
-    .filter((prop) => prop.value !== null);
-});
-
-const config = reactive({
-  lineData: [],
-  tooltip: 'off',
-  animations: 'off',
-  selectedStocks: [],
-  lineColor: "#fff",
-  gridlines: 'off',
-});
 </script>
 
 <style lang="scss" scoped>
