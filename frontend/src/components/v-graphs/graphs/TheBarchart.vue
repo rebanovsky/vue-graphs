@@ -1,16 +1,11 @@
 <template>
   <div class="gridlines">
-    <div class="single-line-header">
-      <div class="single-line-title">
-        <input type="text" class="bg-transparent" :placeholder="title" />
-      </div>
-    </div>
-    <div ref="chart" class="chart-border"></div>
+    <div ref="chart"></div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref, watch, watchEffect } from "vue";
+import { onMounted, ref, watch } from "vue";
 import * as d3 from "d3";
 import { useDark } from "@vueuse/core";
 

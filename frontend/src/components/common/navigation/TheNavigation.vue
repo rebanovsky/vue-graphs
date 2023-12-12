@@ -12,30 +12,28 @@
         <div class="search ml-[32px]"><TheSearch /></div>
       </div>
       <div class="right-side flex items-center gap-[8px]">
-        <font-awesome-icon
-          class="h-[22px] text-slate-400 cursor-pointer p-[4px] rounded-[2px] hover:text-slate-600 dark:hover:text-slate-400 dark:text-slate-600 transition"
-          :icon="['fab', 'github']"
-        />
+        <a href="https://github.com/rebanovsky/vue-graphs" target="_blank">
+          <font-awesome-icon
+            class="h-[22px] text-slate-400 cursor-pointer p-[4px] rounded-[2px] hover:text-slate-600 dark:hover:text-slate-400 dark:text-slate-600 transition"
+            :icon="['fab', 'github']"
+          />
+        </a>
         <theme-toggler />
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
 import TheSearch from "@/components/navigation/TheSearch.vue";
 import ThemeToggler from "@/components/widgets/ThemeToggler.vue";
 
-export default {
-  components: { ThemeToggler, TheSearch },
-  props: {
-    isSettings: {
-      type: Boolean,
-      default: false,
-    },
+const props = defineProps({
+  isSettings: {
+    type: Boolean,
+    default: false,
   },
-  setup() {},
-};
+});
 </script>
 
 <style scoped></style>

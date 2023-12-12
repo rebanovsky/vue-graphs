@@ -20,7 +20,7 @@ const sidenavItems = [
     title: "Bar Charts",
     name: "bar",
     items: [
-      { name: "barchart", title: "linechart" },
+      { name: "barchart", title: "barchart" },
       { name: "verbar", title: "verbar" },
     ],
   },

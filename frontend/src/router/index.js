@@ -7,43 +7,55 @@ const routes = [
     meta: { requiresAuth: true },
     children: [
       {
-        path: "", // This is the base path ('/')
+        path: "",
         name: "base",
         component: () => import("@/views/TheBase.vue"),
         children: [
           {
-            path: "graphs", // This will be '/graphs'
+            path: "",
             name: "graphs",
             component: () => import("@/views/v-graphs/TheGraphs.vue"),
             children: [
               {
-                path: "home", // This will be '/graphs/home'
+                path: "/",
                 name: "home",
                 component: () => import("@/views/v-graphs/TheHome.vue"),
               },
               {
-                path: "line", // This will be '/graphs/line'
+                path: "line",
                 name: "line",
                 children: [
                   {
-                    path: "linechart", // This will be '/graphs/line/linechart'
+                    path: "linechart",
                     name: "linechart",
                     component: () =>
-                      import("@/views/v-graphs/graphs/TheLine.vue"),
+                      import("@/views/v-graphs/graphs/line/TheSingleline.vue"),
                   },
                   {
                     path: "multiline",
                     name: "multiline",
                     component: () =>
-                      import("@/views/v-graphs/graphs/TheLine.vue"),
+                      import("@/views/v-graphs/graphs/line/TheMultiline.vue"),
+                  },
+                  {
+                    path: "candlestick",
+                    name: "candlestick",
+                    component: () =>
+                      import("@/views/v-graphs/graphs/line/TheCandlestick.vue"),
                   },
                 ],
               },
               {
                 path: "bar",
                 name: "bar",
-                component: () =>
-                  import("@/views/v-graphs/graphs/BarCharts.vue"),
+                children: [
+                  {
+                    path: "barchart",
+                    name: "barchart",
+                    component: () =>
+                      import("@/views/v-graphs/graphs/bar/TheBarchart.vue"),
+                  },
+                ],
               },
               {
                 path: "pie",

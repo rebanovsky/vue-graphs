@@ -1,19 +1,9 @@
 <template>
-  <div class="graph-wrapper flex flex-col">
-    <div
-      class="graph-title gridlines w-[100%] px-[12px] py-[8px] text-[12px] font-medium dark:text-slate-400 text-slate-600"
-    >
-      {{ title }}
-    </div>
-    <div
-      class="graph-legend w-[100%] px-[10px] h-[16px] text-[10px] font-medium dark:text-slate-400 text-slate-600"
-    >
-    </div>
+  <div class="graph-wrapper flex flex-col gridlines">
     <svg
       ref="svgRef"
       :width="width + margin.left + margin.right"
       :height="height + margin.top + margin.bottom"
-      class="rounded-[8px] chart-border"
     >
       <g :transform="'translate(' + margin.left + ',' + margin.top + ')'"></g>
     </svg>
@@ -44,7 +34,7 @@ export default {
     },
     title: {
       type: String,
-    }
+    },
   },
   setup(props) {
     const svgRef = ref(null);

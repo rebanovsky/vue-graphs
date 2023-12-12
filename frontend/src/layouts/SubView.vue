@@ -9,9 +9,9 @@
       </div>
       <div class="flex w-[100%] flex-1 justify-center">
         <router-view v-slot="{ Component }">
-          <transition name="fade" mode="out-in">
+          <!-- <transition name="fade" mode="out-in"> -->
             <component :is="Component" />
-          </transition>
+          <!-- </transition> -->
         </router-view>
       </div>
     </div>

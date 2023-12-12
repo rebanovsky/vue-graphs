@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col text-[11px] gap-[4px]">
-    <div class="config-title">
+    <div class="config-title dark:text-slate-300 text-slate-700">
       {{ title }}
     </div>
     <div class="radio-group flex items-center">
@@ -8,15 +8,16 @@
         v-for="(option, index) in options"
         :key="option.id"
         :class="[
-          'radio-option text-slate-500 dark:text-slate-200 transition ease duration-75',
+          'radio-option text-slate-500 border-[1px] transition ease duration-75',
           roundedClass(index, options.length),
           {
-            '!text-blue-900 !border-blue-900 bg-blue-50 dark:bg-slate-900 dark:border-blue-00 dark:text-slate-200 dark:border-slate-200':
+            '!text-blue-900 !border-blue-900 z-[9999] bg-blue-50 dark:bg-slate-800':
               option.value === modelValue,
           },
         ]"
         @click="() => updateModelValue(option.value)"
-        class="px-[3px] py-[1px]"
+        class="px-[4px] py-[2px]"
+        :style="index !== 0 ? 'transform: translateX(-1px);' : ''"
       >
         <input
           type="radio"
@@ -77,6 +78,4 @@ const roundedClass = (index, length) => {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
-
 </style>
-

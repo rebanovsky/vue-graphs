@@ -7,7 +7,6 @@
         {{ title }}
       </div>
     </div>
-
     <div class="flex flex-col gap-[16px]">
       <div class="flex flex-col gap-[40px]">
         <div class="flex gap-[32px]">
