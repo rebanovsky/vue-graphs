@@ -71,7 +71,7 @@ const customColors = isDark.value ? customDarkColors : customLightColors;
 
 //ANIMATION DURATION AND DELAY CONSTANTS
 const barAnimationDuration = 800;
-const textAnimationDuration = 200;
+const textAnimationDuration = 150;
 const textAnimationDelay = barAnimationDuration;
 
 const drawChart = () => {
@@ -85,16 +85,28 @@ const drawChart = () => {
 
   function handleMouseover(event, d) {
     svg
-      .selectAll(`.value-label`)
-      .filter((labelData) => labelData.entity === d.entity)
-      .style("opacity", 1); // Show label for hovered bar
+      .selectAll(".value-label")
+      .filter(
+        (labelData) =>
+          labelData.entity === d.entity && labelData.period === d.period
+      )
+      .transition()
+      .duration(textAnimationDuration)
+      .style("opacity", 1)
+      .attr("y", (d) => y(d.value) - 12);
   }
 
   function handleMouseout(event, d) {
     svg
-      .selectAll(`.value-label`)
-      .filter((labelData) => labelData.entity === d.entity)
-      .style("opacity", 0); // Hide label
+      .selectAll(".value-label")
+      .filter(
+        (labelData) =>
+          labelData.entity === d.entity && labelData.period === d.period
+      )
+      .transition()
+      .duration(textAnimationDuration)
+      .style("opacity", 0)
+      .attr("y", (d) => y(d.value) - 6);
   }
 
   // Create SVG
@@ -142,6 +154,7 @@ const drawChart = () => {
         const dataPoint = entity.data.find((dd) => dd.x === d);
         return {
           entity: entity.entity,
+          period: d,
           value: dataPoint ? dataPoint.y : 0,
         };
       })
@@ -194,10 +207,10 @@ const drawChart = () => {
       return formatNumber(d.value);
     })
     .attr("x", (d) => x1(d.entity) + x1.bandwidth() / 2)
-    .attr("y", (d) => y(d.value) - 5)
+    .attr("y", (d) => y(d.value) - 8)
     .attr("text-anchor", "middle")
     .attr("fill", "white")
-    .attr("font-size", "10px")
+    .attr("font-size", "0.7em")
     .style("opacity", 0);
 
   // Append Axes
