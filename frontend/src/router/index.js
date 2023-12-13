@@ -55,37 +55,79 @@ const routes = [
                     component: () =>
                       import("@/views/graphs/bar/TheBarchart.vue"),
                   },
+                  {
+                    path: "verbar",
+                    name: "verbar",
+                    component: () =>
+                      import("@/views/graphs/bar/FlippedBar.vue"),
+                  },
                 ],
               },
               {
                 path: "pie",
                 name: "pie",
-                component: () =>
-                  import("@/views/graphs/PieCharts.vue"),
+                children: [
+                  {
+                    path: "piechart",
+                    name: "piechart",
+                    component: () =>
+                      import("@/views/graphs/pie/ThePiechart.vue"),
+                  },
+                  {
+                    path: "doughnut",
+                    name: "doughnut",
+                    component: () =>
+                      import("@/views/graphs/pie/TheDoughnut.vue"),
+                  },
+                ],
               },
               {
                 path: "dot",
                 name: "dot",
-                component: () =>
-                  import("@/views/graphs/DotGraphs.vue"),
+                children: [
+                  {
+                    path: "dotplot",
+                    name: "dotplot",
+                    component: () =>
+                      import("@/views/graphs/dot/TheDotplot.vue"),
+                  },
+                ],
               },
               {
                 path: "bubble",
                 name: "bubble",
-                component: () =>
-                  import("@/views/graphs/BubbleCharts.vue"),
+                children: [
+                  {
+                    path: "bubblechart",
+                    name: "bubblechart",
+                    component: () =>
+                      import("@/views/graphs/bubble/TheBubblechart.vue"),
+                  },
+                ],
               },
               {
-                path: "heatmap",
-                name: "heatmap",
-                component: () =>
-                  import("@/views/graphs/TheHeatmaps.vue"),
+                path: "map",
+                name: "map",
+                children: [
+                  {
+                    path: "heatmap",
+                    name: "heatmap",
+                    component: () =>
+                      import("@/views/graphs/map/TheHeatmap.vue"),
+                  },
+                ],
               },
               {
                 path: "tree",
                 name: "tree",
-                component: () =>
-                  import("@/views/graphs/TheTreemaps.vue"),
+                children: [
+                  {
+                    path: "treemap",
+                    name: "treemap",
+                    component: () =>
+                      import("@/views/graphs/tree/TheTreemap.vue"),
+                  },
+                ],
               },
             ],
           },

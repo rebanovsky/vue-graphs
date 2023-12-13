@@ -57,14 +57,41 @@
             </div>
           </div>
           <div class="flex flex-col gap-[20px]">
-            <div class="config-header flex text-[14px]">
+            <div class="config flex flex-col gap-[4px] text-[14px]">
+              <div class="config-search flex text-[14px]">
+                <div class="gridlines w-[100%]">
+                  <div
+                    :class="
+                      isInputFocused
+                        ? 'border-slate-400 transition'
+                        : 'border-slate-100 dark:border-slate-900'
+                    "
+                    class="ticker-searcher flex items-center border-b-[1px] px-[8px]"
+                  >
+                    <font-awesome-icon
+                      class="h-[12px] text-slate-400 dark:text-slate-600 transition"
+                      :icon="['fas', 'magnifying-glass']"
+                      :class="
+                        isInputFocused
+                          ? 'text-slate-900 dark:text-slate-100 transition'
+                          : ''
+                      "
+                    />
+                    <input
+                      ref="searchRef"
+                      class="dark:placeholder-slate-500 font-light text-[12px] h-[32px] px-[6px] w-[140px] mx-[5px] bg-slate-100 dark:bg-transparent placeholder-slate-400 transition ease"
+                      placeholder="Search"
+                    />
+                  </div>
+                </div>
+              </div>
               <div
-                class="flex flex-col gap-[20px] gridlines w-[200px] p-[12px] h-[280px] overflow-y-auto"
+                class="flex flex-col gap-[20px] gridlines w-[200px] p-[12px] h-[243px] overflow-y-auto"
               >
                 <slot name="config"></slot>
               </div>
             </div>
-            <div class="config-header flex text-[14px]">
+            <div class="code-block flex text-[14px]">
               <div
                 class="flex flex-col gap-[12px] gridlines w-[200px] p-[12px] h-[auto] overflow-y-auto overflow-x-hidden"
               >
@@ -79,9 +106,9 @@
 </template>
 
 <script setup>
-import { nanoid } from 'nanoid'
-import { ref } from 'vue';
-import RadioButton from './RadioButton.vue';
+import { nanoid } from "nanoid";
+import { ref } from "vue";
+import RadioButton from "./RadioButton.vue";
 
 defineProps({
   dataFile: {
@@ -97,20 +124,20 @@ defineProps({
   },
 });
 
-const appendix = ref('props');
+const appendix = ref("props");
 
 const options = [
   {
-    id: nanoid(10), 
-    value: 'props',
-    label: 'Props'
+    id: nanoid(10),
+    value: "props",
+    label: "Props",
   },
   {
-    id: nanoid(10), 
-    value: 'data',
-    label: 'Data'
-  }
-]
+    id: nanoid(10),
+    value: "data",
+    label: "Data",
+  },
+];
 </script>
 
 <style lang="scss" scoped></style>

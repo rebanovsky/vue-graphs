@@ -29,23 +29,23 @@ const sidenavItems = [
     name: "pie",
     items: [
       { name: "piechart", title: "piechart" },
-      { name: "doughnut chart", title: "doughnut" },
+      { name: "doughnut", title: "doughnut" },
     ],
   },
   {
     title: "Dot Plots",
     name: "dot",
-    items: [{ name: "dotplots", title: "dotplots" }],
+    items: [{ name: "dotplot", title: "dotplot" }],
   },
   {
     title: "Bubble Charts",
     name: "bubble",
-    items: [{ name: "bubble chart", title: "bubble chart" }],
+    items: [{ name: "bubblechart", title: "bubblechart" }],
   },
   {
     title: "Heat Maps",
-    name: "heatmap",
-    items: [{ name: "heatmaps", title: "heatmaps" }],
+    name: "map",
+    items: [{ name: "heatmap", title: "heatmap" }],
   },
   {
     title: "Treemaps",

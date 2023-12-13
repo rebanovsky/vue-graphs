@@ -1,16 +1,11 @@
 <template>
   <div class="gridlines">
-    <div class="single-line-header">
-      <div class="single-line-title">
-        <input type="text" class="bg-transparent" :placeholder="title" />
-      </div>
-    </div>
-    <div ref="chart" class="chart-border"></div>
+    <div ref="chart"></div>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref, watch, watchEffect } from "vue";
+import { onMounted, ref, watch } from "vue";
 import * as d3 from "d3";
 import { useDark } from "@vueuse/core";
 
@@ -76,7 +71,7 @@ const customColors = isDark.value ? customDarkColors : customLightColors;
 
 //ANIMATION DURATION AND DELAY CONSTANTS
 const barAnimationDuration = 800;
-const textAnimationDuration = 200;
+const textAnimationDuration = 150;
 const textAnimationDelay = barAnimationDuration;
 
 const drawChart = () => {
@@ -84,22 +79,34 @@ const drawChart = () => {
 
   d3.select(chart.value).selectAll("*").remove();
 
-  const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+  const margin = { top: 2, right: 2, bottom: 3, left: 5 };
   const width = props.width - margin.left - margin.right;
   const height = props.height - margin.top - margin.bottom;
 
   function handleMouseover(event, d) {
     svg
-      .selectAll(`.value-label`)
-      .filter((labelData) => labelData.entity === d.entity)
-      .style("opacity", 1); // Show label for hovered bar
+      .selectAll(".value-label")
+      .filter(
+        (labelData) =>
+          labelData.entity === d.entity && labelData.period === d.period
+      )
+      .transition()
+      .duration(textAnimationDuration)
+      .style("opacity", 1)
+      .attr("y", (d) => y(d.value) - 12);
   }
 
   function handleMouseout(event, d) {
     svg
-      .selectAll(`.value-label`)
-      .filter((labelData) => labelData.entity === d.entity)
-      .style("opacity", 0); // Hide label
+      .selectAll(".value-label")
+      .filter(
+        (labelData) =>
+          labelData.entity === d.entity && labelData.period === d.period
+      )
+      .transition()
+      .duration(textAnimationDuration)
+      .style("opacity", 0)
+      .attr("y", (d) => y(d.value) - 6);
   }
 
   // Create SVG
@@ -147,6 +154,7 @@ const drawChart = () => {
         const dataPoint = entity.data.find((dd) => dd.x === d);
         return {
           entity: entity.entity,
+          period: d,
           value: dataPoint ? dataPoint.y : 0,
         };
       })
@@ -199,10 +207,10 @@ const drawChart = () => {
       return formatNumber(d.value);
     })
     .attr("x", (d) => x1(d.entity) + x1.bandwidth() / 2)
-    .attr("y", (d) => y(d.value) - 5)
+    .attr("y", (d) => y(d.value) - 8)
     .attr("text-anchor", "middle")
     .attr("fill", "white")
-    .attr("font-size", "10px")
+    .attr("font-size", "0.7em")
     .style("opacity", 0);
 
   // Append Axes
