@@ -14,12 +14,12 @@ const routes = [
           {
             path: "",
             name: "graphs",
-            component: () => import("@/views/v-graphs/TheGraphs.vue"),
+            component: () => import("@/views/TheGraphs.vue"),
             children: [
               {
                 path: "/",
                 name: "home",
-                component: () => import("@/views/v-graphs/TheHome.vue"),
+                component: () => import("@/views/TheHome.vue"),
               },
               {
                 path: "line",
@@ -29,19 +29,19 @@ const routes = [
                     path: "linechart",
                     name: "linechart",
                     component: () =>
-                      import("@/views/v-graphs/graphs/line/TheSingleline.vue"),
+                      import("@/views/graphs/line/TheSingleline.vue"),
                   },
                   {
                     path: "multiline",
                     name: "multiline",
                     component: () =>
-                      import("@/views/v-graphs/graphs/line/TheMultiline.vue"),
+                      import("@/views/graphs/line/TheMultiline.vue"),
                   },
                   {
                     path: "candlestick",
                     name: "candlestick",
                     component: () =>
-                      import("@/views/v-graphs/graphs/line/TheCandlestick.vue"),
+                      import("@/views/graphs/line/TheCandlestick.vue"),
                   },
                 ],
               },
@@ -53,7 +53,7 @@ const routes = [
                     path: "barchart",
                     name: "barchart",
                     component: () =>
-                      import("@/views/v-graphs/graphs/bar/TheBarchart.vue"),
+                      import("@/views/graphs/bar/TheBarchart.vue"),
                   },
                 ],
               },
@@ -61,31 +61,31 @@ const routes = [
                 path: "pie",
                 name: "pie",
                 component: () =>
-                  import("@/views/v-graphs/graphs/PieCharts.vue"),
+                  import("@/views/graphs/PieCharts.vue"),
               },
               {
                 path: "dot",
                 name: "dot",
                 component: () =>
-                  import("@/views/v-graphs/graphs/DotGraphs.vue"),
+                  import("@/views/graphs/DotGraphs.vue"),
               },
               {
                 path: "bubble",
                 name: "bubble",
                 component: () =>
-                  import("@/views/v-graphs/graphs/BubbleCharts.vue"),
+                  import("@/views/graphs/BubbleCharts.vue"),
               },
               {
                 path: "heatmap",
                 name: "heatmap",
                 component: () =>
-                  import("@/views/v-graphs/graphs/TheHeatmaps.vue"),
+                  import("@/views/graphs/TheHeatmaps.vue"),
               },
               {
                 path: "tree",
                 name: "tree",
                 component: () =>
-                  import("@/views/v-graphs/graphs/TheTreemaps.vue"),
+                  import("@/views/graphs/TheTreemaps.vue"),
               },
             ],
           },

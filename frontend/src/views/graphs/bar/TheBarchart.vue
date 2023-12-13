@@ -1,11 +1,12 @@
 <template>
-  <!-- TheCandlestick.vue -->
-  <ChartContainer title="TheCandlestick.vue" :props="props">
-    <template #title>TheCandlestick.vue</template>
-    <TheCandlestick
-      :data="candleStickData"
-      :width="500"
-      :height="230"
+  <!-- BarChart.vue -->
+  <ChartContainer title="TheBarchart.vue" :props="props">
+    <TheBarchart
+      :data="earnings"
+      :tooltip="true"
+      :animations="true"
+      :width="560"
+      :height="280"
     />
     <template #config>
       <RadioButton
@@ -54,7 +55,7 @@
             <div class="top flex">
               {{ "<" }}
               <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                TheCandlestick
+                TheBarchart
               </div>
             </div>
             <transition-group name="list" tag="div">
@@ -84,9 +85,8 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from "vue";
-import { line1, line2 } from "@/data/dummyMultiLine";
-import TheCandlestick from "@/components/v-graphs/graphs/TheCandlestick.vue";
+import { ref, computed, reactive } from "vue";
+import TheBarchart from "@/components/graphs/TheBarchart.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
@@ -94,8 +94,27 @@ import ChartContainer from "@/components/common/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 
-// Candlestick data
-const candleStickData = line1.slice(0, 50);
+// BARCHART DATA
+const earnings = [
+  {
+    entity: "AAPL",
+    data: [
+      { x: "Q1 2023", y: 90000000 },
+      { x: "Q2 2023", y: 110000000 },
+      { x: "Q3 2023", y: 105000000 },
+      { x: "Q4 2023", y: 120000000 },
+    ],
+  },
+  {
+    entity: "MSFT",
+    data: [
+      { x: "Q1 2023", y: 100000000 },
+      { x: "Q2 2023", y: 120000000 },
+      { x: "Q3 2023", y: 100000000 },
+      { x: "Q4 2023", y: 100000000 },
+    ],
+  },
+];
 
 //Radio configs
 const radioConfigs = {
@@ -146,7 +165,7 @@ const mapDisplayValue = (key, value) => {
 };
 
 const config = reactive({
-  data: [],
+  lineData: [],
   selectedStocks: [],
   lineColor: "#fff",
   tooltip: "off",

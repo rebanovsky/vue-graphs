@@ -67,8 +67,8 @@
 
 <script setup>
 import { ref, computed, reactive } from "vue";
-import BarChart from "@/components/v-graphs/graphs/BarChart.vue";
-import VerBar from "@/components/v-graphs/graphs/VerBar.vue";
+import BarChart from "@/components/graphs/BarChart.vue";
+import VerBar from "@/components/graphs/VerBar.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ChartContainer from "@/components/common/ChartContainer.vue";

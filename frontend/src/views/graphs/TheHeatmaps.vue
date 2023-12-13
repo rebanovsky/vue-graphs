@@ -61,7 +61,7 @@
 <script setup>
 import { ref, reactive, computed } from "vue";
 import { line1, line2 } from "@/data/dummyMultiLine";
-import TheHeatmap from "@/components/v-graphs/graphs/TheHeatmap.vue";
+import TheHeatmap from "@/components/graphs/TheHeatmap.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";

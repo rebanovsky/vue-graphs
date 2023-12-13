@@ -1,5 +1,5 @@
 <template>
-  <div class="side-menu overflow-y-auto flex flex-col justify-between h-[100%]">
+  <div class="side-menu overflow-y-auto dark:bg-slate-800 flex flex-col justify-between h-[100%]">
     <div>
       <div class="w-[200px] flex flex-col">
         <div v-for="(item, index) in items" :key="index" class="accordion-item">

@@ -1,11 +1,15 @@
 <template>
-  <!-- MultiLine.vue -->
-  <ChartContainer title="MultiLine.vue" :props="props">
-    <MultiLine
-      :data="chartData"
-      date-format="%Y-%m-%d"
+  <!-- SingleLine.vue -->
+  <ChartContainer title="SingleLine.vue" :props="props">
+    <SingleLine
       :width="560"
       :height="280"
+      :data="lineData"
+      dateFormat="%Y-%m-%d"
+      :line-color="config.lineColor"
+      :tooltip="tooltipBoolean"
+      :gridlines="gridlinesBoolean"
+      :animations="animationsBoolean"
     />
     <template #config>
       <RadioButton
@@ -54,7 +58,7 @@
             <div class="top flex">
               {{ "<" }}
               <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                MultiLine
+                SingleLine
               </div>
             </div>
             <transition-group name="list" tag="div">
@@ -85,8 +89,8 @@
 
 <script setup>
 import { ref, reactive, computed } from "vue";
-import { line1, line2 } from "@/data/dummyMultiLine";
-import MultiLine from "@/components/v-graphs/graphs/MultiLine.vue";
+import { line1 } from "@/data/dummyMultiLine";
+import SingleLine from "@/components/graphs/SingleLine.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
@@ -94,22 +98,16 @@ import ChartContainer from "@/components/common/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 
-//MULTILINE DATA
-const transformLineData = (lineData) => {
-  return lineData.map((dataPoint) => ({
-    x: dataPoint.Date,
-    y: dataPoint.Normalized_Close,
-  }));
-};
+// LINECHART DATA
+const formattedLineData = line1.map((item) => ({
+  x: item.Date,
+  y: item.Close,
+}));
 
-const chartData = ref([
+const lineData = ref([
   {
     color: "#061826",
-    values: transformLineData(line1),
-  },
-  {
-    color: "#F7567C",
-    values: transformLineData(line2),
+    values: formattedLineData,
   },
 ]);
 

@@ -79,7 +79,7 @@ const drawChart = () => {
 
   d3.select(chart.value).selectAll("*").remove();
 
-  const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+  const margin = { top: 2, right: 2, bottom: 3, left: 5 };
   const width = props.width - margin.left - margin.right;
   const height = props.height - margin.top - margin.bottom;
 

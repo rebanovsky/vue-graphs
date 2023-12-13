@@ -61,7 +61,7 @@
 <script setup>
 import { ref, reactive, watch, computed } from "vue";
 import { line1, line2 } from "@/data/dummyMultiLine";
-import TheTreemap from "@/components/v-graphs/graphs/TheTreemap.vue";
+import TheTreemap from "@/components/graphs/TheTreemap.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";

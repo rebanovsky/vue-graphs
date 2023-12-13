@@ -134,8 +134,8 @@
 
 <script setup>
 import { ref } from "vue";
-import PieChart from "@/components/v-graphs/graphs/PieChart.vue";
-import DoughnutChart from "@/components/v-graphs/graphs/DoughnutChart.vue";
+import PieChart from "@/components/graphs/PieChart.vue";
+import DoughnutChart from "@/components/graphs/DoughnutChart.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ChartContainer from "@/components/common/ChartContainer.vue";

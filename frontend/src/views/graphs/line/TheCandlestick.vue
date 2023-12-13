@@ -1,15 +1,11 @@
 <template>
-  <!-- SingleLine.vue -->
-  <ChartContainer title="SingleLine.vue" :props="props">
-    <SingleLine
-      :width="560"
-      :height="280"
-      :data="lineData"
-      dateFormat="%Y-%m-%d"
-      :line-color="config.lineColor"
-      :tooltip="tooltipBoolean"
-      :gridlines="gridlinesBoolean"
-      :animations="animationsBoolean"
+  <!-- TheCandlestick.vue -->
+  <ChartContainer title="TheCandlestick.vue" :props="props">
+    <template #title>TheCandlestick.vue</template>
+    <TheCandlestick
+      :data="candleStickData"
+      :width="500"
+      :height="230"
     />
     <template #config>
       <RadioButton
@@ -58,7 +54,7 @@
             <div class="top flex">
               {{ "<" }}
               <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                SingleLine
+                TheCandlestick
               </div>
             </div>
             <transition-group name="list" tag="div">
@@ -89,8 +85,8 @@
 
 <script setup>
 import { ref, reactive, computed } from "vue";
-import { line1 } from "@/data/dummyMultiLine";
-import SingleLine from "@/components/v-graphs/graphs/SingleLine.vue";
+import { line1, line2 } from "@/data/dummyMultiLine";
+import TheCandlestick from "@/components/graphs/TheCandlestick.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
@@ -98,18 +94,8 @@ import ChartContainer from "@/components/common/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 
-// LINECHART DATA
-const formattedLineData = line1.map((item) => ({
-  x: item.Date,
-  y: item.Close,
-}));
-
-const lineData = ref([
-  {
-    color: "#061826",
-    values: formattedLineData,
-  },
-]);
+// Candlestick data
+const candleStickData = line1.slice(0, 50);
 
 //Radio configs
 const radioConfigs = {
@@ -160,7 +146,7 @@ const mapDisplayValue = (key, value) => {
 };
 
 const config = reactive({
-  lineData: [],
+  data: [],
   selectedStocks: [],
   lineColor: "#fff",
   tooltip: "off",

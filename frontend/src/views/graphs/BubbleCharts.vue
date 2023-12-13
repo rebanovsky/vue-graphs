@@ -67,7 +67,7 @@
 
 <script setup>
 import { ref } from "vue";
-import BubbleChart from "@/components/v-graphs/graphs/BubbleChart.vue";
+import BubbleChart from "@/components/graphs/BubbleChart.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ChartContainer from "@/components/common/ChartContainer.vue";

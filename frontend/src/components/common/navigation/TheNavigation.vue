@@ -1,7 +1,7 @@
 <template>
   <div class="p-[12px]">
     <div
-      class="content-navigation gridlines rounded-[12px] border-slate-200 px-[32px] text-[0.8em] gap-[20px] w-[100%] h-[50px] overflow-x-auto flex items-center justify-between"
+      class="content-navigation  dark:bg-slate-800 gridlines rounded-[12px] border-slate-200 px-[32px] text-[0.8em] gap-[20px] w-[100%] h-[50px] overflow-x-auto flex items-center justify-between"
     >
       <div class="left-side flex items-center">
         <div

@@ -84,13 +84,11 @@
                   class="w-[100%] h-[100%] flex items-center justify-center gridlines"
                   v-if="graph.name == 'Barchart'"
                 >
-                  <!-- <BarChart
+                  <TheBarchart
                     :data="earnings"
-                    :tooltip="true"
-                    :animations="true"
-                    height="240"
-                    width="480"
-                  /> -->
+                    :height="60"
+                    :width="100"
+                  />
                 </div>
                 <div
                   class="w-[100%] h-[100%] flex items-center justify-center gridlines"
@@ -127,7 +125,7 @@
       </div>
     </div>
     <!-- Version History -->
-    <div class="version-history w-[200px] gridlines rounded-[12px] p-[12px]">
+    <div class="version-history w-[200px] gridlines dark:bg-slate-800 rounded-[12px] p-[12px]">
       <div class="versions-wrapper flex flex-col gap-[8px]">
         <div class="version-header">Version history</div>
         <div class="versions">
@@ -147,7 +145,8 @@
 </template>
 
 <script setup>
-import SingleLine from "@/components/v-graphs/graphs/SingleLine.vue";
+import SingleLine from "@/components/graphs/SingleLine.vue";
+import TheBarchart from "@/components/graphs/TheBarchart.vue";
 import { line1 } from "@/data/dummyMultiLine";
 import { ref } from "vue";
 
@@ -211,6 +210,28 @@ const steps = [
     stepNr: "3",
     stepTitle: "Bind data",
     content: ':data="array"',
+  },
+];
+
+// BARCHART DATA
+const earnings = [
+  {
+    entity: "AAPL",
+    data: [
+      { x: "Q1 2023", y: 90000000 },
+      { x: "Q2 2023", y: 110000000 },
+      { x: "Q3 2023", y: 105000000 },
+      { x: "Q4 2023", y: 120000000 },
+    ],
+  },
+  {
+    entity: "MSFT",
+    data: [
+      { x: "Q1 2023", y: 100000000 },
+      { x: "Q2 2023", y: 120000000 },
+      { x: "Q3 2023", y: 100000000 },
+      { x: "Q4 2023", y: 100000000 },
+    ],
   },
 ];
 </script>

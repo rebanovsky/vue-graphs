@@ -1,10 +1,9 @@
 <template>
-  <!-- BarChart.vue -->
-  <ChartContainer title="TheBarchart.vue" :props="props">
-    <TheBarchart
-      :data="earnings"
-      :tooltip="true"
-      :animations="true"
+  <!-- MultiLine.vue -->
+  <ChartContainer title="MultiLine.vue" :props="props">
+    <MultiLine
+      :data="chartData"
+      date-format="%Y-%m-%d"
       :width="560"
       :height="280"
     />
@@ -55,7 +54,7 @@
             <div class="top flex">
               {{ "<" }}
               <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                TheBarchart
+                MultiLine
               </div>
             </div>
             <transition-group name="list" tag="div">
@@ -85,8 +84,9 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive } from "vue";
-import TheBarchart from "@/components/v-graphs/graphs/TheBarchart.vue";
+import { ref, reactive, computed } from "vue";
+import { line1, line2 } from "@/data/dummyMultiLine";
+import MultiLine from "@/components/graphs/MultiLine.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
@@ -94,27 +94,24 @@ import ChartContainer from "@/components/common/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 
-// BARCHART DATA
-const earnings = [
+//MULTILINE DATA
+const transformLineData = (lineData) => {
+  return lineData.map((dataPoint) => ({
+    x: dataPoint.Date,
+    y: dataPoint.Normalized_Close,
+  }));
+};
+
+const chartData = ref([
   {
-    entity: "AAPL",
-    data: [
-      { x: "Q1 2023", y: 90000000 },
-      { x: "Q2 2023", y: 110000000 },
-      { x: "Q3 2023", y: 105000000 },
-      { x: "Q4 2023", y: 120000000 },
-    ],
+    color: "#061826",
+    values: transformLineData(line1),
   },
   {
-    entity: "MSFT",
-    data: [
-      { x: "Q1 2023", y: 100000000 },
-      { x: "Q2 2023", y: 120000000 },
-      { x: "Q3 2023", y: 100000000 },
-      { x: "Q4 2023", y: 100000000 },
-    ],
+    color: "#F7567C",
+    values: transformLineData(line2),
   },
-];
+]);
 
 //Radio configs
 const radioConfigs = {

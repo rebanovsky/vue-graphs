@@ -68,7 +68,7 @@
 <script setup>
 import { ref } from "vue";
 import { earnings1 } from "@/data/earningsDummy";
-import DotGraph from "@/components/v-graphs/graphs/DotGraph.vue";
+import DotGraph from "@/components/graphs/DotGraph.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ChartContainer from "@/components/common/ChartContainer.vue";
