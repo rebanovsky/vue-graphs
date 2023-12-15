@@ -6,13 +6,14 @@
       :height="280"
       :width="560"
       :legend="legendBoolean"
+      :labels="labelsBoolean"
     />
     <template #config>
       <RadioButton
-        v-model="config.tooltip"
-        :options="radioConfigs.tooltip.config"
-        title="Tooltip"
-        name="tooltip"
+        v-model="config.labels"
+        :options="radioConfigs.labels.config"
+        title="Labels"
+        name="labels"
       />
       <RadioButton
         v-model="config.legend"
@@ -118,8 +119,8 @@ const radioConfigs = {
       { id: nanoid(10), label: "Off", value: "off" },
     ],
   },
-  tooltip: {
-    title: "Tooltip",
+  labels: {
+    title: "Labels",
     config: [
       { id: nanoid(10), label: "On", value: "on" },
       { id: nanoid(10), label: "Off", value: "off" },
@@ -127,10 +128,9 @@ const radioConfigs = {
   },
 };
 
-const tooltipBoolean = computed(() => config.tooltip === "on");
-const legendBoolean = computed(() => config.legend === "on");
 const animationsBoolean = computed(() => config.animations === "on");
-
+const legendBoolean = computed(() => config.legend === "on");
+const labelsBoolean = computed(() => config.labels === "on");
 
 // Adding/removing stocks
 const stockOptions = {
@@ -145,7 +145,7 @@ const stockOptions = {
 const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
 
 const mapDisplayValue = (key, value) => {
-  if (key === "tooltip" || key === "legend" || key === "animations") {
+  if (key === "labels" || key === "legend" || key === "animations") {
     return value === "on" ? "on" : null;
   }
   return JSON.stringify(value);
@@ -155,7 +155,7 @@ const config = reactive({
   lineData: [],
   selectedStocks: [],
   lineColor: "#fff",
-  tooltip: "off",
+  labels: "on",
   legend: "off",
   animations: "off",
 });
@@ -167,10 +167,6 @@ const chartProps = computed(() => {
       value: mapDisplayValue(key, value),
     }))
     .filter((prop) => prop.value !== null);
-});
-
-watch(legendBoolean, (newVal) => {
-  console.log(newVal);
 });
 
 // PROPS

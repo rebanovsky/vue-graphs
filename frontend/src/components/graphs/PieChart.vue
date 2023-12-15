@@ -12,9 +12,8 @@ export default {
     data: Array,
     height: Number,
     width: Number,
-    legend: {
-      type: Boolean,
-    },
+    legend: Boolean,
+    labels: Boolean,
   },
   setup(props) {
     const chart = ref(null);
@@ -29,7 +28,7 @@ export default {
 
     const renderChart = () => {
       d3.select(chart.value).select("svg").remove();
-      
+
       const svg = d3
         .select(chart.value)
         .append("svg")
@@ -64,24 +63,25 @@ export default {
         .attr("d", arc)
         .style("fill", (d, i) => customColors[i % customColors.length]);
 
-      // Append text elements
-      g.selectAll(".arc")
-        .data(sectors)
-        .enter()
-        .append("text")
-        .attr("class", "dark:fill-slate-200 fill-slate-100")
-        .attr("transform", function (d) {
-          // Calculate the centroid of each sector
-          const c = arc.centroid(d);
-          return "translate(" + c[0] + "," + c[1] + ")";
-        })
-        .attr("text-anchor", "middle") // Center the text horizontally
-        .attr("dy", "0.35em") // Center the text vertically
-        .text(function (d) {
-          return d.value;
-        });
+      if (props.labels) {
+        // Append text elements
+        g.selectAll(".arc")
+          .data(sectors)
+          .enter()
+          .append("text")
+          .attr("class", "dark:fill-slate-200 fill-slate-100")
+          .attr("transform", function (d) {
+            // Calculate the centroid of each sector
+            const c = arc.centroid(d);
+            return "translate(" + c[0] + "," + c[1] + ")";
+          })
+          .attr("text-anchor", "middle") // Center the text horizontally
+          .attr("dy", "0.35em") // Center the text vertically
+          .text(function (d) {
+            return d.value;
+          });
+      }
 
-      // Create legend
       if (props.legend) {
         const legend = svg
           .append("g")
@@ -112,7 +112,7 @@ export default {
       }
     };
 
-    // onMounted(renderChart);
+    onMounted(renderChart);
 
     watchEffect(renderChart);
 
