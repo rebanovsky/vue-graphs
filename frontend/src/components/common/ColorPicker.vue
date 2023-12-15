@@ -3,12 +3,9 @@
     <div class="config-title">
       {{ title }}
     </div>
-    <div class="color-group p-[0px] flex gap-[8px] items-center">
+    <div class="color-group border-[1px] border-slate-200 hover:border-slate-300 transition ease hover:shadow-boxshlight rounded p-[2px] flex gap-[4px] items-center">
       <div
-        class="border-[1px] border-slate-100 dark:border-slate-900 rounded-[20px]"
-        :class="{
-          'border-slate-700 dark:!border-slate-300': option.value === modelValue,
-        }"
+        class="border-[1px] border-slate-100 dark:border-slate-900 rounded-[8px]"
         v-for="option in options"
         :key="option.id"
       >
@@ -22,6 +19,9 @@
           @click="() => updateModelValue(option.value)"
           :style="{ backgroundColor: option.value }"
         ></div>
+      </div>
+      <div class="">
+        <input type="text" class="bg-slate-100 placeholder:font-light text-[14px] placeholder:text-[14px] w-[140px]" :placeholder="'#ffffff'" />
       </div>
     </div>
   </div>

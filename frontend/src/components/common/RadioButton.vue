@@ -1,34 +1,36 @@
 <template>
   <div class="flex flex-col text-[11px] gap-[4px]">
-    <div class="config-title dark:text-slate-300 text-slate-700">
+    <div class="config-title dark:text-slate-300 text-slate-700 cursor-default">
       {{ title }}
     </div>
-    <div class="radio-group flex items-center">
-      <div
-        v-for="(option, index) in options"
-        :key="option.id"
-        :class="[
-          'radio-option text-slate-500 border-[1px] transition ease duration-75',
-          roundedClass(index, options.length),
-          {
-            '!text-blue-900 !border-blue-900 z-[9999] bg-blue-50 dark:bg-slate-800':
-              option.value === modelValue,
-          },
-        ]"
-        @click="() => updateModelValue(option.value)"
-        class="px-[4px] py-[2px]"
-        :style="index !== 0 ? 'transform: translateX(-1px);' : ''"
-      >
-        <input
-          type="radio"
-          :value="option.value"
-          :checked="option.value === modelValue"
-          :id="option.id"
-          :name="name"
-          :disabled="disabled"
-          class="hidden-radio"
-        />
-        <label :for="option.id">{{ option.label }}</label>
+    <div class="radio-group flex items-center w-[auto]">
+      <div class="w-[auto] flex">
+        <div
+          v-for="(option, index) in options"
+          :key="option.id"
+          :class="[
+            'radio-option text-slate-400 dark:text-slate-600  border-[1px] transition ease duration-75',
+            roundedClass(index, options.length),
+            {
+              '!text-blue-900 !border-blue-900 z-[9999] bg-blue-50 dark:bg-slate-800':
+                option.value === modelValue,
+            },
+          ]"
+          @click="() => updateModelValue(option.value)"
+          class="px-[4px] py-[2px]"
+          :style="index !== 0 ? 'transform: translateX(-1px);' : ''"
+        >
+          <input
+            type="radio"
+            :value="option.value"
+            :checked="option.value === modelValue"
+            :id="option.id"
+            :name="name"
+            :disabled="disabled"
+            class="hidden-radio"
+          />
+          <label :for="option.id">{{ option.label }}</label>
+        </div>
       </div>
     </div>
   </div>

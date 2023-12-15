@@ -12,6 +12,11 @@
       :animations="animationsBoolean"
     />
     <template #config>
+      <ColorPicker
+        v-model="config.lineColor"
+        :options="colorOptions"
+        title="Line Color"
+      />
       <RadioButton
         v-model="config.tooltip"
         :options="radioConfigs.tooltip.config"
@@ -34,11 +39,6 @@
         v-model="config.selectedStocks"
         :title="stockOptions.title"
         :options="stockOptions.configs"
-      />
-      <ColorPicker
-        v-model="config.lineColor"
-        :options="colorOptions"
-        title="Line Color"
       />
     </template>
     <template #code-block>
