@@ -6,7 +6,7 @@
       :height="280"
       :data="lineData"
       dateFormat="%Y-%m-%d"
-      :line-color="config.lineColor"
+      :line-color="lineColor"
       :tooltip="tooltipBoolean"
       :gridlines="gridlinesBoolean"
       :animations="animationsBoolean"
@@ -16,6 +16,7 @@
         v-model="config.lineColor"
         :options="colorOptions"
         title="Line Color"
+        @colorChange="handleValue"
       />
       <RadioButton
         v-model="config.tooltip"
@@ -88,7 +89,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import { line1 } from "@/data/dummyMultiLine";
 import SingleLine from "@/components/graphs/SingleLine.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
@@ -97,6 +98,16 @@ import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/common/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
+
+const lineColor = ref('#ffffff')
+
+const handleValue = (val) => {
+  lineColor.value = val
+}
+
+watch(lineColor, (newVal) => {
+  console.log(newVal)
+})
 
 // LINECHART DATA
 const formattedLineData = line1.map((item) => ({

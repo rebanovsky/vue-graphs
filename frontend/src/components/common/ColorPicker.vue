@@ -3,52 +3,43 @@
     <div class="config-title">
       {{ title }}
     </div>
-    <div class="color-group border-[1px] border-slate-200 hover:border-slate-300 transition ease hover:shadow-boxshlight rounded p-[2px] flex gap-[4px] items-center">
-      <div
-        class="border-[1px] border-slate-100 dark:border-slate-900 rounded-[8px]"
-        v-for="option in options"
-        :key="option.id"
-      >
-        <div
-          :class="[
-            'color-dot border-[6px] border-slate-100 dark:border-slate-900 rounded-full transition ease duration-75',
-            {
-              '': option.value === modelValue,
-            },
-          ]"
-          @click="() => updateModelValue(option.value)"
-          :style="{ backgroundColor: option.value }"
-        ></div>
-      </div>
+    <div
+      class="color-group border-[1px] border-slate-200 hover:border-slate-300 transition ease hover:shadow-boxshlight rounded p-[2px] flex gap-[4px] items-center"
+    >
+      <input
+        type="color"
+        class="cursor-pointer border-[0px] rounded"
+        @input="updateColor"
+      />
       <div class="">
-        <input type="text" class="bg-slate-100 placeholder:font-light text-[14px] placeholder:text-[14px] w-[140px]" :placeholder="'#ffffff'" />
+        <input
+          type="text"
+          class="bg-slate-100 placeholder:font-light text-[14px] placeholder:text-[14px] placeholder:text-slate-900 dark:placeholder:text-slate-100 w-[140px]"
+          :placeholder="color"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
+
 const props = defineProps({
-  options: {
-    type: Array,
-    required: true,
-    default: () => [],
-  },
-  modelValue: {
-    type: String,
-    default: "",
-  },
   title: {
     type: String,
     default: "",
   },
 });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['colorChange'])
 
-const updateModelValue = (newValue) => {
-  emit("update:modelValue", newValue);
-};
+const color = ref("#ffffff")
+
+const updateColor = (e) => {
+  color.value = e.target.value
+  emit('colorChange', color.value)
+}
 </script>
 
 <style scoped>

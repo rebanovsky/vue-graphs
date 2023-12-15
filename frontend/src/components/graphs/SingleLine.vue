@@ -46,40 +46,14 @@ export default {
     },
     animation: {
       type: Boolean,
-      default: false,
     },
     xAxis: {
       type: Boolean,
-    }
+    },
   },
   setup(props) {
     const chart = ref(null);
     const parseDate = props.dateFormat ? d3.timeParse(props.dateFormat) : null;
-
-    const animateLine = () => {
-      if (!props.animation) return;
-
-      const paths = d3.select(chart.value).selectAll(".line");
-      paths.each(function () {
-        const totalLength = this.getTotalLength();
-        d3.select(this)
-          .attr("stroke-dasharray", `${totalLength} ${totalLength}`)
-          .attr("stroke-dashoffset", totalLength)
-          .transition()
-          .duration(420)
-          .ease(d3.easeCubicInOut)
-          .attr("stroke-dashoffset", 0);
-      });
-    };
-
-    watch(
-      () => props.animation,
-      (newVal) => {
-        if (newVal) {
-          drawChart()
-        }
-      }
-    );
 
     const drawChart = () => {
       if (!chart.value) return;
@@ -150,21 +124,20 @@ export default {
           .attr("class", "line")
           .attr("d", line)
           .attr("style", `stroke: ${props.lineColor} !important;`)
-          .attr(
-            "class",
-            "transition ease dark:stroke-slate-300 !stroke-slate-700"
-          )
-          .attr("fill", "none")
-          .each(function () {
+          .attr("fill", "none");
+
+        if (props.animation) {
+          path.each(function () {
             const totalLength = this.getTotalLength();
             d3.select(this)
               .attr("stroke-dasharray", `${totalLength} ${totalLength}`)
               .attr("stroke-dashoffset", totalLength)
               .transition()
-              .duration(600) // Set the duration of the transition in milliseconds
+              .duration(600) // Animation duration
               .ease(d3.easeCubicInOut)
               .attr("stroke-dashoffset", 0);
           });
+        }
       });
 
       if (props.dateFormat) {
@@ -199,7 +172,6 @@ export default {
       if (!props.xAxis) {
         svg.select(".domain").remove();
       }
-
 
       if (props.tooltip) {
         const hoverVerticalLineGroup = svg
@@ -301,8 +273,32 @@ export default {
 
     onMounted(drawChart);
 
+    const animateLine = () => {
+      const paths = d3.select(chart.value).selectAll(".line");
+      paths.each(function () {
+        const totalLength = this.getTotalLength();
+        d3.select(this)
+          .attr("stroke-dasharray", `${totalLength} ${totalLength}`)
+          .attr("stroke-dashoffset", totalLength)
+          .transition()
+          .duration(420)
+          .ease(d3.easeCubicInOut)
+          .attr("stroke-dashoffset", 0);
+      });
+    };
+
+    // Watch for changes in the animation prop
+    watch(
+      () => props.animation,
+      (newVal) => {
+        if (newVal) {
+          animateLine();
+        }
+      }
+    );
+
+    // Reactive effect for redrawing the chart on data change
     watchEffect(() => {
-      console.log(props.gridlines)
       drawChart();
     });
 
