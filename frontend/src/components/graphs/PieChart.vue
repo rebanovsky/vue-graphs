@@ -1,9 +1,9 @@
 <template>
-  <div ref="chart" class="chart-border"></div>
+  <div ref="chart"></div>
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import * as d3 from "d3";
 
 export default {
@@ -12,6 +12,9 @@ export default {
     data: Array,
     height: Number,
     width: Number,
+    legend: {
+      type: Boolean,
+    },
   },
   setup(props) {
     const chart = ref(null);
@@ -22,10 +25,11 @@ export default {
       "#bc5090", // Green
       "#ff6361", // Blue
       "#ffa600", // Purple
-      // Add more as needed
     ];
 
-    onMounted(() => {
+    const renderChart = () => {
+      d3.select(chart.value).select("svg").remove();
+      
       const svg = d3
         .select(chart.value)
         .append("svg")
@@ -78,33 +82,39 @@ export default {
         });
 
       // Create legend
-      const legend = svg
-        .append("g")
-        .attr("class", "legend bg-slate-200")
-        .attr("transform", `translate(${props.width - 120}, ${30})`); // Adjust these values as needed
-
-      // Add legend items
-      props.data.forEach((d, i) => {
-        const legendRow = legend
+      if (props.legend) {
+        const legend = svg
           .append("g")
-          .attr("transform", `translate(0, ${i * 20})`); // Space out legend items
+          .attr("class", "legend bg-slate-200")
+          .attr("transform", `translate(${props.width - 120}, ${30})`); // Adjust these values as needed
 
-        // Draw color boxes
-        legendRow
-          .append("rect")
-          .attr("width", 10)
-          .attr("height", 10)
-          .attr("fill", customColors[i % customColors.length]);
+        // Add legend items
+        props.data.forEach((d, i) => {
+          const legendRow = legend
+            .append("g")
+            .attr("transform", `translate(0, ${i * 20})`); // Space out legend items
 
-        // Add text labels
-        legendRow
-          .append("text")
-          .attr('class', 'dark:fill-slate-300 text-xs')
-          .attr("x", 20) // Distance from the color box
-          .attr("y", 10) // Vertically align text with box
-          .text(d.label); // Assuming each data element has a label
-      });
-    });
+          // Draw color boxes
+          legendRow
+            .append("rect")
+            .attr("width", 10)
+            .attr("height", 10)
+            .attr("fill", customColors[i % customColors.length]);
+
+          // Add text labels
+          legendRow
+            .append("text")
+            .attr("class", "dark:fill-slate-300 text-xs")
+            .attr("x", 20) // Distance from the color box
+            .attr("y", 10) // Vertically align text with box
+            .text(d.label); // Assuming each data element has a label
+        });
+      }
+    };
+
+    // onMounted(renderChart);
+
+    watchEffect(renderChart);
 
     return {
       chart,
@@ -113,6 +123,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

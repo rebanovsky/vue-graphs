@@ -61,21 +61,11 @@
               <div class="config-search flex text-[14px]">
                 <div class="gridlines w-[100%]">
                   <div
-                    :class="
-                      isInputFocused
-                        ? 'border-slate-400 transition'
-                        : 'border-slate-100 dark:border-slate-900'
-                    "
-                    class="ticker-searcher flex items-center border-b-[1px] px-[8px]"
+                    class="ticker-searcher flex items-center px-[8px]"
                   >
                     <font-awesome-icon
                       class="h-[12px] text-slate-400 dark:text-slate-600 transition"
                       :icon="['fas', 'magnifying-glass']"
-                      :class="
-                        isInputFocused
-                          ? 'text-slate-900 dark:text-slate-100 transition'
-                          : ''
-                      "
                     />
                     <input
                       ref="searchRef"

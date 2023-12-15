@@ -9,7 +9,6 @@
         >
           Vue graphs
         </div>
-        <div class="search ml-[32px]"><TheSearch /></div>
       </div>
       <div class="right-side flex items-center gap-[8px]">
         <a href="https://github.com/rebanovsky/vue-graphs" target="_blank">

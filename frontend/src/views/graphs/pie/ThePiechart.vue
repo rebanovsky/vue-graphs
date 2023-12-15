@@ -1,7 +1,12 @@
 <template>
-  <!-- BarChart.vue -->
+  <!-- PieChart.vue -->
   <ChartContainer title="ThePiechart.vue" :props="props">
-    <PieChart :data="sectors" :height="280" :width="560" />
+    <PieChart
+      :data="sectors"
+      :height="280"
+      :width="560"
+      :legend="legendBoolean"
+    />
     <template #config>
       <RadioButton
         v-model="config.tooltip"
@@ -10,10 +15,10 @@
         name="tooltip"
       />
       <RadioButton
-        v-model="config.gridlines"
-        :options="radioConfigs.gridlines.config"
-        title="Gridlines"
-        name="gridlines"
+        v-model="config.legend"
+        :options="radioConfigs.legend.config"
+        title="Legend"
+        name="legend"
       />
       <RadioButton
         v-model="config.animations"
@@ -79,7 +84,7 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive } from "vue";
+import { ref, computed, reactive, watch } from "vue";
 import PieChart from "@/components/graphs/PieChart.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
@@ -106,8 +111,8 @@ const radioConfigs = {
       { id: nanoid(10), label: "Off", value: "off" },
     ],
   },
-  gridlines: {
-    title: "Gridlines",
+  legend: {
+    title: "Legend",
     config: [
       { id: nanoid(10), label: "On", value: "on" },
       { id: nanoid(10), label: "Off", value: "off" },
@@ -123,8 +128,9 @@ const radioConfigs = {
 };
 
 const tooltipBoolean = computed(() => config.tooltip === "on");
-const gridlinesBoolean = computed(() => config.gridlines === "on");
+const legendBoolean = computed(() => config.legend === "on");
 const animationsBoolean = computed(() => config.animations === "on");
+
 
 // Adding/removing stocks
 const stockOptions = {
@@ -139,7 +145,7 @@ const stockOptions = {
 const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
 
 const mapDisplayValue = (key, value) => {
-  if (key === "tooltip" || key === "gridlines" || key === "animations") {
+  if (key === "tooltip" || key === "legend" || key === "animations") {
     return value === "on" ? "on" : null;
   }
   return JSON.stringify(value);
@@ -150,7 +156,7 @@ const config = reactive({
   selectedStocks: [],
   lineColor: "#fff",
   tooltip: "off",
-  gridlines: "off",
+  legend: "off",
   animations: "off",
 });
 
@@ -161,6 +167,10 @@ const chartProps = computed(() => {
       value: mapDisplayValue(key, value),
     }))
     .filter((prop) => prop.value !== null);
+});
+
+watch(legendBoolean, (newVal) => {
+  console.log(newVal);
 });
 
 // PROPS

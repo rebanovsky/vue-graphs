@@ -84,16 +84,14 @@
                   class="w-[100%] h-[100%] flex items-center justify-center gridlines"
                   v-if="graph.name == 'Barchart'"
                 >
-                  <TheBarchart
-                    :data="earnings"
-                    :height="60"
-                    :width="100"
-                  />
+                  <TheBarchart :data="earnings" :height="60" :width="100" />
                 </div>
                 <div
                   class="w-[100%] h-[100%] flex items-center justify-center gridlines"
                   v-if="graph.name == 'Piechart'"
-                ></div>
+                >
+                  <PieChart :data="sectors" :width="100" :height="60" />
+                </div>
                 <div
                   class="w-[100%] h-[100%] flex items-center justify-center gridlines"
                   v-if="graph.name == 'Area chart'"
@@ -125,7 +123,9 @@
       </div>
     </div>
     <!-- Version History -->
-    <div class="version-history w-[200px] gridlines dark:bg-slate-800 rounded-[12px] p-[12px]">
+    <div
+      class="version-history w-[200px] gridlines dark:bg-slate-800 rounded-[12px] p-[12px]"
+    >
       <div class="versions-wrapper flex flex-col gap-[8px]">
         <div class="version-header">Version history</div>
         <div class="versions">
@@ -145,6 +145,7 @@
 </template>
 
 <script setup>
+import PieChart from "@/components/graphs/PieChart.vue";
 import SingleLine from "@/components/graphs/SingleLine.vue";
 import TheBarchart from "@/components/graphs/TheBarchart.vue";
 import { line1 } from "@/data/dummyMultiLine";
@@ -224,15 +225,15 @@ const earnings = [
       { x: "Q4 2023", y: 120000000 },
     ],
   },
-  {
-    entity: "MSFT",
-    data: [
-      { x: "Q1 2023", y: 100000000 },
-      { x: "Q2 2023", y: 120000000 },
-      { x: "Q3 2023", y: 100000000 },
-      { x: "Q4 2023", y: 100000000 },
-    ],
-  },
+];
+
+//PIECHART DATA
+const sectors = [
+  { label: "Others", value: 10 },
+  { label: "Energy", value: 15 },
+  { label: "Finance", value: 25 },
+  { label: "Technology", value: 30 },
+  { label: "Healthcare", value: 20 },
 ];
 </script>
 
