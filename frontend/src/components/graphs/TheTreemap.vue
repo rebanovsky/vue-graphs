@@ -8,45 +8,42 @@
 </template>
 
 <script>
-import { watchEffect, ref } from "vue";
+import { watchEffect, onMounted, ref } from "vue";
 import * as d3 from "d3";
 
 export default {
   name: "Treemap",
   props: {
-    inputData: {
+    data: {
       type: Object,
       required: true,
     },
   },
   setup(props) {
-    const data = ref(props.inputData);
+    const data = ref(props.data);
 
-    watchEffect(() => {
-      // Process the new data
+    console.log('data: ', props.data)
+    const drawChart = () => {
+      d3.select("#treemap").selectAll("*").remove();
+
       const width = 400;
       const height = 180;
       const root = d3.hierarchy(data.value).sum((d) => d.value);
       d3.treemap().size([width, height]).padding(2)(root);
 
-      // Clear the existing graph just before creating the new one
-      d3.select("#treemap").selectAll("*").remove();
-
-      // Create new SVG element for the graph
       const svg = d3
         .select("#treemap")
         .append("svg")
         .attr("width", width)
         .attr("height", height);
 
-      // Create a color scale for root children
-      const colors = ["#57E2E5", "#FEC3A6", "#FFAC81", "#FF928B"]; // Change these colors to your preference
+      const colors = ["#57E2E5", "#FEC3A6", "#FFAC81", "#FF928B"];
       const colorScale = d3
         .scaleOrdinal()
-        .domain(root.children.map((d, i) => i)) // Assigning each root child an index
+        .domain(root.children.map((d, i) => i))
         .range(colors);
 
-      const tooltip = d3.select("#tooltip"); // Select the tooltip
+      const tooltip = d3.select("#tooltip");
 
       svg
         .selectAll("rect")
@@ -57,22 +54,19 @@ export default {
         .attr("y", (d) => d.y0)
         .attr("width", (d) => d.x1 - d.x0)
         .attr("height", (d) => d.y1 - d.y0)
-        .style("fill", (d) => colorScale(d.parent.data.name)) // Use parent's name as the color domain
+        .style("fill", (d) => colorScale(d.parent.data.name))
         .on("mouseover", (event, d) => {
-          // Display the tooltip on mouseover
-          tooltip.style("opacity", 1).html(d.data.value); // Display the value
+          tooltip.style("opacity", 1).html(d.data.value);
         })
         .on("mousemove", (event) => {
-          // Update tooltip position on mouse move
           tooltip
             .style("left", event.pageX + "px")
             .style(
               "top",
               event.pageY - 10 - tooltip.node().offsetHeight + "px"
-            ); // Positioned right above the cursor
+            );
         })
         .on("mouseout", () => {
-          // Hide the tooltip on mouseout
           tooltip.style("opacity", 0);
         });
 
@@ -84,7 +78,11 @@ export default {
         .attr("x", (d) => d.x0 + 5)
         .attr("y", (d) => d.y0 + 20)
         .text((d) => d.data.name);
-    });
+    };
+
+    onMounted(drawChart)
+
+    watchEffect(drawChart)
 
     return {};
   },

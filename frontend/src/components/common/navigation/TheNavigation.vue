@@ -24,7 +24,6 @@
 </template>
 
 <script setup>
-import TheSearch from "@/components/navigation/TheSearch.vue";
 import ThemeToggler from "@/components/widgets/ThemeToggler.vue";
 
 const props = defineProps({

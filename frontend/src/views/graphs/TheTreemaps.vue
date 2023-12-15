@@ -2,7 +2,7 @@
   <!-- TheTreemap.vue -->
   <ChartContainer>
     <template #title>TheTreemap.vue</template>
-    <TheTreemap :input-data="sampleTreeData" />
+    <TheTreemap :data="sampleTreeData" />
     <template #config>
       <RadioButton
         :title="barTooltip.title"
@@ -68,12 +68,7 @@ import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/common/ChartContainer.vue";
 import { theStates } from "@/data/regionalData";
 
-// LINECHART DATA
-const formattedLineData = line1.map((item) => ({
-  x: item.Date,
-  y: item.Close,
-}));
-
+// DATA
 const sampleTreeData = ref({
   name: "Root",
   children: [
@@ -91,62 +86,8 @@ const sampleTreeData = ref({
   ],
 });
 
-const barTooltipState = ref("off");
-const barTooltip = {
-  title: "Tooltip",
-  config: [
-    { id: "lineTooltipOn", label: "On", value: true },
-    { id: "lineTooltipOff", label: "Off", value: false },
-  ],
-};
 
-//Visualizations
-const barVisualizationState = ref("off");
-const barAnimations = {
-  title: "Animations",
-  config: [
-    { id: "barAnimationsOn", label: "On", value: "on" },
-    { id: "barAnimationsOff", label: "Off", value: "off" },
-  ],
-};
 
-// Adding/removing stocks
-const selectedStocks = ref([]);
-const stockOptions = {
-  title: "Add/remove Bars",
-  configs: [
-    { label: "AAPL", value: "AAPL" },
-    { label: "MSFT", value: "MSFT" },
-    { label: "NVDA", value: "NVDA" },
-  ],
-};
-
-//Line color
-const colorOptions = ref([
-  { id: "color1", label: "Blue", value: "#0000FF" },
-  { id: "color2", label: "Red", value: "#FF0000" },
-  // Add more colors as needed
-]);
-
-//PROPS
-//SingleLine
-// const singleLineProps = ref([
-//   {
-//     name: "toolbar",
-//     value: "true",
-//     type: "prop",
-//   },
-//   {
-//     name: "animation",
-//     value: "true",
-//     type: "prop",
-//   },
-//   {
-//     name: "line-color",
-//     value: "#eff",
-//     type: "prop",
-//   },
-// ]);
 
 // Function to map barTooltipState value for display and filter
 const mapDisplayValue = (key, value) => {

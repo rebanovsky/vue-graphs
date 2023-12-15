@@ -6,20 +6,18 @@
       <div
         class="items-center mr-[8px] px-[10px] flex rounded-[8px] py-[4px] text-[14px] text-slate-500"
       ></div>
-      <TheSearch />
     </div>
   </div>
 </template>
 
 <script>
-import TheSearch from "@/components/navigation/TheSearch.vue";
 import axios from "axios";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import TheDropdown from "../common/TheDropdown.vue";
 
 export default {
-  components: { TheSearch, TheDropdown },
+  components: { TheDropdown },
   setup() {
     const store = useStore();
     const router = useRouter();

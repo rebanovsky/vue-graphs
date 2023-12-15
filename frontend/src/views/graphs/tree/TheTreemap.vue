@@ -1,7 +1,7 @@
 <template>
   <!-- TheTreemap.vue -->
   <ChartContainer title="TheTreemap.vue" :props="props">
-    <TheTreemap :input-data="sampleTreeData" />
+    <TheTreemap :data="sampleTreeData" />
     <template #config>
       <RadioButton
         v-model="config.tooltip"
