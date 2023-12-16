@@ -112,19 +112,131 @@ export default {
           .attr("class", "text-slate-200 dark:text-slate-800");
       }
 
+      const firstItemYValue = yScale(props.data[0].values[0].y);
+
+      // Define the area generator
+      const area = d3
+        .area()
+        .x((d) => xScale(props.dateFormat ? parseDate(d.x) : d.x))
+        .y0(firstItemYValue)
+        .y1((d) => yScale(d.y))
+        .curve(d3.curveMonotoneX);
+
+      // Create a continuous gradient for the entire area
+      const gradientId = `gradient-area-${Math.random()
+        .toString(36)
+        .substr(2, 9)}`;
+
+      const gradient = svg
+        .append("linearGradient")
+        .attr("id", gradientId)
+        .attr("gradientUnits", "userSpaceOnUse")
+        .attr("x1", 0)
+        .attr("x2", 0)
+        .attr(
+          "y1",
+          yScale(d3.min(props.data, (d) => d3.min(d.values, (pt) => pt.y)))
+        )
+        .attr(
+          "y2",
+          yScale(d3.max(props.data, (d) => d3.max(d.values, (pt) => pt.y)))
+        );
+
+      gradient
+        .append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "rgb(204,0,0)")
+        .attr("stop-opacity", 0.4);
+
+      gradient
+        .append("stop")
+        .attr("offset", "40%")
+        .attr("stop-color", "rgb(255, 0, 106)")
+        .attr("stop-opacity", 0.05);
+
+      gradient
+        .append("stop")
+        .attr("offset", "50%")
+        .attr("stop-color", "#f1f5f900");
+
+      gradient
+        .append("stop")
+        .attr("offset", "60%")
+        .attr("stop-color", "rgb(0, 128, 0)")
+        .attr("stop-opacity", 0.05);
+
+      gradient
+        .append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", "rgb(0, 128, 0)")
+        .attr("stop-opacity", 0.4);
+
+      const colorScaleRed = d3
+        .scaleLinear()
+        .domain([
+          d3.min(props.data, (d) => d3.min(d.values, (pt) => pt.y)),
+          firstItemYValue,
+        ])
+        .range(["darkred", "red"]);
+
+      const colorScaleGreen = d3
+        .scaleLinear()
+        .domain([
+          firstItemYValue,
+          d3.max(props.data, (d) => d3.max(d.values, (pt) => pt.y)),
+        ])
+        .range(["green", "lightgreen"]);
+
+      // ... existing code ...
+
       const line = d3
         .line()
         .x((d) => xScale(props.dateFormat ? parseDate(d.x) : d.x))
-        .y((d) => yScale(d.y));
+        .y((d) => yScale(d.y))
+        .curve(d3.curveMonotoneX) // Optional: makes the line smoother
+        .defined((d) => !isNaN(d.y)); // Handle missing data
 
       props.data.forEach((d) => {
-        const path = svg
+        svg
+          .append("path")
+          .data([d.values])
+          .attr("class", "area")
+          .attr("d", area)
+          .attr("fill", `url(#${gradientId})`);
+        // Define a gradient for the line
+        const lineGradientId = `line-gradient-${Math.random()
+          .toString(36)
+          .substr(2, 9)}`;
+        const lineGradient = svg
+          .append("linearGradient")
+          .attr("id", lineGradientId)
+          .attr("gradientUnits", "userSpaceOnUse")
+          .attr("x1", xScale.range()[0])
+          .attr("x2", xScale.range()[1]);
+
+        d.values.forEach((point) => {
+          const color =
+            point.y < firstItemYValue
+              ? colorScaleRed(point.y)
+              : colorScaleGreen(point.y);
+          const offset =
+            (xScale(props.dateFormat ? parseDate(point.x) : point.x) -
+              xScale.range()[0]) /
+            (xScale.range()[1] - xScale.range()[0]);
+          lineGradient
+            .append("stop")
+            .attr("offset", `${offset * 100}%`)
+            .attr("stop-color", color);
+        });
+
+        // Draw the line with the gradient
+        svg
           .append("path")
           .data([d.values])
           .attr("class", "line")
           .attr("d", line)
-          .attr("style", `stroke: ${props.lineColor} !important;`)
-          .attr("fill", "none");
+          .attr("fill", "none")
+          .attr("stroke", `url(#${lineGradientId})`);
 
         if (props.animation) {
           path.each(function () {
@@ -221,8 +333,8 @@ export default {
                   )
                 )
                 .attr("cy", yScale(closestPt.y))
-                .attr("r", 36) // The size of the larger circle
-                .attr("fill", "rgba(61, 151, 255, 0.1)"); // Semi-transparent black
+                .attr("r", 36)
+                .attr("fill", "rgba(61, 151, 255, 0.1)");
 
               hoverCirclesGroup
                 .append("circle")
@@ -271,7 +383,7 @@ export default {
       }
     };
 
-    onMounted(drawChart, console.log('data: ', props.data));
+    onMounted(drawChart);
 
     const animateLine = () => {
       const paths = d3.select(chart.value).selectAll(".line");
@@ -312,6 +424,6 @@ export default {
 
 <style scoped>
 .line {
-  stroke-width: 2px;
+  stroke-width: 1px;
 }
 </style>
