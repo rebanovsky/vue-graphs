@@ -4,17 +4,17 @@
       {{ title }}
     </div>
     <div
-      class="color-group border-[1px] border-slate-200 hover:border-slate-300 transition ease hover:shadow-boxshlight rounded p-[2px] flex gap-[4px] items-center"
+      class="color-group border-[1px] px-[4px] w-[auto] border-slate-200 dark:border-slate-800 hover:border-blue-400 transition ease rounded p-[2px] flex gap-[4px] items-center"
     >
       <input
         type="color"
-        class="cursor-pointer border-[0px] rounded"
+        class="cursor-pointer flex w-[14px] h-[14px] bg-transparent"
         @input="updateColor"
       />
       <div class="">
         <input
           type="text"
-          class="bg-slate-100 placeholder:font-light text-[14px] placeholder:text-[14px] placeholder:text-slate-900 dark:placeholder:text-slate-100 w-[140px]"
+          class="bg-slate-100 dark:bg-slate-900 px-[2px] flex placeholder:font-light text-[14px] placeholder:text-[14px] w-[140px] placeholder:tracking-wider"
           :placeholder="color"
         />
       </div>
@@ -51,5 +51,13 @@ const updateColor = (e) => {
 
 .color-group {
   margin-top: 8px;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: 8px;
 }
 </style>
