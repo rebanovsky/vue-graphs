@@ -43,7 +43,7 @@
                   >
                     <div
                       class="props-row flex gap-[12px] py-[16px] h-[100%] flex items-center text-slate-600 dark:text-slate-400 border-b-[1px] border-slate-200 dark:border-slate-800"
-                      v-for="prop in props"
+                      v-for="prop in componentProps"
                     >
                       <div class="props-cell w-[64px]">{{ prop.name }}</div>
                       <div class="props-cell w-[64px]">{{ prop.type }}</div>
@@ -55,8 +55,32 @@
                   </div>
                 </div>
               </div>
-              <div class="graph-data" v-if="appendix == 'data'">
-                data
+              <div
+                class="preview-data-wrapper p-[12px]"
+                v-if="appendix == 'data'"
+              >
+                <div class="preview-data-title text-[12px] font-medium">
+                  {{ previewData.title }}
+                </div>
+                <div class="preview-data-content text-[12px]">
+                  Array({{ previewData.arrLength }})
+                  <br />
+                  [
+                  <div class="key-values-wrapper px-[12px]">
+                    <div
+                      class="key-values"
+                      v-for="(object, index) in previewData.json"
+                    >
+                      [{{ index }}] {
+                      <div class="" v-for="kv in object.keyValues">
+                        {{ kv.key }}: {{ kv.value }}
+                      </div>
+                      },
+                    </div>
+                    ...
+                  </div>
+                  ]
+                </div>
               </div>
             </div>
           </div>
@@ -71,7 +95,7 @@
                     />
                     <input
                       ref="searchRef"
-                      class="dark:placeholder-slate-500 font-light text-[12px] h-[32px] px-[6px] w-[140px] mx-[5px] bg-slate-100 dark:bg-transparent placeholder-slate-400 transition ease"
+                      class="dark:placeholder-slate-500 font-light text-[12px] h-[32px] px-[6px] w-[140px] mx-[5px] bg-transparent placeholder-slate-400 transition ease"
                       placeholder="Search"
                     />
                   </div>
@@ -99,10 +123,10 @@
 
 <script setup>
 import { nanoid } from "nanoid";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import RadioButton from "./RadioButton.vue";
 
-defineProps({
+const props = defineProps({
   dataFile: {
     type: String,
     default: ".json",
@@ -111,8 +135,11 @@ defineProps({
     type: String,
     default: "Chart title",
   },
-  props: {
+  componentProps: {
     type: Array,
+  },
+  previewData: {
+    type: Object,
   },
 });
 

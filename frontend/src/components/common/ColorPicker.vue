@@ -14,7 +14,7 @@
       <div class="">
         <input
           type="text"
-          class="bg-slate-100 dark:bg-slate-900 px-[2px] flex placeholder:font-light text-[14px] placeholder:text-[14px] w-[140px] placeholder:tracking-wider"
+          class="bg-slate-100 dark:bg-slate-900 px-[2px] transition ease flex placeholder:font-light text-[14px] placeholder:text-[14px] w-[140px] placeholder:tracking-wider"
           :placeholder="color"
         />
       </div>

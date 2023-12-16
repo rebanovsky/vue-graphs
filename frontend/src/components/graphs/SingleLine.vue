@@ -271,7 +271,7 @@ export default {
       }
     };
 
-    onMounted(drawChart);
+    onMounted(drawChart, console.log('data: ', props.data));
 
     const animateLine = () => {
       const paths = d3.select(chart.value).selectAll(".line");

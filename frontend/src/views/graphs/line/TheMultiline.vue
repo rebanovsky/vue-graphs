@@ -1,6 +1,6 @@
 <template>
   <!-- MultiLine.vue -->
-  <ChartContainer title="MultiLine.vue" :props="props">
+  <ChartContainer title="MultiLine.vue" :component-props="props">
     <MultiLine
       :data="chartData"
       date-format="%Y-%m-%d"

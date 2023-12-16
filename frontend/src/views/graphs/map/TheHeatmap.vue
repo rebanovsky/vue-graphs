@@ -1,6 +1,6 @@
 <template>
   <!-- TheHeatmap.vue -->
-  <ChartContainer title="TheHeatmap.vue" :props="props">
+  <ChartContainer title="TheHeatmap.vue" :component-props="props">
     <TheHeatmap :geo-json-data="geoJson" />
     <template #config>
       <RadioButton

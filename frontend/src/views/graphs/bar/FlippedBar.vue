@@ -1,6 +1,6 @@
 <template>
   <!-- BarChart.vue -->
-  <ChartContainer title="FlippedBar.vue" :props="props">
+  <ChartContainer title="FlippedBar.vue" :component-props="props">
     <TheBarchart
       :data="earnings"
       :tooltip="true"

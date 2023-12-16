@@ -1,6 +1,6 @@
 <template>
   <!-- PieChart.vue -->
-  <ChartContainer title="ThePiechart.vue" :props="props">
+  <ChartContainer title="ThePiechart.vue" :component-props="props">
     <PieChart
       :data="sectors"
       :height="280"

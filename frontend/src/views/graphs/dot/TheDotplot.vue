@@ -1,6 +1,6 @@
 <template>
   <!-- BarChart.vue -->
-  <ChartContainer title="TheDotplot.vue" :props="props">
+  <ChartContainer title="TheDotplot.vue" :component-props="props">
     <DotGraph :data="earnings1.AppleEarningsData" :width="480" :height="240" />
     <template #config>
       <RadioButton

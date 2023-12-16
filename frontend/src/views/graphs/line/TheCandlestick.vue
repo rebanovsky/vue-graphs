@@ -1,6 +1,6 @@
 <template>
   <!-- TheCandlestick.vue -->
-  <ChartContainer title="TheCandlestick.vue" :props="props">
+  <ChartContainer title="TheCandlestick.vue" :component-props="props">
     <template #title>TheCandlestick.vue</template>
     <TheCandlestick
       :data="candleStickData"

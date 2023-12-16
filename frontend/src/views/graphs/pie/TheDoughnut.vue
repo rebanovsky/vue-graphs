@@ -1,6 +1,6 @@
 <template>
   <!-- BarChart.vue -->
-  <ChartContainer title="DoughnutChart.vue" :props="props">
+  <ChartContainer title="DoughnutChart.vue" :component-props="props">
     <DoughnutChart :data="sectors" :height="280" :width="560" />
     <template #config>
       <RadioButton

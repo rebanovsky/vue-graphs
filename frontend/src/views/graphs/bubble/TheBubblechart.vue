@@ -1,6 +1,6 @@
 <template>
   <!-- TheBubblechart.vue -->
-  <ChartContainer title="TheBubblechart.vue" :props="props">
+  <ChartContainer title="TheBubblechart.vue" :component-props="props">
     <template #title>TheBubblechart.vue</template>
     <BubbleChart :data="bubbleData" width="480" height="240" />
     <template #config>
