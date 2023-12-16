@@ -31,7 +31,7 @@
               >
                 <div class="props-table flex flex-col">
                   <div
-                    class="props-header flex gap-[12px] text-slate-700 py-[12px] dark:text-slate-300 border-b-[1px] border-slate-400 dark:border-slate-600"
+                    class="props-header flex gap-[12px] text-slate-700 py-[12px] dark:text-slate-300 border-b-[1px] font-medium border-slate-300 dark:border-slate-700"
                   >
                     <div class="props-title w-[64px]">Prop</div>
                     <div class="props-title w-[64px]">Type</div>
@@ -59,21 +59,44 @@
                 class="preview-data-wrapper p-[12px]"
                 v-if="appendix == 'data'"
               >
-                <div class="preview-data-title text-[12px] font-medium">
-                  {{ previewData.title }}
+                <div
+                  class="preview-data-title text-slate-700 py-[12px] dark:text-slate-300 py-[12px] text-[12px] font-medium flex gap-[12px] border-b-[1px] border-slate-300 dark:border-slate-700"
+                >
+                  <div class="">
+                    {{ previewData.title }}
+                  </div>
+                  <div class="text-slate-500">
+                    Array({{ previewData.arrLength }})
+                  </div>
                 </div>
-                <div class="preview-data-content text-[12px]">
-                  Array({{ previewData.arrLength }})
-                  <br />
+                <div
+                  class="preview-data-content m-[20px] text-[12px] text-slate-500 font-mono font-light"
+                >
                   [
-                  <div class="key-values-wrapper px-[12px]">
+                  <div class="key-values-wrapper px-[16px]">
                     <div
                       class="key-values"
-                      v-for="(object, index) in previewData.json"
+                      v-for="object in previewData.json"
+                      :key="index"
                     >
-                      [{{ index }}] {
-                      <div class="" v-for="kv in object.keyValues">
-                        {{ kv.key }}: {{ kv.value }}
+                      {
+                      <div
+                        class="mx-[16px] text-harlequin-500 flex gap-[8px]"
+                        v-for="kv in object.keyValues"
+                      >
+                        <div class="">"{{ kv.key }}":</div>
+                        <div
+                          class="text-blue-400"
+                          v-if="getType(kv.value) === 'number'"
+                        >
+                          {{ kv.value }}
+                        </div>
+                        <div
+                          class="text-harlequin-500"
+                          v-else-if="getType(kv.value) === 'string'"
+                        >
+                          "{{ kv.value }}"
+                        </div>
                       </div>
                       },
                     </div>
@@ -157,6 +180,14 @@ const options = [
     label: "Data",
   },
 ];
+
+// data type check
+function getType(value) {
+  if (Array.isArray(value)) {
+    return "array";
+  }
+  return typeof value;
+}
 </script>
 
 <style lang="scss" scoped></style>

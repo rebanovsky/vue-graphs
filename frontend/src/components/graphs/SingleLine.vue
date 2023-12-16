@@ -221,7 +221,7 @@ export default {
                   )
                 )
                 .attr("cy", yScale(closestPt.y))
-                .attr("r", 32) // The size of the larger circle
+                .attr("r", 36) // The size of the larger circle
                 .attr("fill", "rgba(61, 151, 255, 0.1)"); // Semi-transparent black
 
               hoverCirclesGroup
@@ -234,7 +234,7 @@ export default {
                 )
                 .attr("cy", yScale(closestPt.y))
                 .attr("r", 4) // The size of the smaller circle
-                .attr("class", `fill-[#3d97ff] dark:fill-[#49B7F7]`);
+                .attr("class", `fill-[#0072ff] dark:fill-[#49B7F7]`);
 
               // Append text label for the y value
               hoverCirclesGroup
