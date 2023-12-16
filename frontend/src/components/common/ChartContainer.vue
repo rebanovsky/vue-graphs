@@ -1,6 +1,6 @@
 <template>
   <div
-    class="chart-container flex w-[auto] mb-[20px] flex-col gap-[20px] p-[32px] rounded-[12px]"
+    class="chart-container flex w-[auto] mb-[20px] flex-col gap-[20px] py-[32px] mt-[60px] pl-[32px] rounded-[12px]"
   >
     <div class="chart-title flex py-[4px]">
       <div class="h-[100%] text-[14px] text-slate-500 flex">
@@ -27,6 +27,7 @@
 
               <div
                 class="chart-properties text-[12px] w-[auto] p-[12px] rounded-[8px]"
+                v-if="appendix == 'props'"
               >
                 <div class="props-table flex flex-col">
                   <div
@@ -54,15 +55,16 @@
                   </div>
                 </div>
               </div>
+              <div class="graph-data" v-if="appendix == 'data'">
+                data
+              </div>
             </div>
           </div>
           <div class="flex flex-col gap-[20px]">
             <div class="config flex flex-col gap-[4px] text-[14px]">
               <div class="config-search flex text-[14px]">
                 <div class="gridlines w-[100%]">
-                  <div
-                    class="ticker-searcher flex items-center px-[8px]"
-                  >
+                  <div class="ticker-searcher flex items-center px-[8px]">
                     <font-awesome-icon
                       class="h-[12px] text-slate-400 dark:text-slate-600 transition"
                       :icon="['fas', 'magnifying-glass']"

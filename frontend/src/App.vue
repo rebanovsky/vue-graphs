@@ -1,19 +1,12 @@
 <template>
   <div
-    class="app-wrapper background dark:bg-slate-900 w-[100vw] text-slate-900 dark:text-slate-400 bg-slate-100 overflow-hidden transition ease"
+    class="app-wrapper background dark:bg-slate-900 w-[100vw] text-slate-900 dark:text-slate-400 bg-slate-100 overflow-y-auto transition ease"
   >
     <router-view />
   </div>
 </template>
 
-<script>
-export default {
-  components: {},
-  setup() {
-    return {};
-  },
-};
-</script>
+<script setup></script>
 
 <style>
 p {

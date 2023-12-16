@@ -1,8 +1,8 @@
 <template>
-  <div class="subview overflow-y-auto w-full flex justify-center">
+  <div class="subview w-full flex justify-center">
     <div class="flex gap-5">
       <!-- Fixed Side Menu -->
-      <div class="sidenav fixed overflow-y-auto w-48 gridlines top-[155px]">
+      <div class="sidenav fixed overflow-y-auto w-48 gridlines top-[141px]">
         <SideMenu :title="title" :items="sidenavItems" :base-path="basePath" />
       </div>
 
