@@ -5,7 +5,7 @@
     >
       <!-- Introduction Section -->
       <div
-        class="container w-[800px] overflow-y-auto p-[20px] rounded-[12px] gridlines flex flex-col gap-[20px]"
+        class="container w-[800px] p-[20px] rounded-[12px] gridlines flex flex-col gap-[20px]"
       >
         <header>
           <h1 class="text-[20px] font-medium">Vue-Graphs</h1>

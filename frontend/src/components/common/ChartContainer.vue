@@ -116,7 +116,7 @@ defineProps({
   },
 });
 
-const appendix = ref("props");
+const appendix = ref("data");
 
 const options = [
   {

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-[0px] h-screen items-center overflow-y-auto">
+  <div class="flex flex-col gap-[0px] h-screen items-center">
     <TheNavigation />
     <router-view />
   </div>
