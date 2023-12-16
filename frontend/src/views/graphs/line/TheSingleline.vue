@@ -1,6 +1,6 @@
 <template>
   <!-- SingleLine.vue -->
-  <ChartContainer title="SingleLine.vue" :props="props">
+  <ChartContainer title="SingleLine.vue" :props="props" :json="json">
     <SingleLine
       :width="560"
       :height="280"
@@ -44,17 +44,26 @@
     </template>
     <template #code-block>
       <div
-        class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%] font-mono"
+        class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%]"
       >
         <div
-          class="copy-code w-[100%] flex justify-end border-b-[1px] border-b-slate-300 dark:border-b-slate-800 pb-[8px]"
+          class="copy-code w-[100%] flex gap-[8px] justify-end border-b-[1px] border-b-slate-300 dark:border-b-slate-800 pb-[8px]"
         >
+          <Transition name="slide-left">
+            <div class="copy-text text-[11px] text-slate-700" v-if="isHovered">
+              copy
+            </div>
+          </Transition>
           <SvgIcon
             name="copy"
             dynamicClass="hover:fill-slate-900 cursor-pointer p-[2px] dark:hover:!fill-slate-200"
+            @mouseover="isHovered = true"
+            @mouseleave="isHovered = false"
           />
         </div>
-        <div class="flex gridlines h-[100%] items-center justify-center">
+        <div
+          class="flex gridlines font-mono h-[100%] items-center justify-center"
+        >
           <div class="flex flex-col relative" v-if="chartProps.length > 0">
             <div class="top flex">
               {{ "<" }}
@@ -99,15 +108,19 @@ import ChartContainer from "@/components/common/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 
-const lineColor = ref('#ffffff')
+// Utils
+const isHovered = ref(false);
+
+// Configs
+const lineColor = ref("#ffffff");
 
 const handleValue = (val) => {
-  lineColor.value = val
-}
+  lineColor.value = val;
+};
 
 watch(lineColor, (newVal) => {
-  console.log(newVal)
-})
+  console.log(newVal);
+});
 
 // LINECHART DATA
 const formattedLineData = line1.map((item) => ({
@@ -127,29 +140,29 @@ const radioConfigs = {
   animations: {
     title: "Animations",
     config: [
-      { id: nanoid(10), label: "On", value: "on" },
-      { id: nanoid(10), label: "Off", value: "off" },
+      { id: nanoid(10), label: "On", value: "true" },
+      { id: nanoid(10), label: "Off", value: "false" },
     ],
   },
   gridlines: {
     title: "Gridlines",
     config: [
-      { id: nanoid(10), label: "On", value: "on" },
-      { id: nanoid(10), label: "Off", value: "off" },
+      { id: nanoid(10), label: "On", value: "true" },
+      { id: nanoid(10), label: "Off", value: "false" },
     ],
   },
   tooltip: {
     title: "Tooltip",
     config: [
-      { id: nanoid(10), label: "On", value: "on" },
-      { id: nanoid(10), label: "Off", value: "off" },
+      { id: nanoid(10), label: "On", value: "true" },
+      { id: nanoid(10), label: "Off", value: "false" },
     ],
   },
 };
 
-const tooltipBoolean = computed(() => config.tooltip === "on");
-const gridlinesBoolean = computed(() => config.gridlines === "on");
-const animationsBoolean = computed(() => config.animations === "on");
+const tooltipBoolean = computed(() => config.tooltip === "true");
+const gridlinesBoolean = computed(() => config.gridlines === "true");
+const animationsBoolean = computed(() => config.animations === "true");
 
 // Adding/removing stocks
 const stockOptions = {
@@ -165,7 +178,7 @@ const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
 
 const mapDisplayValue = (key, value) => {
   if (key === "tooltip" || key === "gridlines" || key === "animations") {
-    return value === "on" ? "on" : null;
+    return value === "true" ? "true" : null;
   }
   return JSON.stringify(value);
 };
@@ -174,9 +187,9 @@ const config = reactive({
   lineData: [],
   selectedStocks: [],
   lineColor: "#fff",
-  tooltip: "off",
-  gridlines: "off",
-  animations: "off",
+  tooltip: "false",
+  gridlines: "false",
+  animations: "false",
 });
 
 const chartProps = computed(() => {

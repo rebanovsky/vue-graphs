@@ -17,7 +17,7 @@
             },
           ]"
           @click="() => updateModelValue(option.value)"
-          class="px-[4px] py-[2px]"
+          class="px-[3px] py-[1px]"
           :style="index !== 0 ? 'transform: translateX(-1px);' : ''"
         >
           <input

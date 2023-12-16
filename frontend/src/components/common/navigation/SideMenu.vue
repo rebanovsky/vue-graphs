@@ -35,9 +35,6 @@
         </div>
       </div>
     </div>
-    <div class="gridlines mx-[12px] text-[10px] text-slate-500 py-[12px]">
-      created by <em class="font-medium">Mark Andreas Rebane</em>
-    </div>
   </div>
 </template>
 

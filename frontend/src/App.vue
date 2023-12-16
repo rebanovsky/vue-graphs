@@ -1,6 +1,6 @@
 <template>
   <div
-    class="app-wrapper background dark:bg-slate-900 w-[100vw] text-slate-900 dark:text-slate-400 bg-slate-100 overflow-hidden transition ease flex"
+    class="app-wrapper background dark:bg-slate-900 w-[100vw] text-slate-900 dark:text-slate-400 bg-slate-100 overflow-hidden transition ease"
   >
     <router-view />
   </div>
@@ -61,6 +61,29 @@ input:focus {
 .-leave-from {
   transform: translateY(0);
   opacity: 1;
+}
+
+.slide-left-enter-to,
+.slide-left-leave-from {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.slide-left-leave-to {
+  transform: translateX(4%);
+  opacity: 0;
+}
+
+.slide-left-enter-active,
+.slide-left-leave-active,
+.-enter-active,
+.-leave-active {
+  transition: all 200ms ease;
+}
+
+.slide-left-enter-from {
+  transform: translateX(4%);
+  opacity: 0;
 }
 
 .documents-mobile {

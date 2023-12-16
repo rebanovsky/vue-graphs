@@ -1,9 +1,9 @@
 <template>
   <div
-    class="chart-container flex w-[auto] mb-[20px] dark:shadow flex-col gap-[20px] p-[32px] rounded-[12px]"
+    class="chart-container flex w-[auto] mb-[20px] flex-col gap-[20px] p-[32px] rounded-[12px]"
   >
     <div class="chart-title flex py-[4px]">
-      <div class="h-[100%] text-[14px] gridlines text-slate-500 flex">
+      <div class="h-[100%] text-[14px] text-slate-500 flex">
         {{ title }}
       </div>
     </div>

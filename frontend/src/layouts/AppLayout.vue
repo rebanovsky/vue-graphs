@@ -1,8 +1,8 @@
 <template>
   <div
-    class="app-wrapper background dark:bg-slate-900 w-[100vw] text-slate-900 dark:text-slate-300 bg-slate-100 overflow-hidden transition ease flex"
+    class="app-wrapper background dark:bg-slate-900 w-[100vw] text-slate-900 dark:text-slate-300 bg-slate-100 overflow-hidden transition ease"
   >
-    <div class="ih-app flex w-[100%]">
+    <div class="ih-app w-[100%]">
       <div
         class="content flex-1 flex-col w-[100%] border-[0px]"
       >
@@ -11,7 +11,7 @@
           <transition name="fade" mode="out-in">
             <component
               :is="Component"
-              class="flex flex-col pb-[20px] h-[100%]"
+              class="h-[100%]"
             />
           </transition>
         </router-view>
