@@ -1,8 +1,12 @@
 <template>
   <!-- BarChart.vue -->
-  <ChartContainer title="TheBarchart.vue" :component-props="props">
+  <ChartContainer
+    title="TheBarchart.vue"
+    :component-props="barProps"
+    :preview-data="barPreview"
+  >
     <TheBarchart
-      :data="earnings"
+      :data="barData"
       :tooltip="true"
       :animations="true"
       :width="560"
@@ -27,15 +31,15 @@
         title="Animations"
         name="animations"
       />
-      <MultiSelect
+      <!-- <MultiSelect
         v-model="config.selectedStocks"
         :title="stockOptions.title"
         :options="stockOptions.configs"
-      />
+      /> -->
       <ColorPicker
         v-model="config.lineColor"
         :options="colorOptions"
-        title="Line Color"
+        title="Bar color"
       />
     </template>
     <template #code-block>
@@ -93,9 +97,12 @@ import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/common/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
+// data imports
+import { barProps } from "@/data/props";
+import { barPreview } from "@/data/previewData";
 
-// BARCHART DATA
-const earnings = [
+// DATA
+const barData = [
   {
     entity: "AAPL",
     data: [
@@ -121,29 +128,29 @@ const radioConfigs = {
   animations: {
     title: "Animations",
     config: [
-      { id: nanoid(10), label: "On", value: "on" },
-      { id: nanoid(10), label: "Off", value: "off" },
+      { id: nanoid(10), label: "On", value: "true" },
+      { id: nanoid(10), label: "Off", value: "false" },
     ],
   },
   gridlines: {
     title: "Gridlines",
     config: [
-      { id: nanoid(10), label: "On", value: "on" },
-      { id: nanoid(10), label: "Off", value: "off" },
+      { id: nanoid(10), label: "On", value: "true" },
+      { id: nanoid(10), label: "Off", value: "false" },
     ],
   },
   tooltip: {
     title: "Tooltip",
     config: [
-      { id: nanoid(10), label: "On", value: "on" },
-      { id: nanoid(10), label: "Off", value: "off" },
+      { id: nanoid(10), label: "On", value: "true" },
+      { id: nanoid(10), label: "Off", value: "false" },
     ],
   },
 };
 
-const tooltipBoolean = computed(() => config.tooltip === "on");
-const gridlinesBoolean = computed(() => config.gridlines === "on");
-const animationsBoolean = computed(() => config.animations === "on");
+const tooltipBoolean = computed(() => config.tooltip === "true");
+const gridlinesBoolean = computed(() => config.gridlines === "true");
+const animationsBoolean = computed(() => config.animations === "true");
 
 // Adding/removing stocks
 const stockOptions = {
@@ -165,12 +172,11 @@ const mapDisplayValue = (key, value) => {
 };
 
 const config = reactive({
-  lineData: [],
-  selectedStocks: [],
+  data: "barData",
   lineColor: "#fff",
-  tooltip: "off",
-  gridlines: "off",
-  animations: "off",
+  tooltip: "false",
+  gridlines: "false",
+  animations: "false",
 });
 
 const chartProps = computed(() => {
@@ -181,80 +187,6 @@ const chartProps = computed(() => {
     }))
     .filter((prop) => prop.value !== null);
 });
-
-// PROPS
-const props = [
-  {
-    name: "data",
-    type: "Array",
-    default: "null",
-    description:
-      "The dataset for the line chart, consisting of an array of data points.",
-  },
-  {
-    name: "width",
-    type: "Number",
-    default: "400",
-    description: "Specifies the width of the chart in pixels.",
-  },
-  {
-    name: "height",
-    type: "Number",
-    default: "200",
-    description: "Specifies the height of the chart in pixels.",
-  },
-  {
-    name: "dateFormat",
-    type: "String",
-    default: "null",
-    description:
-      "Defines the format for date values in the dataset. If null, no formatting is applied.",
-  },
-  {
-    name: "title",
-    type: "String",
-    default: '"Title"',
-    description: "The title of the line chart.",
-  },
-  {
-    name: "dotColor",
-    type: "String",
-    default: '"#05D9FF"',
-    description: "The color of the dots on the line chart.",
-  },
-  {
-    name: "lineColor",
-    type: "String",
-    default: "null",
-    description:
-      "The color of the line in the chart. If not specified, a default color is used.",
-  },
-  {
-    name: "tooltip",
-    type: "Boolean",
-    default: "false",
-    description: "Determines whether tooltips are shown on hover.",
-  },
-  {
-    name: "gridlines",
-    type: "Boolean",
-    default: "false",
-    description: "Controls the visibility of gridlines in the chart.",
-  },
-  {
-    name: "animation",
-    type: "Boolean",
-    default: "false",
-    description: "Controls whether animation is used on load.",
-  },
-  {
-    name: "xAxis",
-    type: "Boolean",
-    default: "null",
-    description:
-      "Controls the visibility of the X-axis. If not specified, default behavior is applied.",
-  },
-];
 </script>
 
 <style lang="scss" scoped>

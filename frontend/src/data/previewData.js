@@ -40,3 +40,9 @@ export const linePreview = {
     },
   ],
 };
+
+export const barPreview = {
+  title: "barData.json",
+  arrLength: 300,
+  json: []
+}
