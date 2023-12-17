@@ -125,9 +125,11 @@
                 </div>
               </div>
               <div
-                class="flex flex-col gap-[20px] gridlines w-[200px] p-[12px] h-[243px] overflow-y-auto"
+                class="flex flex-col gap-[12px] gridlines w-[200px] p-[12px] h-[243px] overflow-y-auto"
               >
-                <slot name="config"></slot>
+                <div class="w-[112px] flex flex-col gap-[16px]">
+                  <slot name="config"></slot>
+                </div>
               </div>
             </div>
             <div class="code-block flex text-[14px]">

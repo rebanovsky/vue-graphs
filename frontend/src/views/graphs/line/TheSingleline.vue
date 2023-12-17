@@ -16,6 +16,9 @@
       :animations="animationsBoolean"
     />
     <template #config>
+      <RadioToggle title="Tooltip" />
+      <RadioToggle title="Gridlines" />
+      <RadioToggle title="Animations" />
       <ColorPicker
         v-model="config.lineColor"
         :options="colorOptions"
@@ -98,6 +101,7 @@
 import { ref, reactive, computed, watch, onMounted } from "vue";
 import SingleLine from "@/components/graphs/SingleLine.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
+import RadioToggle from "@/components/common/RadioToggle.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/common/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
@@ -121,7 +125,7 @@ const handleValue = (val) => {
 };
 
 watch(lineColor, (newVal) => {
-  config.lineColor = newVal
+  config.lineColor = newVal;
 });
 
 // data manipulations
@@ -165,7 +169,6 @@ const radioConfigs = {
 const tooltipBoolean = computed(() => config.tooltip === "true");
 const gridlinesBoolean = computed(() => config.gridlines === "true");
 const animationsBoolean = computed(() => config.animations === "true");
-
 
 const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
 
@@ -211,18 +214,19 @@ const chartProps = computed(() => {
   position: absolute;
 }
 
-
-.slide-up-enter-active, .slide-up-leave-active {
+.slide-up-enter-active,
+.slide-up-leave-active {
   transition: all 0.2s;
 }
-.slide-up-enter-from, .slide-up-leave-to {
+.slide-up-enter-from,
+.slide-up-leave-to {
   transform: translateY(4px);
   opacity: 0;
 }
 
-.slide-up-enter-to, .slide-up-leave-from {
+.slide-up-enter-to,
+.slide-up-leave-from {
   transform: translateY(0);
   opacity: 1;
 }
-
 </style>
