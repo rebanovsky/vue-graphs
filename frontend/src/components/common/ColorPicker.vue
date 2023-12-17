@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-between text-[12px] items-center">
+  <div class="flex justify-between text-[12px] w-[176px] items-center">
     <div class="config-title flex w-[100px] flex-1 whitespace-nowrap">
       {{ title }}
     </div>
