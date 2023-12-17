@@ -1,5 +1,5 @@
 <template>
-  <div class="p-[12px] absolute">
+  <div class="p-[12px] absolute w-[1042px] z-[100]">
     <div
       class="content-navigation bg-slate-100 transition ease dark:bg-slate-900 gridlines rounded-[12px] border-slate-200 px-[32px] text-[0.8em] gap-[20px] w-[100%] h-[50px] overflow-x-auto flex items-center justify-between"
     >

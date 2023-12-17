@@ -1,11 +1,11 @@
 <template>
-  <div class="flex justify-between w-[100%] px-[12px] gap-[12px]">
+  <div class="flex justify-between w-[100%] pl-[12px] gap-[12px] mt-[60px] py-[32px]">
     <div
       class="playground-component p-[12px] text-[14px] flex flex-1 gap-[40px] justify-center w-[100%] gridlines rounded-[14px]"
     >
       <!-- Introduction Section -->
       <div
-        class="container w-[800px] p-[20px] rounded-[12px] gridlines flex flex-col gap-[20px]"
+        class="container w-[596px] p-[20px] rounded-[12px] gridlines flex flex-col gap-[20px]"
       >
         <header>
           <h1 class="text-[20px] font-medium">Vue-Graphs</h1>
@@ -124,7 +124,7 @@
     </div>
     <!-- Version History -->
     <div
-      class="version-history w-[200px] gridlines dark:bg-slate-800 rounded-[12px] p-[12px]"
+      class="version-history w-[180px] gridlines dark:bg-slate-800 rounded-[12px] p-[12px]"
     >
       <div class="versions-wrapper flex flex-col gap-[8px]">
         <div class="version-header">Version history</div>

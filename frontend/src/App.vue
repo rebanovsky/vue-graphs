@@ -6,12 +6,41 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useDark } from "@vueuse/core";
+import { watch, onMounted, onUnmounted } from "vue";
+
+const isDark = useDark();
+
+const updateBodyClass = (dark) => {
+  document.body.classList.toggle("bg-slate-900", dark);
+  document.body.classList.toggle("bg-slate-100", !dark);
+};
+
+// Watch for changes in isDark
+watch(
+  isDark,
+  (newValue) => {
+    updateBodyClass(newValue);
+  },
+  { immediate: true }
+);
+
+onMounted(() => {
+  updateBodyClass(isDark.value);
+});
+
+onUnmounted(() => {
+  // Remove classes when component is destroyed
+  document.body.classList.remove("bg-slate-900", "bg-slate-100");
+});
+</script>
 
 <style>
 body {
-  background-color: #000;
+  background-color: transparent;
 }
+
 p {
   padding: 0;
 }

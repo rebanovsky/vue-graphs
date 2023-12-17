@@ -40,30 +40,23 @@
         title="Animations"
         name="animations"
       />
-      <MultiSelect
-        v-model="config.selectedStocks"
-        :title="stockOptions.title"
-        :options="stockOptions.configs"
-      />
     </template>
     <template #code-block>
       <div
         class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%]"
+        @mouseover="isHovered = true"
+        @mouseleave="isHovered = false"
       >
         <div
-          class="copy-code w-[100%] flex gap-[8px] justify-end border-b-[1px] border-b-slate-300 dark:border-b-slate-800 pb-[8px]"
+          class="copy-code w-[100%] flex gap-[8px] h-[40px] justify-end border-b-[1px] border-b-slate-300 dark:border-b-slate-800 pb-[8px]"
         >
-          <Transition name="slide-left">
-            <div class="copy-text text-[11px] text-slate-700" v-if="isHovered">
-              copy
-            </div>
+          <Transition name="slide-up">
+            <SvgIcon
+              v-if="isHovered"
+              name="copy"
+              dynamicClass="hover:fill-slate-900 cursor-pointer p-[2px] dark:hover:!fill-slate-200"
+            />
           </Transition>
-          <SvgIcon
-            name="copy"
-            dynamicClass="hover:fill-slate-900 cursor-pointer p-[2px] dark:hover:!fill-slate-200"
-            @mouseover="isHovered = true"
-            @mouseleave="isHovered = false"
-          />
         </div>
         <div
           class="flex gridlines font-mono h-[100%] items-center justify-center"
@@ -104,7 +97,6 @@
 <script setup>
 import { ref, reactive, computed, watch, onMounted } from "vue";
 import SingleLine from "@/components/graphs/SingleLine.vue";
-import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/common/ChartContainer.vue";
@@ -115,7 +107,9 @@ import { line1 } from "@/data/dummyMultiLine";
 import { lineProps } from "@/data/props";
 import { linePreview } from "@/data/previewData";
 
-onMounted(() => {console.log('lineProps: ', lineProps)})
+onMounted(() => {
+  console.log("lineProps: ", lineProps);
+});
 // utils
 const isHovered = ref(false);
 
@@ -127,7 +121,7 @@ const handleValue = (val) => {
 };
 
 watch(lineColor, (newVal) => {
-  console.log(newVal);
+  config.lineColor = newVal
 });
 
 // data manipulations
@@ -172,15 +166,6 @@ const tooltipBoolean = computed(() => config.tooltip === "true");
 const gridlinesBoolean = computed(() => config.gridlines === "true");
 const animationsBoolean = computed(() => config.animations === "true");
 
-// Adding/removing stocks
-const stockOptions = {
-  title: "Add/remove Bars",
-  configs: [
-    { label: "AAPL", value: "AAPL" },
-    { label: "MSFT", value: "MSFT" },
-    { label: "NVDA", value: "NVDA" },
-  ],
-};
 
 const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
 
@@ -193,7 +178,6 @@ const mapDisplayValue = (key, value) => {
 
 const config = reactive({
   data: "lineData",
-  selectedStocks: [],
   lineColor: "#fff",
   tooltip: "false",
   gridlines: "false",
@@ -226,4 +210,19 @@ const chartProps = computed(() => {
 .list-leave-active {
   position: absolute;
 }
+
+
+.slide-up-enter-active, .slide-up-leave-active {
+  transition: all 0.2s;
+}
+.slide-up-enter-from, .slide-up-leave-to {
+  transform: translateY(4px);
+  opacity: 0;
+}
+
+.slide-up-enter-to, .slide-up-leave-from {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 </style>
