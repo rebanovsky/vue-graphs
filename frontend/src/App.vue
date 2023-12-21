@@ -1,6 +1,6 @@
 <template>
   <div
-    class="app-wrapper background dark:bg-slate-900 w-[100vw] text-slate-900 dark:text-slate-400 bg-slate-100 transition ease"
+    class="app-wrapper background dark:bg-slate-900 w-[100vw] text-slate-700 dark:text-slate-300 bg-slate-100 transition ease"
   >
     <router-view />
   </div>

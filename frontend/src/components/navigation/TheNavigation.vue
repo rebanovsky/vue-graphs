@@ -26,14 +26,34 @@
             </g>
           </svg>
         </div>
-        <div class="comp-name cursor-pointer p-[4px] hover:text-slate-700">
+        <div
+          class="comp-name cursor-pointer p-[4px] hover:text-slate-700 dark:hover:text-slate-400"
+        >
           Vue graphs
         </div>
       </div>
       <div class="right-side flex items-center gap-[20px]">
-        <div class="datapoints gridlines w-[200px] h-[28px]">
-
-        </div>
+        <div class="version-name cursor-pointer hover:text-slate-700">version 21-Dec-23</div>
+        <!-- Version History -->
+        <!-- <div
+          class="version-history w-[180px] gridlines dark:bg-slate-800 rounded-[12px] p-[12px]"
+        >
+          <div class="versions-wrapper flex flex-col gap-[8px]">
+            <div class="version-header">Version history</div>
+            <div class="versions">
+              <div class="version text-[12px] py-[4px] flex flex-col gap-[4px]">
+                <div class="version-no">version 21.12.23</div>
+                <div
+                  class="version-notes text-slate-500 flex flex-col gap-[2px] text-[11px]"
+                >
+                  <div class="note">- UI/UX bug fixes</div>
+                  <div class="note">- Added 4 new graphs</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="datapoints gridlines w-[200px] h-[28px]"></div>
         <a
           href="https://github.com/rebanovsky/vue-graphs"
           class="flex"

@@ -1,59 +1,34 @@
 <template>
-  <div
-    class="flex justify-center w-[100%] pl-[25px] gap-[25px] py-[32px]"
-  >
+  <div class="flex justify-center w-[100%] pl-[25px] gap-[25px] py-[32px]">
     <!-- Introduction Section -->
-    <div
-      class="container w-[596px] p-[20px] rounded-[12px] gridlines flex flex-col gap-[20px]"
-    >
-      <header>
-        <h1 class="text-[20px] font-medium">Vue-Graphs</h1>
-      </header>
-
-      <section class="introduction leading-6 font-normal text-slate-500">
-        <!-- <p>
-            A practical and efficient package for Vue 3, designed to enhance
-            your experience with D3.js. It simplifies the process of creating
-            interactive data visualizations, making it more accessible and less
-            time-consuming for developers.
-          </p> -->
-      </section>
-
-      <section class="installation my-[20px]">
-        <div class="steps flex justify-around">
+    <div class="home-section-wrapper flex flex-col gap-[64px]">
+      <div
+        class="home-section w-[800px] gridlines flex gap-[12px]"
+        v-for="section in sections"
+        :key="section.id"
+      >
+        <div class="h-[36px] flex items-center">
           <div
-            class="step flex items-center justify-around w-[400px]"
-            v-for="(step, index) in steps"
-            :key="index"
+            class="hash text-harlequin-500 text-[24px] cursor-pointer flex items-center justify-center h-[24px] opacity-0 hover:opacity-[1] transition ease"
           >
-            <div class="flex flex-col gap-[12px] items-center">
-              <div class="step-header flex gap-[8px] items-center">
-                <div
-                  class="step-nr border-[1px] border-harlequin-300 rounded-[20px] h-[24px] w-[24px] flex items-center justify-center"
-                >
-                  {{ step.stepNr }}
-                </div>
-                <div class="step-title">{{ step.stepTitle }}</div>
-              </div>
-              <div
-                class="step-content text-[12px] border-[1px] cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 border-slate-100 dark:border-slate-900 p-[8px] rounded"
-              >
-                {{ step.content }}
-              </div>
-            </div>
-            <div class="w-[14px]">
-              <div
-                v-if="index < steps.length - 1"
-                class="arrow text-[24px] tracking-7 text-slate-400"
-              >
-                >
-              </div>
-            </div>
+            #
           </div>
         </div>
-      </section>
-
-      <section class="graphs-wrapper flex justify-center my-[40px]">
+        <div class="flex flex-col gap-[20px] w-[600px]">
+          <h1 class="font-medium text-[24px]">{{ section.title }}</h1>
+          <div
+            class="home-paragraph text-slate-800 dark:text-slate-300 font-light text-[14px] leading-7"
+            v-html="section.content"
+          ></div>
+          <div
+            class="code-line rounded w-[100%] h-[100px] bg-slate-25 dark:bg-slate-800"
+            v-if="section.id == '2'"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <!-- GRAPHS SECTION
+            <section class="graphs-wrapper flex justify-center my-[40px]">
         <div class="flex flex-wrap gap-[20px] w-[600px]">
           <div
             class="graphs-container"
@@ -115,39 +90,46 @@
           </div>
         </div>
       </section>
-
-      <footer>
-        <p>Vue-Graphs: Streamlining Data Visualization in Vue.</p>
-      </footer>
-    </div>
-    <!-- Version History -->
-    <div
-      class="version-history w-[180px] gridlines dark:bg-slate-800 rounded-[12px] p-[12px]"
-    >
-      <div class="versions-wrapper flex flex-col gap-[8px]">
-        <div class="version-header">Version history</div>
-        <div class="versions">
-          <div class="version text-[12px] py-[4px] flex flex-col gap-[4px]">
-            <div class="version-no">V 0.99</div>
-            <div
-              class="version-notes text-slate-500 flex flex-col gap-[2px] text-[11px]"
-            >
-              <div class="note">- UI/UX bug fixes</div>
-              <div class="note">- Added 4 new graphs</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+     -->
   </div>
 </template>
 
 <script setup>
-import PieChart from "@/components/graphs/PieChart.vue";
-import SingleLine from "@/components/graphs/SingleLine.vue";
-import TheBarchart from "@/components/graphs/TheBarchart.vue";
+// import PieChart from "@/components/graphs/PieChart.vue";
+// import SingleLine from "@/components/graphs/SingleLine.vue";
+// import TheBarchart from "@/components/graphs/TheBarchart.vue";
 import { line1 } from "@/data/dummyMultiLine";
 import { ref } from "vue";
+
+const sections = [
+  {
+    id: 1,
+    title: "About",
+    content: `
+      This is a reusable graphs library for 
+      <a class="text-harlequin-500" href="https://vuejs.org/guide/introduction.html" target="_blank">Vue3</a>, 
+      utilizing 
+      <a class="text-harlequin-500" href="https://d3js.org/" target="_blank">D3.js</a> 
+      for its underlying data visualization capabilities. It is aimed at developers who need to integrate data visualizations into their Vue3 applications. The library offers a bridge between the reactivity of Vue3 and the graphical strengths of D3.js, providing a straightforward solution for incorporating complex charts and graphs.
+    `,
+  },
+  {
+    id: 2,
+    title: "Installation",
+    content: `
+    Quickly integrate our Vue3 Graphs Library into your project with a simple npm install vue-graphs command.`,
+  },
+];
+
+//
+
+//
+
+// Data for graphs
+
+//
+
+//
 
 // LINECHART DATA
 const formattedLineData = line1.map((item) => ({

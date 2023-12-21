@@ -1,8 +1,6 @@
 <template>
-  <div
-    class="side-menu overflow-y-auto flex flex-col justify-between h-[100%]"
-  >
-    <div class="w-[240px] flex flex-col gap-[32px] py-[20px]">
+  <div class="side-menu overflow-y-auto flex flex-col justify-between h-[100%]">
+    <div class="w-[240px] flex flex-col gap-[40px] py-[20px]">
       <div
         v-for="(item, index) in items"
         :key="index"
@@ -20,14 +18,12 @@
               v-for="(subItem, subIndex) in item.items"
               :key="`item-${subIndex}`"
               :class="{
-                'border-harlequin-500 text-harlequin-500':
+                'border-harlequin-500 text-harlequin-500 hover:!border-harlequin-500':
                   isSubItemActive(item.name, subItem.name),
-                'border-slate-100 dark:border-slate-900 text-slate-600 dark:text-slate-400': !isSubItemActive(
-                  item.name,
-                  subItem.name
-                ),
+                'border-slate-100 dark:border-slate-900 text-slate-600 dark:text-slate-400':
+                  !isSubItemActive(item.name, subItem.name),
               }"
-              class="text-[14px] border-l-[4px] py-[8px] px-[24px] hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
+              class="text-[14px] border-l-[4px] py-[8px] px-[24px] transition ease hover:bg-slate-50 hover:border-slate-50 dark:hover:bg-slate-800 dark:hover:border-slate-800 cursor-pointer"
               @click="navigateTo(item.name, subItem.name)"
             >
               {{ subItem.title }}
@@ -40,7 +36,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 const props = defineProps({
@@ -61,16 +57,12 @@ const toggleAccordion = (item, index) => {
 };
 
 const isSubItemActive = (itemName, subItemName) => {
-  // For top-level items (e.g., home)
   if (!subItemName && route.path === `${props.basePath}/${itemName}`) {
     return true;
   }
-
-  // For nested routes (e.g., linechart under line)
   if (subItemName) {
     return route.path.includes(`${props.basePath}/${itemName}/${subItemName}`);
   }
-
   return false;
 };
 

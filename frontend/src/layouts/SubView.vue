@@ -6,7 +6,7 @@
         <SideMenu :title="title" :items="sidenavItems" :base-path="basePath" />
       </div>
       <!-- Main Content Area -->
-      <div class="main-content flex-grow justify-center w-[100%] flex-1 ml-[200px] overflow-y-auto">
+      <div class="main-content flex-grow justify-center w-[100%] flex-1 ml-[240px] overflow-y-auto">
         <router-view v-slot="{ Component }">
           <component :is="Component" />
         </router-view>

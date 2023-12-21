@@ -1,13 +1,13 @@
 <template>
   <div
-    class="chart-container flex w-[100%] items-center mb-[20px] flex-col gap-[20px] py-[32px] pl-[32px] rounded-[12px] overflow-y-auto"
+    class="chart-container flex w-[100%] items-center mb-[20px] flex-col gap-[20px] p-[32px] overflow-y-auto"
   >
     <div class="chart-title flex py-[4px]">
       <div class="h-[100%] text-[14px] text-slate-500 flex">
         {{ title }}
       </div>
     </div>
-    <div class="flex flex-col gap-[16px]">
+    <div class="flex flex-col gap-[16px] w-[800px]">
       <div class="flex flex-col gap-[40px]">
         <div class="flex gap-[32px]">
           <div class="flex flex-col gap-[20px]">
