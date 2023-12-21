@@ -20,14 +20,17 @@ const routes = [
                 path: "/",
                 name: "home",
                 component: () => import("@/views/TheHome.vue"),
+                props: true
               },
               {
                 path: "line",
                 name: "line",
+                props: true,
                 children: [
                   {
                     path: "linechart",
                     name: "linechart",
+                    props: true,
                     component: () =>
                       import("@/views/graphs/line/TheSingleline.vue"),
                   },

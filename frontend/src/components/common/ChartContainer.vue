@@ -1,6 +1,6 @@
 <template>
   <div
-    class="chart-container flex w-[auto] mb-[20px] flex-col gap-[20px] py-[32px] mt-[60px] pl-[32px] rounded-[12px]"
+    class="chart-container flex w-[100%] items-center mb-[20px] flex-col gap-[20px] py-[32px] pl-[32px] rounded-[12px] overflow-y-auto"
   >
     <div class="chart-title flex py-[4px]">
       <div class="h-[100%] text-[14px] text-slate-500 flex">

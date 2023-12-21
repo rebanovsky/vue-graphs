@@ -1,10 +1,14 @@
 <template>
-  <div class="flex flex-col gap-[0px] h-screen items-center">
+  <div class="flex flex-col">
     <TheNavigation />
-    <router-view />
+    <div class="main-content mt-[50px]">
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script setup>
-import TheNavigation from "@/components/common/navigation/TheNavigation.vue";
+import TheNavigation from "@/components/navigation/TheNavigation.vue";
 </script>
+
+<style></style>

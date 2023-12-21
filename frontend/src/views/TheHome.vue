@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-between w-[100%] pl-[25px] gap-[25px] mt-[60px] py-[32px]"
+    class="flex justify-center w-[100%] pl-[25px] gap-[25px] py-[32px]"
   >
     <!-- Introduction Section -->
     <div

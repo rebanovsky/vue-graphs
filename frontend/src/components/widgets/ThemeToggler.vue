@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[100%] flex items-center">
+  <div class="flex items-center">
     <div
       class="py-2 gap-[8px] flex text-[10px] items-center justify-between cursor-pointer"
       @click="toggleDark"
