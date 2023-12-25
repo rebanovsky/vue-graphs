@@ -43,8 +43,8 @@ c-9.9,9.6-25.7,9.6-35.6,0l-36.2-36.2c-10.2-9.8-10.5-26-0.6-36.2c9.8-10.2,26-10.5
         <span
           :class="[
             isDark
-              ? 'translate-x-[19px] bg-slate-600'
-              : 'translate-x-[1px] bg-slate-100',
+              ? 'translate-x-[18px] bg-slate-600'
+              : 'translate-x-[2px] bg-slate-100',
             'pointer-events-none translate-y-[1px] inline-block h-[12px] w-[12px] transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out',
           ]"
           aria-hidden="true"

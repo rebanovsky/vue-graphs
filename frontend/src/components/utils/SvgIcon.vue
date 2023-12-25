@@ -1,7 +1,7 @@
 <template>
   <div
     ref="svgContainer"
-    class="svg-icon flex items-center justify-center gridlines"
+    class="svg-icon flex items-center justify-center"
     :class="[width, height]"
   ></div>
 </template>

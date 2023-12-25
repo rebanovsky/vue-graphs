@@ -1,7 +1,7 @@
 <template>
   <!-- SingleLine.vue -->
   <ChartContainer
-    title="SingleLine.vue"
+    title="Line Chart"
     :component-props="lineProps"
     :preview-data="linePreview"
   >
@@ -212,21 +212,5 @@ const chartProps = computed(() => {
 
 .list-leave-active {
   position: absolute;
-}
-
-.slide-up-enter-active,
-.slide-up-leave-active {
-  transition: all 0.2s;
-}
-.slide-up-enter-from,
-.slide-up-leave-to {
-  transform: translateY(4px);
-  opacity: 0;
-}
-
-.slide-up-enter-to,
-.slide-up-leave-from {
-  transform: translateY(0);
-  opacity: 1;
 }
 </style>

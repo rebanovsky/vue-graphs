@@ -2,12 +2,12 @@
   <div
     class="chart-container flex w-[100%] items-center mb-[20px] flex-col gap-[20px] p-[32px] overflow-y-auto"
   >
-    <div class="chart-title flex py-[4px]">
-      <div class="h-[100%] text-[14px] text-slate-500 flex">
-        {{ title }}
-      </div>
-    </div>
     <div class="flex flex-col gap-[16px] w-[800px]">
+      <div class="chart-title flex py-[4px]">
+        <h1>
+          {{ title }}
+        </h1>
+      </div>
       <div class="flex flex-col gap-[40px]">
         <div class="flex gap-[32px]">
           <div class="flex flex-col gap-[20px]">
@@ -183,7 +183,6 @@ const options = [
   },
 ];
 
-// data type check
 function getType(value) {
   if (Array.isArray(value)) {
     return "array";

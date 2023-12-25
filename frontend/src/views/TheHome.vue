@@ -1,12 +1,8 @@
 <template>
   <div class="flex justify-center w-[100%] pl-[25px] gap-[25px] py-[32px]">
-    <!-- Introduction Section -->
     <div class="home-section-wrapper flex flex-col gap-[64px]">
-      <div
-        class="home-section w-[800px] gridlines flex gap-[12px]"
-        v-for="section in sections"
-        :key="section.id"
-      >
+      <!-- About -->
+      <section class="home-section w-[800px] gridlines flex gap-[12px]">
         <div class="h-[36px] flex items-center">
           <div
             class="hash text-harlequin-500 text-[24px] cursor-pointer flex items-center justify-center h-[24px] opacity-0 hover:opacity-[1] transition ease"
@@ -15,111 +11,207 @@
           </div>
         </div>
         <div class="flex flex-col gap-[20px] w-[600px]">
-          <h1 class="font-medium text-[24px]">{{ section.title }}</h1>
+          <h1>
+            {{ sections.about.title }}
+          </h1>
           <div
             class="home-paragraph text-slate-800 dark:text-slate-300 font-light text-[14px] leading-7"
-            v-html="section.content"
-          ></div>
-          <div
-            class="code-line rounded w-[100%] h-[100px] bg-slate-25 dark:bg-slate-800"
-            v-if="section.id == '2'"
+            v-html="sections.about.content"
           ></div>
         </div>
-      </div>
-    </div>
-    <!-- GRAPHS SECTION
-            <section class="graphs-wrapper flex justify-center my-[40px]">
-        <div class="flex flex-wrap gap-[20px] w-[600px]">
+      </section>
+
+      <!-- Installation -->
+      <section class="home-section w-[800px] gridlines flex gap-[12px]">
+        <div class="h-[36px] flex items-center">
           <div
-            class="graphs-container"
-            v-for="(graph, index) in graphs"
-            :key="index"
+            class="hash text-harlequin-500 text-[24px] cursor-pointer flex items-center justify-center h-[24px] opacity-0 hover:opacity-[1] transition ease"
           >
-            <div
-              class="graph-box hover:bg-harlequin-50 flex flex-col gap-[2px] dark:hover:bg-harlequin-900 rounded-[8px] hover:border-harlequin-300 hover:text-harlequin-500 dark:hover:text-harlequin-300 border-[1.25px] border-slate-300 dark:border-slate-700 dark:hover:border-harlequin-300 transition ease duration-75 cursor-pointer w-[120px] h-[120px] p-[8px] text-[12px]"
-              @mouseover="isAnimate = true"
-              @mouseleave="isAnimate = false"
-            >
-              {{ graph.name }}
-              <div
-                class="w-[100%] h-[100%] flex items-center justify-center gridlines"
-                v-if="graph.name == 'Linechart'"
-              >
-                <SingleLine
-                  :animation="isAnimate"
-                  :width="100"
-                  :height="60"
-                  :data="lineData"
-                  dateFormat="%Y-%m-%d"
-                  :line-color="''"
-                />
-              </div>
-              <div
-                class="w-[100%] h-[100%] flex items-center justify-center gridlines"
-                v-if="graph.name == 'Barchart'"
-              >
-                <TheBarchart :data="earnings" :height="60" :width="100" />
-              </div>
-              <div
-                class="w-[100%] h-[100%] flex items-center justify-center gridlines"
-                v-if="graph.name == 'Piechart'"
-              >
-                <PieChart :data="sectors" :width="100" :height="60" />
-              </div>
-              <div
-                class="w-[100%] h-[100%] flex items-center justify-center gridlines"
-                v-if="graph.name == 'Area chart'"
-              ></div>
-              <div
-                class="w-[100%] h-[100%] flex items-center justify-center gridlines"
-                v-if="graph.name == 'Scatterplot'"
-              ></div>
-              <div
-                class="w-[100%] h-[100%] flex items-center justify-center gridlines"
-                v-if="graph.name == 'Heatmap'"
-              ></div>
-              <div
-                class="w-[100%] h-[100%] flex items-center justify-center gridlines"
-                v-if="graph.name == 'Bubblechart'"
-              ></div>
-              <div
-                class="w-[100%] h-[100%] flex items-center justify-center gridlines"
-                v-if="graph.name == 'Treemap'"
-              ></div>
-            </div>
+            #
+          </div>
+        </div>
+        <div class="flex flex-col gap-[20px] w-[600px]">
+          <h1 class="font-medium text-[24px]">
+            {{ sections.installation.title }}
+          </h1>
+          <div
+            class="home-paragraph text-slate-800 dark:text-slate-300 font-light text-[14px] leading-7"
+          >
+            {{ sections.installation.content }}
+          </div>
+          <CodeBlock :code="exampleCode" freeform>
+          </CodeBlock>
+        </div>
+      </section>
+
+      <!-- Examples -->
+      <section class="home-section w-[800px] gridlines flex gap-[12px]">
+        <div class="h-[36px] flex items-center">
+          <div
+            class="hash text-harlequin-500 text-[24px] cursor-pointer flex items-center justify-center h-[24px] opacity-0 hover:opacity-[1] transition ease"
+          >
+            #
+          </div>
+        </div>
+        <div class="flex flex-col gap-[20px] w-[600px]">
+          <h1 class="font-medium text-[24px]">
+            {{ sections.examples.title }}
+          </h1>
+          <div
+            class="home-paragraph text-slate-800 dark:text-slate-300 font-light text-[14px] leading-7"
+          >
+            {{ sections.examples.content }}
           </div>
         </div>
       </section>
-     -->
+
+      <!-- API reference -->
+      <section class="home-section w-[800px] gridlines flex gap-[12px]">
+        <div class="h-[36px] flex items-center">
+          <div
+            class="hash text-harlequin-500 text-[24px] cursor-pointer flex items-center justify-center h-[24px] opacity-0 hover:opacity-[1] transition ease"
+          >
+            #
+          </div>
+        </div>
+        <div class="flex flex-col gap-[20px] w-[600px]">
+          <h1 class="font-medium text-[24px]">
+            {{ sections.apiReference.title }}
+          </h1>
+          <div
+            class="home-paragraph text-slate-800 dark:text-slate-300 font-light text-[14px] leading-7"
+          >
+            {{ sections.apiReference.content }}
+          </div>
+        </div>
+      </section>
+
+      <!-- Configuration options -->
+      <section class="home-section w-[800px] gridlines flex gap-[12px]">
+        <div class="h-[36px] flex items-center">
+          <div
+            class="hash text-harlequin-500 text-[24px] cursor-pointer flex items-center justify-center h-[24px] opacity-0 hover:opacity-[1] transition ease"
+          >
+            #
+          </div>
+        </div>
+        <div class="flex flex-col gap-[20px] w-[600px]">
+          <h1 class="font-medium text-[24px]">
+            {{ sections.configOption.title }}
+          </h1>
+          <div
+            class="home-paragraph text-slate-800 dark:text-slate-300 font-light text-[14px] leading-7"
+          >
+            {{ sections.configOption.content }}
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact & support -->
+      <section class="home-section w-[800px] gridlines flex gap-[12px]">
+        <div class="h-[36px] flex items-center">
+          <div
+            class="hash text-harlequin-500 text-[24px] cursor-pointer flex items-center justify-center h-[24px] opacity-0 hover:opacity-[1] transition ease"
+          >
+            #
+          </div>
+        </div>
+        <div class="flex flex-col gap-[20px] w-[600px]">
+          <h1 class="font-medium text-[24px]">
+            {{ sections.contactAndSupport.title }}
+          </h1>
+          <div
+            class="home-paragraph text-slate-800 dark:text-slate-300 font-light text-[14px] leading-7"
+          >
+            {{ sections.contactAndSupport.content }}
+          </div>
+        </div>
+      </section>
+
+      <!-- License -->
+      <section class="home-section w-[800px] gridlines flex gap-[12px]">
+        <div class="h-[36px] flex items-center">
+          <div
+            class="hash text-harlequin-500 text-[24px] cursor-pointer flex items-center justify-center h-[24px] opacity-0 hover:opacity-[1] transition ease"
+          >
+            #
+          </div>
+        </div>
+        <div class="flex flex-col gap-[20px] w-[600px]">
+          <h1 class="font-medium text-[24px]">
+            {{ sections.license.title }}
+          </h1>
+          <div
+            class="home-paragraph text-slate-800 dark:text-slate-300 font-light text-[14px] leading-7"
+          >
+            {{ sections.license.content }}
+          </div>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
 <script setup>
-// import PieChart from "@/components/graphs/PieChart.vue";
-// import SingleLine from "@/components/graphs/SingleLine.vue";
-// import TheBarchart from "@/components/graphs/TheBarchart.vue";
+import CodeBlock from "@/components/common/CodeBlock.vue";
 import { line1 } from "@/data/dummyMultiLine";
 import { ref } from "vue";
 
-const sections = [
-  {
+// codeBlock test
+const exampleCode = ref(
+  `npm install vue-graphs`
+);
+
+const sections = {
+  about: {
     id: 1,
     title: "About",
-    content: `
-      This is a reusable graphs library for 
-      <a class="text-harlequin-500" href="https://vuejs.org/guide/introduction.html" target="_blank">Vue3</a>, 
-      utilizing 
-      <a class="text-harlequin-500" href="https://d3js.org/" target="_blank">D3.js</a> 
-      for its underlying data visualization capabilities. It is aimed at developers who need to integrate data visualizations into their Vue3 applications. The library offers a bridge between the reactivity of Vue3 and the graphical strengths of D3.js, providing a straightforward solution for incorporating complex charts and graphs.
-    `,
+    content: `This is a reusable graphs library for
+      <a class="text-harlequin-500" href="https://vuejs.org/guide/introduction.html" target="_blank">Vue3</a>,
+        utilizing
+        <a class="text-harlequin-500" href="https://d3js.org/" target="_blank">D3.js</a>
+        for its underlying data visualization capabilities. It is aimed at developers who need to integrate data visualizations into their Vue3 applications. The library offers a bridge between the reactivity of Vue3 and the graphical strengths of D3.js, providing a straightforward solution for incorporating complex charts and graphs.`,
   },
-  {
+  installation: {
     id: 2,
     title: "Installation",
-    content: `
-    Quickly integrate our Vue3 Graphs Library into your project with a simple npm install vue-graphs command.`,
+    content: `Quickly integrate our Vue3 Graphs Library into your project with a simple npm install vue-graphs command.`,
   },
-];
+  examples: {
+    id: 3,
+    title: "Examples",
+    content: "",
+  },
+  apiReference: {
+    id: 4,
+    title: "API reference",
+    content:
+      "A comprehensive list of all components, props, events, and slots. Description of each item along with type information and default values.",
+  },
+  configOption: {
+    id: 5,
+    title: "Configuration options",
+    content:
+      "Explain how to configure the graphs (e.g., themes, data formats). Provide code examples for common configurations.",
+  },
+  contactAndSupport: {
+    id: 6,
+    title: "Contact & support",
+    content:
+      "Provide information on how users can get support, report bugs, or reach out for help.",
+  },
+  license: {
+    id: 7,
+    title: "License",
+    content: "State the type of license the library is released under.",
+  },
+};
+// CODE
+
+// npm install
+const npmInstall = `npm install vue-graphs`;
+
+//
 
 //
 

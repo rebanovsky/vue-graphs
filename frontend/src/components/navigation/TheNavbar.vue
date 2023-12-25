@@ -40,7 +40,4 @@ export default {
 </script>
 
 <style>
-.navbar-wrapper {
-  z-index: 99999;
-}
 </style>

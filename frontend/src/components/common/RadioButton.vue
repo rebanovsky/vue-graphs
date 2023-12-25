@@ -12,7 +12,7 @@
             'radio-option text-slate-400  cursor-pointer dark:text-slate-600  border-[1px] transition ease duration-75',
             roundedClass(index, options.length),
             {
-              '!text-blue-900 !border-blue-900 z-[2] bg-blue-50 dark:bg-slate-800':
+              '!text-slate-100 !border-harlequin-500 z-[2] bg-harlequin-500':
                 option.value === modelValue,
             },
           ]"

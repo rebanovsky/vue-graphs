@@ -17,7 +17,6 @@ const updateBodyClass = (dark) => {
   document.body.classList.toggle("bg-slate-100", !dark);
 };
 
-// Watch for changes in isDark
 watch(
   isDark,
   (newValue) => {
@@ -31,7 +30,6 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  // Remove classes when component is destroyed
   document.body.classList.remove("bg-slate-900", "bg-slate-100");
 });
 </script>
@@ -39,7 +37,11 @@ onUnmounted(() => {
 <style>
 body {
   background-color: transparent;
-  overflow: hidden;
+}
+
+h1 {
+  font-weight: 500 !important;
+  font-size: 24px !important;
 }
 
 p {
@@ -70,5 +72,60 @@ html.dark {
 a {
   text-decoration: none;
   font-weight: 400;
+}
+
+/*
+Transitions
+*/
+
+/*
+FADE
+*/
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.1s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+/*
+SLIDE UP
+*/
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: all 0.2s;
+}
+.slide-up-enter-from,
+.slide-up-leave-to {
+  transform: translateY(4px);
+  opacity: 0;
+}
+
+.slide-up-enter-to,
+.slide-up-leave-from {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/*
+SLIDE LEFT
+*/
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: all 0.2s;
+}
+
+.slide-left-enter-from,
+.slide-left-leave-to {
+  transform: translateX(4px);
+  opacity: 0;
+}
+
+.slide-left-enter-to,
+.slide-left-leave-from {
+  transform: translateX(0);
+  opacity: 1;
 }
 </style>

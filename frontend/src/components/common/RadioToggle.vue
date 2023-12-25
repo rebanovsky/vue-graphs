@@ -31,7 +31,7 @@ const toggle = () => {
 const toggleClasses = computed(() => {
   if (isToggled.value) {
     return [
-      "bg-blue-400",
+      "bg-harlequin-500",
       "relative inline-flex h-[14px] w-[28px] shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75",
     ];
   } else {
@@ -45,12 +45,12 @@ const toggleClasses = computed(() => {
 const spanClasses = computed(() => {
   if (isToggled.value) {
     return [
-      "translate-x-[0px] bg-slate-100",
+      "translate-x-[0.5px] bg-slate-100",
       "pointer-events-none translate-y-[0px] inline-block h-[10px] w-[10px] transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out",
     ];
   } else {
     return [
-      "translate-x-[14px]",
+      "translate-x-[13.5px]",
       isDark.value ? "bg-slate-600" : "bg-slate-100",
       "pointer-events-none translate-y-[0px] inline-block h-[10px] w-[10px] transform rounded-full shadow-lg ring-0 transition duration-200 ease-in-out",
     ];

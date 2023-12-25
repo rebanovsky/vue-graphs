@@ -29,7 +29,7 @@
         <div
           class="comp-name cursor-pointer p-[4px] hover:text-slate-700 dark:hover:text-slate-400"
         >
-          Vue graphs
+          VueGraphs
         </div>
       </div>
       <div class="right-side flex items-center gap-[20px]">
