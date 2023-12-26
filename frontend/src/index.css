@@ -17,4 +17,70 @@
     border-color: theme("colors.slate.200");
     @apply dark:border-slate-800;
   }
+  .text-100 {
+    color: theme("colors.slate.100");
+    @apply dark:text-slate-900;
+  }
+  .text-200 {
+    color: theme("colors.slate.200");
+    @apply dark:text-slate-800;
+  }
+  .text-300 {
+    color: theme("colors.slate.300");
+    @apply dark:text-slate-700;
+  }
+  .text-400 {
+    color: theme("colors.slate.400");
+    @apply dark:text-slate-600;
+  }
+  .text-500 {
+    color: theme("colors.slate.500");
+  }
+  .text-600 {
+    color: theme("colors.slate.600");
+    @apply dark:text-slate-400;
+  }
+  .text-700 {
+    color: theme("colors.slate.700");
+    @apply dark:text-slate-300;
+  }
+  .text-800 {
+    color: theme("colors.slate.800");
+    @apply dark:text-slate-200;
+  }
+  .text-900 {
+    color: theme("colors.slate.900");
+    @apply dark:text-slate-100;
+  }
+  .bg-100 {
+    background-color: theme("colors.slate.100");
+    @apply dark:bg-slate-900;
+  }
+  .bg-200 {
+    background-color: theme("colors.slate.200");
+    @apply dark:bg-slate-800;
+  }
+  .bg-300 {
+    background-color: theme("colors.slate.300");
+    @apply dark:bg-slate-700;
+  }
+  .bg-400 {
+    background-color: theme("colors.slate.400");
+    @apply dark:bg-slate-600;
+  }
+  .bg-500 {
+    background-color: theme("colors.slate.500");
+  }
+  .border-100 {
+    border-color: theme("colors.slate.100");
+    @apply dark:border-slate-900;
+  }
+  .border-200 {
+    border-color: theme("colors.slate.200");
+    @apply dark:border-slate-800;
+  }
+  .border-300 {
+    border-color: theme("colors.slate.300");
+    @apply dark:border-slate-700;
+  }
 }

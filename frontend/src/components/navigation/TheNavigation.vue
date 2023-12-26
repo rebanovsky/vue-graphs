@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="right-side flex items-center gap-[20px]">
-        <div class="version-name cursor-pointer hover:text-slate-700">version 21-Dec-23</div>
+        <div class="version-name cursor-pointer hover:text-slate-700">version 26-Dec-23</div>
         <!-- Version History -->
         <!-- <div
           class="version-history w-[180px] gridlines dark:bg-slate-800 rounded-[12px] p-[12px]"

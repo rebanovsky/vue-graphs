@@ -1,13 +1,16 @@
 <template>
-  <div class="side-menu overflow-y-auto flex flex-col justify-between" style="height: calc(100vh - 49px);">
+  <div
+    class="side-menu overflow-y-auto flex flex-col justify-between bg-100 transition ease"
+    style="height: calc(100vh - 49px)"
+  >
     <div class="w-[240px] flex flex-col gap-[40px] py-[20px]">
       <div
         v-for="(item, index) in items"
-        :key="index"
+        :key="item.title"
         class="accordion-item flex flex-col gap-[8px]"
       >
         <div
-          class="accordion-title font-semibold text-[14px] px-[16px] text-slate-700 dark:text-slate-300"
+          class="accordion-title font-semibold text-[14px] px-[16px]"
           @click="toggleAccordion(item, index)"
         >
           {{ item.title }}
@@ -18,9 +21,9 @@
               v-for="(subItem, subIndex) in item.items"
               :key="`item-${subIndex}`"
               :class="{
-                'border-harlequin-500 text-harlequin-500 hover:!border-harlequin-500':
+                'border-harlequin-500 text-harlequin-500 hover:!border-harlequin-500 transition ease':
                   isSubItemActive(item.name, subItem.name),
-                'border-slate-100 dark:border-slate-900 text-slate-600 dark:text-slate-400':
+                'border-slate-100 dark:border-slate-900 text-slate-600 dark:text-slate-400 transition ease':
                   !isSubItemActive(item.name, subItem.name),
               }"
               class="text-[14px] border-l-[4px] py-[8px] px-[24px] transition ease hover:bg-slate-50 hover:border-slate-50 dark:hover:bg-slate-800 dark:hover:border-slate-800 cursor-pointer"
@@ -44,6 +47,7 @@ const props = defineProps({
   items: Array,
   basePath: String,
 });
+
 const router = useRouter();
 const route = useRoute();
 const openIndex = ref(null);
@@ -75,9 +79,4 @@ const navigateTo = (itemName, subItemName = "") => {
 };
 </script>
 
-<style scoped>
-.accordion-content {
-  padding: 0px;
-  overflow: hidden;
-}
-</style>
+<style scoped></style>

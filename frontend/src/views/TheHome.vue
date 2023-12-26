@@ -39,8 +39,7 @@
           >
             {{ sections.installation.content }}
           </div>
-          <CodeBlock :code="exampleCode" freeform>
-          </CodeBlock>
+          <CodeBlock :code="exampleCode" freeform />
         </div>
       </section>
 
@@ -60,6 +59,10 @@
           <div
             class="home-paragraph text-slate-800 dark:text-slate-300 font-light text-[14px] leading-7"
           >
+            <div class="chart-wrapper w-[100%] flex justify-center">
+              <!-- LINECHART EXAMPLE -->
+              <LineChart />
+            </div>
             {{ sections.examples.content }}
           </div>
         </div>
@@ -156,11 +159,11 @@
 import CodeBlock from "@/components/common/CodeBlock.vue";
 import { line1 } from "@/data/dummyMultiLine";
 import { ref } from "vue";
+//Examples
+import LineChart from "@/components/examples/LineChart.vue";
 
 // codeBlock test
-const exampleCode = ref(
-  `npm install vue-graphs`
-);
+const exampleCode = ref(`npm install vue-graphs`);
 
 const sections = {
   about: {

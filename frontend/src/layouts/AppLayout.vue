@@ -1,34 +1,72 @@
 <template>
-  <div
-    class="app-wrapper background dark:bg-slate-900 w-[100vw] text-slate-900 dark:text-slate-300 bg-slate-100 transition ease"
-  >
-    <div class="ih-app w-[100%]">
+  <div class="flex flex-col">
+    <TheNavigation />
+    <div class="main-content mt-[50px] flex w-[100%] relative">
       <div
-        class="content flex-1 flex-col w-[100%] border-[0px]"
+        class="sidenav overflow-y-auto flex flex-1 border-r-[1px] border-200 fixed top-[50px] left-[0px] transition ease"
       >
-        <!-- <TheNavbar /> -->
-        <router-view v-slot="{ Component }">
-          <transition name="fade" mode="out-in">
-            <component
-              :is="Component"
-              class="h-[100%]"
-            />
-          </transition>
-        </router-view>
+        <SideMenu :items="sidenavItems" base-path="" />
       </div>
+      <router-view v-slot="{ Component }">
+        <component :is="Component" />
+      </router-view>
     </div>
   </div>
 </template>
 
-<script>
-import TheNavbar from "@/components/navigation/TheNavbar.vue";
+<script setup>
+import SideMenu from "@/components/navigation/SideMenu.vue";
+import TheNavigation from "@/components/navigation/TheNavigation.vue";
 
-export default {
-  components: { TheNavbar },
-  setup() {
-    return {};
+const sidenavItems = [
+  {
+    title: "",
+    name: "",
+    items: [{ name: "", title: "Home" }],
   },
-};
+  {
+    title: "Line Charts",
+    name: "line",
+    items: [
+      { name: "linechart", title: "Line chart" },
+      // { name: "multiline", title: "Multi line" },
+      { name: "candlestick", title: "Candlestick" },
+    ],
+  },
+  {
+    title: "Bar Charts",
+    name: "bar",
+    items: [{ name: "barchart", title: "Bar chart" }],
+  },
+  {
+    title: "Pie Charts",
+    name: "pie",
+    items: [
+      { name: "piechart", title: "Pie chart" },
+      { name: "doughnut", title: "Doughnut chart" },
+    ],
+  },
+  {
+    title: "Dot Plots",
+    name: "dot",
+    items: [{ name: "dotplot", title: "Dot chart" }],
+  },
+  {
+    title: "Bubble Charts",
+    name: "bubble",
+    items: [{ name: "bubblechart", title: "Bubble chart" }],
+  },
+  {
+    title: "Heat Maps",
+    name: "map",
+    items: [{ name: "heatmap", title: "Heatmap" }],
+  },
+  {
+    title: "Treemaps",
+    name: "tree",
+    items: [{ name: "treemap", title: "treemap" }],
+  },
+];
 </script>
 
-<style lang="scss" scoped></style>
+<style></style>

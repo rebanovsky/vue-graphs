@@ -9,7 +9,7 @@
       >
         <!-- <slot></slot> -->
         <pre v-if="freeform"><code >{{ code }}</code></pre>
-        <pre v-else><code ref="codeBlock" class="language-shell">{{ code }}</code></pre>
+        <pre v-else><code ref="codeBlock" class="language-javascript">{{ code }}</code></pre>
       </div>
       <div class="flex">
         <Transition name="slide-left">
@@ -37,8 +37,8 @@
 import { ref, onMounted, watch } from 'vue';
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import Prism from 'prismjs';
-import 'prismjs/themes/prism-one-light.css';
-// import 'prismjs/themes/prism-okaidia.css';
+// import 'prismjs/themes/prism-dark.css';
+import 'prismjs/themes/prism.-dark.css';
 
 const props = defineProps({
   code: String,
