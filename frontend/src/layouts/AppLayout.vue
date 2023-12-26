@@ -8,7 +8,9 @@
         <SideMenu :items="sidenavItems" base-path="" />
       </div>
       <router-view v-slot="{ Component }">
-        <component :is="Component" />
+        <div class="ml-[220px] flex justify-center w-[100%]">
+          <component :is="Component" />
+        </div>
       </router-view>
     </div>
   </div>

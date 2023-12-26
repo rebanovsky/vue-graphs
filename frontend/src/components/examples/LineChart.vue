@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <CodeBlock :code="exampleCode" />
+  <div class="flex flex-col gap-[40px]">
+    <CodeBlock :code="lineCode" />
     <SingleLine
       :data="lineData"
-      :width="400"
+      :width="480"
       :height="200"
       dotColor="#05D9FF"
       lineColor="#FF5733"
@@ -45,9 +45,8 @@ const lineData = ref([
   },
 ]);
 
-const exampleCode = ref(`<template>
+const lineCode = ref(`<template>
   <div>
-    <CodeBlock :code="exampleCode" />
     <SingleLine
       :data="lineData"
       :width="400"
@@ -62,8 +61,7 @@ const exampleCode = ref(`<template>
 
 <script setup>
 import { ref } from "vue";
-import CodeBlock from "@/components/common/CodeBlock.vue";
-import SingleLine from "@/components/graphs/SingleLine.vue";
+import SingleLine from "vue-graphs";
 
 const monthlySales = [
   { month: "January", value: 262 },

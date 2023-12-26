@@ -11,7 +11,7 @@ module.exports = {
     colors: {
       transparent: "transparent",
       slate: {
-        25: "#f3f5f8",
+        25: "#f3f5f840",
         50: "#f2f2f2",
         100: "#ffffff",
         200: "#e2e2f6",

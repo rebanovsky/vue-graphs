@@ -70,7 +70,7 @@ import { ref } from "vue";
 import BubbleChart from "@/components/graphs/BubbleChart.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
-import ChartContainer from "@/components/common/ChartContainer.vue";
+import ChartContainer from "@/components/templates/ChartContainer.vue";
 
 // BARCHART DATA
 const bubbleData = ref([

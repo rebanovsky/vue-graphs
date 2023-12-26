@@ -84,7 +84,7 @@ import DoughnutChart from "@/components/graphs/DoughnutChart.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
-import ChartContainer from "@/components/common/ChartContainer.vue";
+import ChartContainer from "@/components/templates/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 

@@ -138,7 +138,7 @@ import PieChart from "@/components/graphs/PieChart.vue";
 import DoughnutChart from "@/components/graphs/DoughnutChart.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
-import ChartContainer from "@/components/common/ChartContainer.vue";
+import ChartContainer from "@/components/templates/ChartContainer.vue";
 
 // BARCHART DATA
 const sectors = [

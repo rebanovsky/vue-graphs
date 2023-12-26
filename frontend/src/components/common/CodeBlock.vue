@@ -1,19 +1,27 @@
 <template>
-  <div class="code-line rounded w-[100%] gridlines">
-    <div
-      class="code-header w-[100%] flex items-center px-[12px] justify-between"
-    >
+  <div
+    class="code-line rounded-[8px] w-[100%] bg-slate-25 dark:bg-slate-800 chart-border w-[480px]"
+  >
+    <div class="code-header w-[100%] flex px-[12px] relative">
       <div
         ref="codeContent"
         class="code-content flex p-[12px] rounded-b font-mono"
       >
-        <!-- <slot></slot> -->
-        <pre v-if="freeform"><code >{{ code }}</code></pre>
-        <pre v-else><code ref="codeBlock" class="language-javascript">{{ code }}</code></pre>
+        <pre
+          v-if="freeform"
+          v-highlightjs
+        ><code class="bash w-[100%]" >{{ code }}</code></pre>
+        <pre
+          v-else
+          v-highlightjs
+        ><code class="javascript">{{ code }}</code></pre>
       </div>
-      <div class="flex">
+      <div class="flex mt-[16px] absolute right-[12px] items-center">
         <Transition name="slide-left">
-          <div class="copy mx-[4px] font-normal text-[12px]" v-if="svgHovered">
+          <div
+            class="copy mx-[4px] font-normal text-[12px] h-[20px] flex items-center"
+            v-if="svgHovered"
+          >
             <Transition name="fade" mode="out-in">
               <div :key="copied ? 'copied' : 'copy'">
                 {{ copied ? "Copied" : "Copy" }}
@@ -34,30 +42,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref } from "vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
-import Prism from 'prismjs';
-// import 'prismjs/themes/prism-dark.css';
-import 'prismjs/themes/prism-tomorrow.css';
 
 const props = defineProps({
   code: String,
-  freeform: Boolean
+  freeform: Boolean,
 });
 
-const codeBlock = ref(null);
+// onMounted(highlight);
 
-const highlight = () => {
-  requestAnimationFrame(() => {
-    if (codeBlock.value) {
-      Prism.highlightElement(codeBlock.value);
-    }
-  });
-};
-
-onMounted(highlight);
-
-watch(() => props.code, highlight);
+// watch(() => props.code, highlight);
 
 const svgHovered = ref(false);
 const copied = ref(false);
@@ -89,4 +84,95 @@ const handleMouseOver = () => {
 };
 </script>
 
-<style></style>
+<style>
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  font-size: 0.9em;
+}
+code.hljs {
+  padding: 1px 3px;
+  line-height: 1.5em !important;
+}
+/*
+
+XCode style (c) Angel Garcia <angelgarcia.mail@gmail.com>
+
+*/
+.hljs {
+  color: rgb(0, 0, 0);
+}
+/* Gray DOCTYPE selectors like WebKit */
+.xml .hljs-meta {
+  color: #c0c0c0;
+}
+.hljs-comment,
+.hljs-quote {
+  color: #007400;
+}
+.hljs-tag,
+.hljs-attribute,
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-name {
+  color: #d900a6;
+}
+.hljs-variable,
+.hljs-template-variable {
+  color: #3f6e74;
+}
+.hljs-code,
+.hljs-string,
+.hljs-meta .hljs-string {
+  color: #ee0019;
+}
+.hljs-regexp,
+.hljs-link {
+  color: #0e0eff;
+}
+.hljs-title,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-number {
+  color: #1c00cf;
+}
+.hljs-section,
+.hljs-meta {
+  color: #643820;
+}
+.hljs-title.class_,
+.hljs-class .hljs-title,
+.hljs-type,
+.hljs-built_in,
+.hljs-params {
+  color: #ac00ff;
+}
+.hljs-attr {
+  color: #008f88;
+}
+.hljs-subst {
+  color: #000;
+}
+.hljs-formula {
+  background-color: #eee;
+  font-style: italic;
+}
+.hljs-addition {
+  background-color: #baeeba;
+}
+.hljs-deletion {
+  background-color: #ffc8bd;
+}
+.hljs-selector-id,
+.hljs-selector-class {
+  color: #9b703f;
+}
+.hljs-doctag,
+.hljs-strong {
+  font-weight: bold;
+}
+.hljs-emphasis {
+  font-style: italic;
+}
+</style>

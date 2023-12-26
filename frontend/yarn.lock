@@ -5059,6 +5059,11 @@ he@^1.2.0:
   resolved "https://registry.npmjs.org/he/-/he-1.2.0.tgz"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
+highlight.js@^10.3.2:
+  version "10.7.3"
+  resolved "https://registry.npmjs.org/highlight.js/-/highlight.js-10.7.3.tgz"
+  integrity sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==
+
 highlight.js@^10.7.1:
   version "10.7.3"
   resolved "https://registry.npmjs.org/highlight.js/-/highlight.js-10.7.3.tgz"
@@ -8537,6 +8542,13 @@ vue3-carousel@^0.2.9:
   version "0.2.16"
   resolved "https://registry.npmjs.org/vue3-carousel/-/vue3-carousel-0.2.16.tgz"
   integrity sha512-M0erVlg00e79YF1N0puxPfGSpVTTkk0RUHgJaqv+gerw5sZC33SL5NYHJLqit1Kbm8ebS/KyiTi9gjtW2D6bZw==
+
+vue3-highlightjs@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/vue3-highlightjs/-/vue3-highlightjs-1.0.5.tgz"
+  integrity sha512-Q4YNPXu0X5VMBnwPVOk+IQf1Ohp9jFdMitEAmzaz8qVVefcQpN6Dx4BnDGKxja3TLDVF+EgL136wC8YzmoCX9w==
+  dependencies:
+    highlight.js "^10.3.2"
 
 vue3-marquee@^3.1.2:
   version "3.2.1"

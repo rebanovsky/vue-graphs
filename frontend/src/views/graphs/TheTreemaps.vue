@@ -65,7 +65,7 @@ import TheTreemap from "@/components/graphs/TheTreemap.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
-import ChartContainer from "@/components/common/ChartContainer.vue";
+import ChartContainer from "@/components/templates/ChartContainer.vue";
 import { theStates } from "@/data/regionalData";
 
 // DATA

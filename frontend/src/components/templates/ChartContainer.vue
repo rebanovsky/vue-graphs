@@ -149,7 +149,7 @@
 <script setup>
 import { nanoid } from "nanoid";
 import { onMounted, ref } from "vue";
-import RadioButton from "./RadioButton.vue";
+import RadioButton from "@/components/common/RadioButton.vue";
 
 const props = defineProps({
   dataFile: {

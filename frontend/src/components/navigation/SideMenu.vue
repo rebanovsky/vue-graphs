@@ -3,7 +3,7 @@
     class="side-menu overflow-y-auto flex flex-col justify-between bg-100 transition ease"
     style="height: calc(100vh - 49px)"
   >
-    <div class="w-[240px] flex flex-col gap-[40px] py-[20px]">
+    <div class="w-[220px] flex flex-col gap-[40px] py-[20px]">
       <div
         v-for="(item, index) in items"
         :key="item.title"

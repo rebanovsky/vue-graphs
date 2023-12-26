@@ -103,7 +103,7 @@ import SingleLine from "@/components/graphs/SingleLine.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import RadioToggle from "@/components/common/RadioToggle.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
-import ChartContainer from "@/components/common/ChartContainer.vue";
+import ChartContainer from "@/components/templates/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 // data imports

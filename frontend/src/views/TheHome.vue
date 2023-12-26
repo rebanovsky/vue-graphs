@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center w-[100%] pl-[25px] gap-[25px] py-[32px]">
+  <div class="gap-[25px] py-[32px]">
     <div class="home-section-wrapper flex flex-col gap-[64px]">
       <!-- About -->
       <section class="home-section w-[800px] gridlines flex gap-[12px]">
@@ -39,7 +39,9 @@
           >
             {{ sections.installation.content }}
           </div>
-          <CodeBlock :code="exampleCode" freeform />
+          <div class="w-[100%] flex justify-center">
+            <CodeBlock :code="npmInstall" freeform />
+          </div>
         </div>
       </section>
 
@@ -59,6 +61,10 @@
           <div
             class="home-paragraph text-slate-800 dark:text-slate-300 font-light text-[14px] leading-7"
           >
+            <div
+              class="intro"
+              v-html="sections.examples.charts.line.intro"
+            ></div>
             <div class="chart-wrapper w-[100%] flex justify-center">
               <!-- LINECHART EXAMPLE -->
               <LineChart />
@@ -162,9 +168,6 @@ import { ref } from "vue";
 //Examples
 import LineChart from "@/components/examples/LineChart.vue";
 
-// codeBlock test
-const exampleCode = ref(`npm install vue-graphs`);
-
 const sections = {
   about: {
     id: 1,
@@ -183,7 +186,22 @@ const sections = {
   examples: {
     id: 3,
     title: "Examples",
-    content: "",
+    charts: {
+      line: {
+        intro: `<p>This example demonstrates how to create an interactive line chart using Vue 3's Composition API and D3.js. The chart showcases monthly sales data across a year. For more details, visit <a class="text-harlequin-500" href="line/linechart">line/linechart</a>.</p>
+                <ol>
+                  <li class=my-[20px]>
+                    <strong>Data Structure:</strong> It is crucial to format your data correctly for the line chart. Each data point in the series should be an object with <em>x</em> and <em>y</em> properties, where <em>x</em> represents the label (in this case, the month) and <em>y</em> is the corresponding value (monthly sales figures).
+                  </li>
+                  <li class=my-[20px]>
+                    <strong>Component Usage:</strong> The <em>SingleLine</em> component from our chart library is used to render the line chart. This component accepts props like <em>data</em>, <em>width</em>, <em>height</em>, <em>dotColor</em>, <em>lineColor</em>, and more, allowing for extensive customization of the chart's appearance.
+                  </li>
+                  <li class=my-[20px]>
+                    <strong>Responsive and Interactive:</strong> The chart is designed to be responsive and interactive, with features like tooltips and gridlines enabled for a better user experience.
+                  </li>
+                </ol>`,
+      },
+    },
   },
   apiReference: {
     id: 4,
