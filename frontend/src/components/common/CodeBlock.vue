@@ -38,7 +38,7 @@ import { ref, onMounted, watch } from 'vue';
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import Prism from 'prismjs';
 // import 'prismjs/themes/prism-dark.css';
-import 'prismjs/themes/prism.-dark.css';
+import 'prismjs/themes/prism-tomorrow.css';
 
 const props = defineProps({
   code: String,

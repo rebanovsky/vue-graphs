@@ -29,7 +29,7 @@ In Vue 3's Composition API with the `script setup` syntax, you can import and us
 
 <script setup>
 import { ref } from 'vue';
-import { LineChart } from 'vue3-d3-charts';
+import { LineChart } from 'vue-graphs';
 
 const chartData = ref({
   // Define your chart data here
