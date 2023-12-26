@@ -32,7 +32,18 @@ import { ref } from 'vue';
 import { LineChart } from 'vue-graphs';
 
 const chartData = ref({
-  // Define your chart data here
+  { x: "January", y: 62 },
+  { x: "February", y: 69 },
+  { x: "March", y: 99 },
+  { x: "April", y: 136 },
+  { x: "May", y: 144 },
+  { x: "June", y: 177 },
+  { x: "July", y: 199 },
+  { x: "August", y: 178 },
+  { x: "September", y: 240 },
+  { x: "October", y: 287 },
+  { x: "November", y: 297 },
+  { x: "December", y: 321 },
 });
 </script>
 ```
