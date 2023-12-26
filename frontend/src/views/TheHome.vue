@@ -58,9 +58,7 @@
           <h1 class="font-medium text-[24px]">
             {{ sections.examples.title }}
           </h1>
-          <div
-            class="home-paragraph text-slate-800 dark:text-slate-300 font-light text-[14px] leading-7"
-          >
+          <div class="home-paragraph text-slate-800 dark:text-slate-300 flex flex-col gap-[40px]">
             <div
               class="intro"
               v-html="sections.examples.charts.line.intro"
@@ -188,18 +186,7 @@ const sections = {
     title: "Examples",
     charts: {
       line: {
-        intro: `<p>This example demonstrates how to create an interactive line chart using Vue 3's Composition API and D3.js. The chart showcases monthly sales data across a year. For more details, visit <a class="text-harlequin-500" href="line/linechart">line/linechart</a>.</p>
-                <ol>
-                  <li class=my-[20px]>
-                    <strong>Data Structure:</strong> It is crucial to format your data correctly for the line chart. Each data point in the series should be an object with <em>x</em> and <em>y</em> properties, where <em>x</em> represents the label (in this case, the month) and <em>y</em> is the corresponding value (monthly sales figures).
-                  </li>
-                  <li class=my-[20px]>
-                    <strong>Component Usage:</strong> The <em>SingleLine</em> component from our chart library is used to render the line chart. This component accepts props like <em>data</em>, <em>width</em>, <em>height</em>, <em>dotColor</em>, <em>lineColor</em>, and more, allowing for extensive customization of the chart's appearance.
-                  </li>
-                  <li class=my-[20px]>
-                    <strong>Responsive and Interactive:</strong> The chart is designed to be responsive and interactive, with features like tooltips and gridlines enabled for a better user experience.
-                  </li>
-                </ol>`,
+        intro: `<p>This example demonstrates how to create an interactive line chart using Vue 3's Composition API and D3.js. The chart showcases monthly sales data across a year. For more details, visit <a class="text-harlequin-500" href="line/linechart">line/linechart</a>.</p>`,
       },
     },
   },

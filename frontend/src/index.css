@@ -77,7 +77,7 @@
   }
   .border-200 {
     border-color: theme("colors.slate.200");
-    @apply dark:border-slate-800;
+    @apply dark:border-slate-700;
   }
   .border-300 {
     border-color: theme("colors.slate.300");

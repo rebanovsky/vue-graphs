@@ -5,8 +5,8 @@
       :data="lineData"
       :width="480"
       :height="200"
-      dotColor="#05D9FF"
-      lineColor="#FF5733"
+      dot-color="#05D9FF"
+      line-color="#FF5733"
       tooltip
       gridlines
     />
@@ -46,17 +46,15 @@ const lineData = ref([
 ]);
 
 const lineCode = ref(`<template>
-  <div>
-    <SingleLine
-      :data="lineData"
-      :width="400"
-      :height="200"
-      dotColor="#05D9FF"
-      lineColor="#FF5733"
-      tooltip
-      gridlines
-    />
-  </div>
+  <SingleLine
+    :data="lineData"
+    :width="400"
+    :height="200"
+    dotColor="#05D9FF"
+    lineColor="#FF5733"
+    tooltip
+    gridlines
+  />
 </template>
 
 <script setup>
@@ -64,23 +62,23 @@ import { ref } from "vue";
 import SingleLine from "vue-graphs";
 
 const monthlySales = [
-  { month: "January", value: 262 },
-  { month: "February", value: 369 },
-  { month: "March", value: 259 },
-  { month: "April", value: 286 },
-  { month: "May", value: 414 },
-  { month: "June", value: 297 },
-  { month: "July", value: 119 },
-  { month: "August", value: 368 },
-  { month: "September", value: 157 },
-  { month: "October", value: 387 },
-  { month: "November", value: 347 },
-  { month: "December", value: 221 },
+  { month: "January", sales: 262 },
+  { month: "February", sales: 369 },
+  { month: "March", sales: 259 },
+  { month: "April", sales: 286 },
+  { month: "May", sales: 414 },
+  { month: "June", sales: 297 },
+  { month: "July", sales: 119 },
+  { month: "August", sales: 368 },
+  { month: "September", sales: 157 },
+  { month: "October", sales: 387 },
+  { month: "November", sales: 347 },
+  { month: "December", sales: 221 },
 ];
 
 const formattedLineData = monthlySales.map((item) => ({
   x: item.month,
-  y: item.value,
+  y: item.sales,
 }));
 
 const lineData = ref([

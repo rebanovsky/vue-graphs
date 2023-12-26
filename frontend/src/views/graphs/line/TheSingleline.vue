@@ -1,10 +1,15 @@
 <template>
   <!-- SingleLine.vue -->
+  <!--  -->
   <ChartContainer
     title="Line Chart"
+    chart-title="SingleLine.vue"
     :component-props="lineProps"
     :preview-data="linePreview"
   >
+    <template #intro>
+      <div v-html="texts.intro"></div>
+    </template>
     <SingleLine
       :width="560"
       :height="280"
@@ -47,15 +52,12 @@
     <template #code-block>
       <div
         class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%]"
-        @mouseover="isHovered = true"
-        @mouseleave="isHovered = false"
       >
         <div
           class="copy-code w-[100%] flex gap-[8px] h-[40px] justify-end border-b-[1px] border-b-slate-300 dark:border-b-slate-800 pb-[8px]"
         >
           <Transition name="slide-up">
             <SvgIcon
-              v-if="isHovered"
               name="copy"
               dynamicClass="hover:fill-slate-900 cursor-pointer p-[2px] dark:hover:!fill-slate-200"
             />
@@ -111,14 +113,8 @@ import { line1 } from "@/data/dummyMultiLine";
 import { lineProps } from "@/data/props";
 import { linePreview } from "@/data/previewData";
 
-onMounted(() => {
-  console.log("lineProps: ", lineProps);
-});
-// utils
-const isHovered = ref(false);
-
 // line color
-const lineColor = ref("#ffffff");
+const lineColor = ref("#FF5733");
 
 const handleValue = (val) => {
   lineColor.value = val;
@@ -195,6 +191,21 @@ const chartProps = computed(() => {
     }))
     .filter((prop) => prop.value !== null);
 });
+
+// TEXTS
+const texts = {
+  intro: `<ol>
+            <li class=my-[20px]>
+              <strong>Data Structure:</strong> It is crucial to format your data correctly for the line chart. Each data point in the series should be an object with <em>x</em> and <em>y</em> properties, where <em>x</em> represents the label (in this case, the month) and <em>y</em> is the corresponding value (monthly sales figures).
+            </li>
+            <li class=my-[20px]>
+              <strong>Component Usage:</strong> The <em>SingleLine</em> component from our chart library is used to render the line chart. This component accepts props like <em>data</em>, <em>width</em>, <em>height</em>, <em>dotColor</em>, <em>lineColor</em>, and more, allowing for extensive customization of the chart's appearance.
+            </li>
+            <li class=my-[20px]>
+              <strong>Responsive and Interactive:</strong> The chart is designed to be responsive and interactive, with features like tooltips and gridlines enabled for a better user experience.
+            </li>
+          </ol>`,
+};
 </script>
 
 <style lang="scss" scoped>

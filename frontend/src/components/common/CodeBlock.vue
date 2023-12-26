@@ -53,7 +53,7 @@ const props = defineProps({
 // onMounted(highlight);
 
 // watch(() => props.code, highlight);
-
+const number = 1;
 const svgHovered = ref(false);
 const copied = ref(false);
 const codeContent = ref(null);
@@ -100,7 +100,7 @@ XCode style (c) Angel Garcia <angelgarcia.mail@gmail.com>
 
 */
 .hljs {
-  color: rgb(0, 0, 0);
+  color: #61afee;
 }
 /* Gray DOCTYPE selectors like WebKit */
 .xml .hljs-meta {
@@ -112,11 +112,17 @@ XCode style (c) Angel Garcia <angelgarcia.mail@gmail.com>
 }
 .hljs-tag,
 .hljs-attribute,
-.hljs-keyword,
 .hljs-selector-tag,
-.hljs-literal,
-.hljs-name {
-  color: #d900a6;
+.hljs-literal {
+  color: gray;
+}
+.hljs-name,
+.hljs-number {
+  color: #e5c07b;
+}
+
+.hljs-keyword {
+  color: #c678dd;
 }
 .hljs-variable,
 .hljs-template-variable {
@@ -124,17 +130,21 @@ XCode style (c) Angel Garcia <angelgarcia.mail@gmail.com>
 }
 .hljs-code,
 .hljs-string,
-.hljs-meta .hljs-string {
-  color: #ee0019;
+.hljs-meta {
+  color: gray;
 }
+
+.hljs-string {
+  color: #98c379;
+}
+
 .hljs-regexp,
 .hljs-link {
   color: #0e0eff;
 }
 .hljs-title,
 .hljs-symbol,
-.hljs-bullet,
-.hljs-number {
+.hljs-bullet {
   color: #1c00cf;
 }
 .hljs-section,
@@ -144,15 +154,15 @@ XCode style (c) Angel Garcia <angelgarcia.mail@gmail.com>
 .hljs-title.class_,
 .hljs-class .hljs-title,
 .hljs-type,
-.hljs-built_in,
-.hljs-params {
-  color: #ac00ff;
+.hljs-built_in {
+  color: gray;
 }
-.hljs-attr {
-  color: #008f88;
+.hljs-attr,
+.hljs-params {
+  color: #df6c75;
 }
 .hljs-subst {
-  color: #000;
+  color: #61afee;
 }
 .hljs-formula {
   background-color: #eee;

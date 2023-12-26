@@ -2,11 +2,17 @@
   <div
     class="chart-container flex w-[100%] items-center mb-[20px] flex-col gap-[20px] p-[32px] overflow-y-auto"
   >
-    <div class="flex flex-col gap-[16px] w-[800px]">
+    <div class="flex flex-col gap-[8px] w-[800px]">
       <div class="chart-title flex py-[4px]">
         <h1>
           {{ title }}
         </h1>
+      </div>
+      <div class="chart-intro w-[560px] gridlines mb-[60px]">
+        <slot name="intro"></slot>
+      </div>
+      <div class="chart-title w-[560px] gridlines text-600">
+        {{ chartTitle }}
       </div>
       <div class="flex flex-col gap-[40px]">
         <div class="flex gap-[32px]">
@@ -134,7 +140,7 @@
             </div>
             <div class="code-block flex text-[14px]">
               <div
-                class="flex flex-col gap-[12px] gridlines w-[200px] p-[12px] h-[auto] overflow-y-auto overflow-x-hidden"
+                class="flex flex-col gap-[12px] gridlines w-[200px] leading-5 p-[12px] h-[auto] overflow-y-auto overflow-x-hidden"
               >
                 <slot name="code-block"></slot>
               </div>
@@ -158,6 +164,10 @@ const props = defineProps({
   },
   title: {
     type: String,
+    default: "Title",
+  },
+  chartTitle: {
+    type: String,
     default: "Chart title",
   },
   componentProps: {
@@ -171,6 +181,11 @@ const props = defineProps({
 const appendix = ref("data");
 
 const options = [
+  {
+    id: nanoid(10),
+    value: "code",
+    label: "Code",
+  },
   {
     id: nanoid(10),
     value: "props",

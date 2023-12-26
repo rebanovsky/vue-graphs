@@ -1,6 +1,6 @@
 <template>
   <div
-    class="app-wrapper background dark:bg-slate-900 w-[100vw] text-slate-700 dark:text-slate-300 bg-slate-100 transition ease"
+    class="app-wrapper background w-[100vw] text-700 bg-100 transition ease font-light text-[14px] leading-7"
   >
     <router-view />
   </div>
@@ -30,7 +30,7 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  document.body.classList.remove("bg-slate-900", "bg-slate-100");
+  document.body.classList.remove("bg-100");
 });
 </script>
 
