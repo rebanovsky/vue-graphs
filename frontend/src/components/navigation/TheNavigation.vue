@@ -1,7 +1,7 @@
 <template>
   <div class="fixed w-[100%] z-[100] top-[0]">
     <div
-      class="content-navigation bg-slate-100 transition ease dark:bg-slate-900 border-b-[1px] border-slate-200 dark:border-slate-800 px-[20px] text-[0.8em] gap-[20px] w-[100%] h-[50px] overflow-x-auto flex items-center justify-between"
+      class="content-navigation bg-slate-100 transition ease dark:bg-slate-900 border-b-[1px] border-200 px-[20px] text-[0.8em] gap-[20px] w-[100%] h-[50px] overflow-x-auto flex items-center justify-between"
     >
       <div class="left-side flex items-center gap-[12px]">
         <div class="vue-graphs-icon w-[20px] h-[20px]">

@@ -8,7 +8,7 @@
         v-for="option in options"
         :key="option.value"
         class="multi-select-option border-[1px] text-slate-500 border-slate-300 dark:border-slate-700"
-        :class="{ '!text-blue-900 !border-blue-900 bg-blue-50 dark:bg-slate-900 dark:border-blue-00 dark:text-slate-200 dark:border-slate-200': isSelected(option) }"
+        :class="{ '!text-harlequin-500 !border-harlequin-500 dark:bg-slate-900 dark:border-blue-00 dark:text-slate-200 dark:border-slate-200': isSelected(option) }"
         @click="toggleSelection(option)"
       >
         {{ option.label }}

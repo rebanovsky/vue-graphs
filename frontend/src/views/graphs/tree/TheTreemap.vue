@@ -1,6 +1,6 @@
 <template>
   <!-- TheTreemap.vue -->
-  <ChartContainer title="TheTreemap.vue" :component-props="props">
+  <ChartContainer title="TheTreemap.vue" :component-props="treemapProps">
     <TheTreemap :data="sampleTreeData" />
     <template #config>
       <RadioButton
@@ -87,6 +87,8 @@ import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
+//Data imports
+import { treemapProps } from "@/data/props";
 
 // Treemap data
 const sampleTreeData = ref({

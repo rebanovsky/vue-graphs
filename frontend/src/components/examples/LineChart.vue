@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import CodeBlock from "@/components/common/CodeBlock.vue";
 import SingleLine from "@/components/graphs/SingleLine.vue";
 
@@ -45,7 +45,9 @@ const lineData = ref([
   },
 ]);
 
-const lineCode = ref(`<template>
+const placeholder = 'SCRIPT_TAG_PLACEHOLDER';
+
+const lineCode = computed(() => `<template>
   <SingleLine
     :data="lineData"
     :width="400"
@@ -86,7 +88,9 @@ const lineData = ref([
     color: "#fffff",
     values: formattedLineData,
   },
-]);`);
+]);
+</${placeholder}>`.replace(new RegExp(placeholder, 'g'), 'script'));
+
 </script>
 
 <style lang="scss" scoped></style>

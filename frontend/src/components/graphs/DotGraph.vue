@@ -1,16 +1,11 @@
 <template>
-  <div class="graph-wrapper flex flex-col">
-    <div
-      class="graph-title gridlines w-[100%] px-[12px] py-[8px] text-[12px] font-medium dark:text-slate-400 text-slate-600"
-    >
-      {{ title }}
-    </div>
+  <div class="graph-wrapper flex flex-col gridlines">
     <div
       class="graph-legend w-[100%] px-[10px] h-[16px] text-[10px] font-medium dark:text-slate-400 text-slate-600"
     ></div>
     <div
       ref="graphContainer"
-      class="graph-container chart-border rounded-[8px]"
+      class="graph-container rounded-[8px]"
     ></div>
   </div>
 </template>

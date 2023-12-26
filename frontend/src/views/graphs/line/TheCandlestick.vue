@@ -1,13 +1,32 @@
 <template>
   <!-- TheCandlestick.vue -->
-  <ChartContainer title="TheCandlestick.vue" :component-props="props">
-    <template #title>TheCandlestick.vue</template>
+  <ChartContainer
+    title="Candlestick"
+    chart-title="TheCandlestick.vue"
+    :component-props="candlestickProps"
+    :preview-data="linePreview"
+  >
+    <template #intro>
+      <div v-html="texts.intro"></div>
+    </template>
     <TheCandlestick
       :data="candleStickData"
       :width="500"
       :height="230"
+      :tooltip="tooltipBoolean"
+      :gridlines="gridlinesBoolean"
+      :animations="animationsBoolean"
     />
     <template #config>
+      <RadioToggle title="Tooltip" />
+      <RadioToggle title="Gridlines" />
+      <RadioToggle title="Animations" />
+      <ColorPicker
+        v-model="config.lineColor"
+        :options="colorOptions"
+        title="Line Color"
+        @colorChange="handleValue"
+      />
       <RadioButton
         v-model="config.tooltip"
         :options="radioConfigs.tooltip.config"
@@ -25,16 +44,6 @@
         :options="radioConfigs.animations.config"
         title="Animations"
         name="animations"
-      />
-      <MultiSelect
-        v-model="config.selectedStocks"
-        :title="stockOptions.title"
-        :options="stockOptions.configs"
-      />
-      <ColorPicker
-        v-model="config.lineColor"
-        :options="colorOptions"
-        title="Line Color"
       />
     </template>
     <template #code-block>
@@ -89,10 +98,14 @@ import { line1, line2 } from "@/data/dummyMultiLine";
 import TheCandlestick from "@/components/graphs/TheCandlestick.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
+import RadioToggle from "@/components/common/RadioToggle.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
+//data imports
+import { candlestickProps } from "@/data/props";
+import { linePreview } from "@/data/previewData";
 
 // Candlestick data
 const candleStickData = line1.slice(0, 50);
@@ -122,36 +135,25 @@ const radioConfigs = {
   },
 };
 
-const tooltipBoolean = computed(() => config.tooltip === "on");
-const gridlinesBoolean = computed(() => config.gridlines === "on");
-const animationsBoolean = computed(() => config.animations === "on");
-
-// Adding/removing stocks
-const stockOptions = {
-  title: "Add/remove Bars",
-  configs: [
-    { label: "AAPL", value: "AAPL" },
-    { label: "MSFT", value: "MSFT" },
-    { label: "NVDA", value: "NVDA" },
-  ],
-};
+const tooltipBoolean = computed(() => config.tooltip === "true");
+const gridlinesBoolean = computed(() => config.gridlines === "true");
+const animationsBoolean = computed(() => config.animations === "true");
 
 const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
 
 const mapDisplayValue = (key, value) => {
   if (key === "tooltip" || key === "gridlines" || key === "animations") {
-    return value === "on" ? "on" : null;
+    return value === "true" ? "true" : null;
   }
   return JSON.stringify(value);
 };
 
 const config = reactive({
-  data: [],
-  selectedStocks: [],
+  data: "lineData",
   lineColor: "#fff",
-  tooltip: "off",
-  gridlines: "off",
-  animations: "off",
+  tooltip: "false",
+  gridlines: "false",
+  animations: "false",
 });
 
 const chartProps = computed(() => {
@@ -163,79 +165,23 @@ const chartProps = computed(() => {
     .filter((prop) => prop.value !== null);
 });
 
-// PROPS
-const props = [
-  {
-    name: "data",
-    type: "Array",
-    default: "null",
-    description:
-      "The dataset for the line chart, consisting of an array of data points.",
-  },
-  {
-    name: "width",
-    type: "Number",
-    default: "400",
-    description: "Specifies the width of the chart in pixels.",
-  },
-  {
-    name: "height",
-    type: "Number",
-    default: "200",
-    description: "Specifies the height of the chart in pixels.",
-  },
-  {
-    name: "dateFormat",
-    type: "String",
-    default: "null",
-    description:
-      "Defines the format for date values in the dataset. If null, no formatting is applied.",
-  },
-  {
-    name: "title",
-    type: "String",
-    default: '"Title"',
-    description: "The title of the line chart.",
-  },
-  {
-    name: "dotColor",
-    type: "String",
-    default: '"#05D9FF"',
-    description: "The color of the dots on the line chart.",
-  },
-  {
-    name: "lineColor",
-    type: "String",
-    default: "null",
-    description:
-      "The color of the line in the chart. If not specified, a default color is used.",
-  },
-  {
-    name: "tooltip",
-    type: "Boolean",
-    default: "false",
-    description: "Determines whether tooltips are shown on hover.",
-  },
-  {
-    name: "gridlines",
-    type: "Boolean",
-    default: "false",
-    description: "Controls the visibility of gridlines in the chart.",
-  },
-  {
-    name: "animation",
-    type: "Boolean",
-    default: "false",
-    description: "Controls whether animation is used on load.",
-  },
-  {
-    name: "xAxis",
-    type: "Boolean",
-    default: "null",
-    description:
-      "Controls the visibility of the X-axis. If not specified, default behavior is applied.",
-  },
-];
+// TEXTS
+const texts = {
+  intro: `<ul>
+    <li class=my-[20px]>
+      <strong>Data Structure:</strong> Each data point in the candlestick chart is represented by an object with <em>Date</em>, <em>Open</em>, <em>High</em>, <em>Low</em>, and <em>Close</em> properties. These properties correspond to the key aspects of financial data for a given time period.
+    </li>
+    <li class=my-[20px]>
+      <strong>Component Usage:</strong> The example uses a custom <em>CandlestickChart</em> component that leverages D3.js for rendering. This component accepts props like <em>data</em>, <em>width</em>, <em>height</em>, and <em>margin</em>, offering customization for the chart's layout and dimensions.
+    </li>
+    <li class=my-[20px]>
+      <strong>Interactive Features:</strong> The chart includes interactive elements such as hover effects and tooltips to provide a detailed view of the data points.
+    </li>
+    <li class=my-[20px]>
+      <strong>Customization:</strong> The chart's appearance, including colors and styles, can be customized based on whether the opening price is higher or lower than the closing price, indicated by different colors.
+    </li>
+  </ul>`,
+};
 </script>
 
 <style lang="scss" scoped>

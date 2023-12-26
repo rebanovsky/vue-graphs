@@ -1,37 +1,20 @@
 <template>
   <!-- TheBubblechart.vue -->
-  <ChartContainer title="TheBubblechart.vue" :component-props="props">
-    <template #title>TheBubblechart.vue</template>
-    <BubbleChart :data="bubbleData" width="480" height="240" />
+  <ChartContainer
+    title="Bubble chart"
+    chart-title="BubbleChart.vue"
+    :component-props="bubblechartProps"
+    :preview-data="linePreview"
+  >
+    <template #intro>
+      <!-- <div v-html="texts.intro"></div> -->
+    </template>
+    <BubbleChart :data="bubbleData" :width="560" :height="280" />
+
     <template #config>
-      <RadioButton
-        v-model="config.tooltip"
-        :options="radioConfigs.tooltip.config"
-        title="Tooltip"
-        name="tooltip"
-      />
-      <RadioButton
-        v-model="config.gridlines"
-        :options="radioConfigs.gridlines.config"
-        title="Gridlines"
-        name="gridlines"
-      />
-      <RadioButton
-        v-model="config.animations"
-        :options="radioConfigs.animations.config"
-        title="Animations"
-        name="animations"
-      />
-      <MultiSelect
-        v-model="config.selectedStocks"
-        :title="stockOptions.title"
-        :options="stockOptions.configs"
-      />
-      <ColorPicker
-        v-model="config.lineColor"
-        :options="colorOptions"
-        title="Line Color"
-      />
+      <RadioToggle title="Tooltip" />
+      <RadioToggle title="Gridlines" />
+      <RadioToggle title="Animations" />
     </template>
     <template #code-block>
       <div
@@ -50,7 +33,7 @@
             <div class="top flex">
               {{ "<" }}
               <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                TheBubblecharts
+                Bubblechart
               </div>
             </div>
             <transition-group name="list" tag="div">
@@ -80,51 +63,16 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive } from "vue";
-import { earnings1 } from "@/data/earningsDummy";
+import { computed, reactive } from "vue";
 import BubbleChart from "@/components/graphs/BubbleChart.vue";
-import MultiSelect from "@/components/common/MultiSelect.vue";
-import RadioButton from "@/components/common/RadioButton.vue";
-import ColorPicker from "@/components/common/ColorPicker.vue";
+import RadioToggle from "@/components/common/RadioToggle.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
-
-// Bubblechart data
-const bubbleData = ref([
-  {
-    performancePercentage: 10.5,
-    ownership: 10.3,
-    weight: 15.2,
-    sector: "Energy",
-    securityName: "Company A",
-    symbol: "COMPA",
-  },
-  {
-    performancePercentage: 5.7,
-    ownership: 25.1,
-    weight: 10.0,
-    sector: "Materials",
-    securityName: "Company B",
-    symbol: "COMPB",
-  },
-  {
-    performancePercentage: 15.2,
-    ownership: 20.5,
-    weight: 20.3,
-    sector: "Industrials",
-    securityName: "Company C",
-    symbol: "COMPC",
-  },
-  {
-    performancePercentage: -15.2,
-    ownership: 0.5,
-    weight: 10.3,
-    sector: "Technology",
-    securityName: "Company D",
-    symbol: "COMPD",
-  },
-]);
+//Data imports
+import { bubbleData } from "@/data/dummyBubble";
+import { bubblechartProps } from "@/data/props";
+import { linePreview } from "@/data/previewData";
 
 //Radio configs
 const radioConfigs = {
@@ -155,18 +103,6 @@ const tooltipBoolean = computed(() => config.tooltip === "on");
 const gridlinesBoolean = computed(() => config.gridlines === "on");
 const animationsBoolean = computed(() => config.animations === "on");
 
-// Adding/removing stocks
-const stockOptions = {
-  title: "Add/remove Bars",
-  configs: [
-    { label: "AAPL", value: "AAPL" },
-    { label: "MSFT", value: "MSFT" },
-    { label: "NVDA", value: "NVDA" },
-  ],
-};
-
-const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
-
 const mapDisplayValue = (key, value) => {
   if (key === "tooltip" || key === "gridlines" || key === "animations") {
     return value === "on" ? "on" : null;
@@ -175,12 +111,7 @@ const mapDisplayValue = (key, value) => {
 };
 
 const config = reactive({
-  lineData: [],
-  selectedStocks: [],
-  lineColor: "#fff",
-  tooltip: "off",
-  gridlines: "off",
-  animations: "off",
+  bubbleData: [],
 });
 
 const chartProps = computed(() => {
@@ -191,80 +122,6 @@ const chartProps = computed(() => {
     }))
     .filter((prop) => prop.value !== null);
 });
-
-// PROPS
-const props = [
-  {
-    name: "data",
-    type: "Array",
-    default: "null",
-    description:
-      "The dataset for the line chart, consisting of an array of data points.",
-  },
-  {
-    name: "width",
-    type: "Number",
-    default: "400",
-    description: "Specifies the width of the chart in pixels.",
-  },
-  {
-    name: "height",
-    type: "Number",
-    default: "200",
-    description: "Specifies the height of the chart in pixels.",
-  },
-  {
-    name: "dateFormat",
-    type: "String",
-    default: "null",
-    description:
-      "Defines the format for date values in the dataset. If null, no formatting is applied.",
-  },
-  {
-    name: "title",
-    type: "String",
-    default: '"Title"',
-    description: "The title of the line chart.",
-  },
-  {
-    name: "dotColor",
-    type: "String",
-    default: '"#05D9FF"',
-    description: "The color of the dots on the line chart.",
-  },
-  {
-    name: "lineColor",
-    type: "String",
-    default: "null",
-    description:
-      "The color of the line in the chart. If not specified, a default color is used.",
-  },
-  {
-    name: "tooltip",
-    type: "Boolean",
-    default: "false",
-    description: "Determines whether tooltips are shown on hover.",
-  },
-  {
-    name: "gridlines",
-    type: "Boolean",
-    default: "false",
-    description: "Controls the visibility of gridlines in the chart.",
-  },
-  {
-    name: "animation",
-    type: "Boolean",
-    default: "false",
-    description: "Controls whether animation is used on load.",
-  },
-  {
-    name: "xAxis",
-    type: "Boolean",
-    default: "null",
-    description:
-      "Controls the visibility of the X-axis. If not specified, default behavior is applied.",
-  },
-];
 </script>
 
 <style lang="scss" scoped>

@@ -1,6 +1,6 @@
 <template>
   <!-- TheHeatmap.vue -->
-  <ChartContainer title="TheHeatmap.vue" :component-props="props">
+  <ChartContainer title="TheHeatmap.vue" :component-props="heatmapProps">
     <TheHeatmap :geo-json-data="geoJson" />
     <template #config>
       <RadioButton
@@ -88,6 +88,8 @@ import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
+// Data imports
+import { heatmapProps } from "@/data/props";
 
 // PIECHART DATA
 const sectors = [

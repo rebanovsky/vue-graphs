@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col text-[12px] gap-[4px]">
-    <div class="config-title dark:text-slate-300 text-slate-700 cursor-default">
+  <div class="flex flex-col text-[12px]">
+    <div class="config-title font-normal cursor-default">
       {{ title }}
     </div>
     <div class="radio-group flex items-center w-[auto]">
@@ -16,7 +16,7 @@
             },
           ]"
           @click="() => updateModelValue(option.value)"
-          class="px-[12px] py-[1px] font-medium"
+          class="px-[12px] font-medium"
           :style="index !== 0 ? 'transform: translateX(-1px);' : ''"
         >
           <input

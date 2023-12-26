@@ -41,7 +41,7 @@ export default {
 
     const drawChart = () => {
       const svg = d3.select(svgRef.value).select("g");
-      svg.selectAll("*").remove(); // Clear svg content before redrawing
+      svg.selectAll("*").remove();
 
       const data = props.data.map((d) => ({
         ...d,
@@ -65,12 +65,11 @@ export default {
       const yScale = d3
         .scaleLinear()
         .domain([
-          d3.min(data, (d) => d.Low) - padding, // Lower the bottom of the scale
-          d3.max(data, (d) => d.High) + padding, // Raise the top of the scale
+          d3.min(data, (d) => d.Low) - padding,
+          d3.max(data, (d) => d.High) + padding,
         ])
         .range([props.height, 0]);
 
-      // Select three dates from your data for the x-axis ticks
       const tickValues =
         data.length > 2
           ? [
@@ -103,18 +102,16 @@ export default {
       // Remove the y-axis line
       svg
         .append("g")
-        .call(
-          d3
-            .axisLeft(yScale)
-            .tickSize(0) // No tick marks
-            .ticks(2) // Number of ticks you want on the y-axis
-        )
-        .call((g) => g.select(".domain").remove()) // Remove the y-axis line
+        .call(d3.axisLeft(yScale).tickSize(0).ticks(2))
+        .call((g) => g.select(".domain").remove())
         .selectAll(".tick text")
         .attr("dx", "-0.5em")
         .attr("fill", "#666");
 
-      // Add horizontal grid lines
+      //
+      // Gridlines
+      //
+
       svg
         .append("g")
         .attr("class", "grid")
@@ -125,13 +122,13 @@ export default {
             .tickFormat("") // No text for these ticks.ticks(2)
             .ticks(2)
         )
-        .call((g) => g.select(".domain").remove()) // Remove the axis line
+        .call((g) => g.select(".domain").remove())
         .call((g) =>
           g
             .selectAll(".tick line")
             .attr("stroke-opacity", 0.3)
             .attr("stroke-dasharray", "2,2")
-        ); // Style the grid lines
+        );
 
       data.forEach((d) => {
         svg
@@ -141,7 +138,7 @@ export default {
           .attr("width", xScale.bandwidth())
           .attr("height", Math.abs(yScale(d.Open) - yScale(d.Close)) || 1)
           .attr("rx", 1)
-          .attr("fill", d.Open > d.Close ? "red" : "green");
+          .attr("fill", d.Open > d.Close ? "#ff1612" : "#63ce21");
 
         svg
           .append("line")
@@ -150,7 +147,7 @@ export default {
           .attr("x2", xScale(d.Date) + xScale.bandwidth() / 2)
           .attr("y1", yScale(d.High))
           .attr("y2", yScale(d.Low))
-          .attr("stroke", d.Open > d.Close ? "red" : "green");
+          .attr("stroke", d.Open > d.Close ? "#ff1612" : "#63ce21");
       });
     };
 

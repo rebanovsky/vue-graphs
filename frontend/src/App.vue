@@ -56,6 +56,10 @@ select {
   text-align: right;
 }
 
+strong {
+  font-weight: 500 !important;
+}
+
 a:hover {
   text-decoration: none;
   text-underline-offset: 2px;

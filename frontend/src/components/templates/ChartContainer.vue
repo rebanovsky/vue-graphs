@@ -133,7 +133,7 @@
               <div
                 class="flex flex-col gap-[12px] gridlines w-[200px] p-[12px] h-[243px] overflow-y-auto"
               >
-                <div class="w-[112px] flex flex-col gap-[16px]">
+                <div class="w-[112px] flex flex-col gap-[28px]">
                   <slot name="config"></slot>
                 </div>
               </div>
@@ -178,7 +178,7 @@ const props = defineProps({
   },
 });
 
-const appendix = ref("data");
+const appendix = ref("props");
 
 const options = [
   {

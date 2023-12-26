@@ -1,6 +1,6 @@
 <template>
   <!-- BarChart.vue -->
-  <ChartContainer title="DoughnutChart.vue" :component-props="props">
+  <ChartContainer title="DoughnutChart.vue" :component-props="doughnutProps">
     <DoughnutChart :data="sectors" :height="280" :width="560" />
     <template #config>
       <RadioButton
@@ -87,6 +87,8 @@ import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
+// Data imports
+import { doughnutProps } from "@/data/props";
 
 // DoughnutChart DATA
 const sectors = [

@@ -22,7 +22,6 @@ export default {
       "#bc5090", // Green
       "#ff6361", // Blue
       "#ffa600", // Purple
-      // Add more as needed
     ];
 
     onMounted(() => {
@@ -34,7 +33,6 @@ export default {
 
       const radius = Math.min(props.width, props.height) / 2;
 
-      // Set the innerRadius to a non-zero value to create a doughnut shape
       const arc = d3
         .arc()
         .outerRadius(radius - 10)
