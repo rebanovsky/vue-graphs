@@ -10,7 +10,7 @@
         class="accordion-item flex flex-col gap-[8px]"
       >
         <div
-          class="accordion-title font-semibold text-[14px] px-[16px]"
+          class="accordion-title font-medium text-[14px] px-[16px]"
           @click="toggleAccordion(item, index)"
         >
           {{ item.title }}

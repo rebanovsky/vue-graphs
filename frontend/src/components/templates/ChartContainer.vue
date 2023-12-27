@@ -30,7 +30,57 @@
                   name="name"
                 />
               </div>
+              <div
+                class="w-[100%] flex justify-center mt-[20px]"
+                v-if="appendix == 'code'"
+              >
+                <CodeBlock :code="code">
+                  <template #custom-code v-if="chartProps.length > 0">
+                    <slot name="custom-code">
+                      <div
+                        class="flex font-mono h-[100%] items-center"
+                      >
+                        <div class="flex flex-col relative text-[0.9em] leading-5">
+                          <div class="top flex flex-col">
+                            <div class="dummy-template-tag text-[#007ee4] dark:text-[#61afee]">
+                              {{ "<template>" }}
+                            </div>
+                            <div class="chart-title-wrapper flex text-[gray] ml-[16px]">
+                              {{ "<" }}
+                              <div
+                                class="component-name text-[#dfaa00] dark:text-[#e5c07b]"
+                              >
+                                {{ chartTitle }}
+                              </div>
+                            </div> 
+                          </div>
+                          <transition-group name="list" tag="div">
+                            <div
+                              class="props ml-[32px] flex max-w-[180px]"
+                              v-for="prop in chartProps"
+                              :key="prop.name"
+                            >
 
+                              <div
+                                class="props-name text-[#d70011] dark:text-[#df6c75]"
+                              >
+                              :{{ prop.name }}
+                              </div>
+                              =
+                              <div
+                                class="props-value text-[#4bb300] dark:text-[#98c379] truncate"
+                              >
+                                {{ prop.value }}
+                              </div>
+                            </div>
+                          </transition-group>
+                          <div class="bottom text-[gray] ml-[16px]">{{ "/>" }}</div>
+                        </div>
+                      </div>
+                    </slot>
+                  </template>
+                </CodeBlock>
+              </div>
               <div
                 class="chart-properties text-[12px] w-[auto] p-[12px] rounded-[8px]"
                 v-if="appendix == 'props'"
@@ -138,13 +188,6 @@
                 </div>
               </div>
             </div>
-            <div class="code-block flex text-[14px]">
-              <div
-                class="flex flex-col gap-[12px] gridlines w-[200px] leading-5 p-[12px] h-[auto] overflow-y-auto overflow-x-hidden"
-              >
-                <slot name="code-block"></slot>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -154,8 +197,9 @@
 
 <script setup>
 import { nanoid } from "nanoid";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import RadioButton from "@/components/common/RadioButton.vue";
+import CodeBlock from "@/components/common/CodeBlock.vue";
 
 const props = defineProps({
   dataFile: {
@@ -176,9 +220,16 @@ const props = defineProps({
   previewData: {
     type: Object,
   },
+  code: {
+    type: String,
+  },
+  chartProps: {
+    type: Array,
+    default: [],
+  },
 });
 
-const appendix = ref("props");
+const appendix = ref("code");
 
 const options = [
   {
@@ -206,4 +257,20 @@ function getType(value) {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.25s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.list-leave-active {
+  position: absolute;
+}
+</style>

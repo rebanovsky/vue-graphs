@@ -1,9 +1,10 @@
 <template>
   <!-- SingleLine.vue -->
-  <!--  -->
   <ChartContainer
     title="Line Chart"
     chart-title="SingleLine.vue"
+    :code="code"
+    :chart-props="chartProps"
     :component-props="lineProps"
     :preview-data="linePreview"
   >
@@ -21,9 +22,6 @@
       :animations="animationsBoolean"
     />
     <template #config>
-      <RadioToggle title="Tooltip" />
-      <RadioToggle title="Gridlines" />
-      <RadioToggle title="Animations" />
       <ColorPicker
         v-model="config.lineColor"
         :options="colorOptions"
@@ -62,37 +60,6 @@
               dynamicClass="hover:fill-slate-900 cursor-pointer p-[2px] dark:hover:!fill-slate-200"
             />
           </Transition>
-        </div>
-        <div
-          class="flex gridlines font-mono h-[100%] items-center justify-center"
-        >
-          <div class="flex flex-col relative" v-if="chartProps.length > 0">
-            <div class="top flex">
-              {{ "<" }}
-              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                SingleLine
-              </div>
-            </div>
-            <transition-group name="list" tag="div">
-              <div
-                class="props pl-[16px] flex max-w-[180px]"
-                v-for="prop in chartProps"
-                :key="prop.name"
-              >
-                :
-                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                  {{ prop.name }}
-                </div>
-                =
-                <div
-                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
-                >
-                  {{ prop.value }}
-                </div>
-              </div>
-            </transition-group>
-            <div class="bottom">{{ "/>" }}</div>
-          </div>
         </div>
       </div>
     </template>
@@ -192,7 +159,7 @@ const chartProps = computed(() => {
     .filter((prop) => prop.value !== null);
 });
 
-// TEXTS
+// Texts
 const texts = {
   intro: `<ol>
             <li class=my-[20px]>
@@ -206,22 +173,32 @@ const texts = {
             </li>
           </ol>`,
 };
+
+// Code block
+const placeholder = "SCRIPT_TAG_PLACEHOLDER"; // helper
+
+const code = computed(() =>
+  `</template>
+
+<script setup>
+import { ref } from 'vue';
+import { LineChart } from 'vue-graphs';
+import { data } from "@/data";
+
+const formattedLineData = data.map((item) => ({
+  x: item.Date,
+  y: item.Close,
+}));
+
+const lineData = ref([
+  {
+    color: "#fffff",
+    values: formattedLineData,
+  },
+]);
+
+</${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")
+);
 </script>
 
-<style lang="scss" scoped>
-.list-move,
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.25s ease;
-}
-
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateY(-6px);
-}
-
-.list-leave-active {
-  position: absolute;
-}
-</style>
+<style lang="scss" scoped></style>

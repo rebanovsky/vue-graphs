@@ -22,28 +22,7 @@
       </section>
 
       <!-- Installation -->
-      <section class="home-section w-[800px] gridlines flex gap-[12px]">
-        <div class="h-[36px] flex items-center">
-          <div
-            class="hash text-harlequin-500 text-[24px] cursor-pointer flex items-center justify-center h-[24px] opacity-0 hover:opacity-[1] transition ease"
-          >
-            #
-          </div>
-        </div>
-        <div class="flex flex-col gap-[20px] w-[600px]">
-          <h1 class="font-medium text-[24px]">
-            {{ sections.installation.title }}
-          </h1>
-          <div
-            class="home-paragraph text-slate-800 dark:text-slate-300 font-light text-[14px] leading-7"
-          >
-            {{ sections.installation.content }}
-          </div>
-          <div class="w-[100%] flex justify-center">
-            <CodeBlock :code="npmInstall" freeform />
-          </div>
-        </div>
-      </section>
+      <TheInstallation />
 
       <!-- Examples -->
       <section class="home-section w-[800px] gridlines flex gap-[12px]">
@@ -58,7 +37,9 @@
           <h1 class="font-medium text-[24px]">
             {{ sections.examples.title }}
           </h1>
-          <div class="home-paragraph text-slate-800 dark:text-slate-300 flex flex-col gap-[40px]">
+          <div
+            class="home-paragraph text-slate-800 dark:text-slate-300 flex flex-col gap-[40px]"
+          >
             <div
               class="intro"
               v-html="sections.examples.charts.line.intro"
@@ -68,48 +49,6 @@
               <LineChart />
             </div>
             {{ sections.examples.content }}
-          </div>
-        </div>
-      </section>
-
-      <!-- API reference -->
-      <section class="home-section w-[800px] gridlines flex gap-[12px]">
-        <div class="h-[36px] flex items-center">
-          <div
-            class="hash text-harlequin-500 text-[24px] cursor-pointer flex items-center justify-center h-[24px] opacity-0 hover:opacity-[1] transition ease"
-          >
-            #
-          </div>
-        </div>
-        <div class="flex flex-col gap-[20px] w-[600px]">
-          <h1 class="font-medium text-[24px]">
-            {{ sections.apiReference.title }}
-          </h1>
-          <div
-            class="home-paragraph text-slate-800 dark:text-slate-300 font-light text-[14px] leading-7"
-          >
-            {{ sections.apiReference.content }}
-          </div>
-        </div>
-      </section>
-
-      <!-- Configuration options -->
-      <section class="home-section w-[800px] gridlines flex gap-[12px]">
-        <div class="h-[36px] flex items-center">
-          <div
-            class="hash text-harlequin-500 text-[24px] cursor-pointer flex items-center justify-center h-[24px] opacity-0 hover:opacity-[1] transition ease"
-          >
-            #
-          </div>
-        </div>
-        <div class="flex flex-col gap-[20px] w-[600px]">
-          <h1 class="font-medium text-[24px]">
-            {{ sections.configOption.title }}
-          </h1>
-          <div
-            class="home-paragraph text-slate-800 dark:text-slate-300 font-light text-[14px] leading-7"
-          >
-            {{ sections.configOption.content }}
           </div>
         </div>
       </section>
@@ -160,11 +99,12 @@
 </template>
 
 <script setup>
-import CodeBlock from "@/components/common/CodeBlock.vue";
 import { line1 } from "@/data/dummyMultiLine";
 import { ref } from "vue";
+//Sections
+import TheInstallation from "@/components/home/TheInstallation.vue";
 //Examples
-import LineChart from "@/components/examples/LineChart.vue";
+import LineChart from "@/components/home/examples/LineChart.vue";
 
 const sections = {
   about: {
@@ -176,11 +116,6 @@ const sections = {
         <a class="text-harlequin-500" href="https://d3js.org/" target="_blank">D3.js</a>
         for its underlying data visualization capabilities. It is aimed at developers who need to integrate data visualizations into their Vue3 applications. The library offers a bridge between the reactivity of Vue3 and the graphical strengths of D3.js, providing a straightforward solution for incorporating complex charts and graphs.`,
   },
-  installation: {
-    id: 2,
-    title: "Installation",
-    content: `Quickly integrate our Vue3 Graphs Library into your project with a simple npm install vue-graphs command.`,
-  },
   examples: {
     id: 3,
     title: "Examples",
@@ -190,34 +125,18 @@ const sections = {
       },
     },
   },
-  apiReference: {
-    id: 4,
-    title: "API reference",
-    content:
-      "A comprehensive list of all components, props, events, and slots. Description of each item along with type information and default values.",
-  },
-  configOption: {
-    id: 5,
-    title: "Configuration options",
-    content:
-      "Explain how to configure the graphs (e.g., themes, data formats). Provide code examples for common configurations.",
-  },
   contactAndSupport: {
-    id: 6,
+    id: 4,
     title: "Contact & support",
     content:
       "Provide information on how users can get support, report bugs, or reach out for help.",
   },
   license: {
-    id: 7,
+    id: 5,
     title: "License",
     content: "State the type of license the library is released under.",
   },
 };
-// CODE
-
-// npm install
-const npmInstall = `npm install vue-graphs`;
 
 //
 

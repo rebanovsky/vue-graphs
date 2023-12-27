@@ -60,6 +60,8 @@ const drawChart = () => {
 
   d3.select(chart.value).selectAll("*").remove();
 
+  console.log(props.data);
+
   const svg = d3
     .select(chart.value)
     .append("svg")
@@ -337,12 +339,11 @@ const drawChart = () => {
           });
         });
       } else {
-        // For continuous scales (date or number)
         const mouseXValue = xScale.invert(mx);
         props.data.forEach((series) => {
           series.values.forEach((pt) => {
             const ptXValue = isDate ? parseDate(pt.x) : pt.x;
-            const distance = Math.abs(ptXValue - mouseXValue);
+            const distance = Math.abs(mouseXValue - ptXValue);
             if (distance < closestDistance) {
               closestDistance = distance;
               closestPt = pt;
@@ -355,13 +356,14 @@ const drawChart = () => {
       hoverVerticalLineGroup.selectAll("*").remove();
 
       if (closestPt) {
-        const cx = xScale(closestPt.x);
+        const cx = xScale(isDate ? parseDate(closestPt.x) : closestPt.x);
+        const cy = yScale(closestPt.y);
 
         // Large circle
         hoverCirclesGroup
           .append("circle")
           .attr("cx", cx)
-          .attr("cy", yScale(closestPt.y))
+          .attr("cy", cy)
           .attr("r", 36)
           .attr("fill", "rgba(61, 151, 255, 0.1)");
 
@@ -369,7 +371,7 @@ const drawChart = () => {
         hoverCirclesGroup
           .append("circle")
           .attr("cx", cx)
-          .attr("cy", yScale(closestPt.y))
+          .attr("cy", cy)
           .attr("r", 4)
           .attr("class", "fill-[#0072ff] dark:fill-[#49B7F7]");
 

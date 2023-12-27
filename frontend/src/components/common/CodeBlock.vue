@@ -5,8 +5,9 @@
     <div class="code-header w-[100%] flex px-[12px] relative">
       <div
         ref="codeContent"
-        class="code-content flex p-[12px] rounded-b font-mono"
+        class="code-content flex p-[12px] rounded-b font-mono flex-col"
       >
+        <slot name="custom-code"></slot>
         <pre
           v-if="freeform"
           v-highlightjs
@@ -42,18 +43,15 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch, onMounted, onUnmounted } from "vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
+import { useDark } from "@vueuse/core";
 
 const props = defineProps({
   code: String,
   freeform: Boolean,
 });
 
-// onMounted(highlight);
-
-// watch(() => props.code, highlight);
-const number = 1;
 const svgHovered = ref(false);
 const copied = ref(false);
 const codeContent = ref(null);
@@ -82,9 +80,74 @@ const handleMouseOver = () => {
     svgHovered.value = true;
   }
 };
+
+// Codeblock colorcoding
+const isDark = useDark();
+
+const updateBodyClass = (dark) => {
+  if (dark) {
+    document.body.classList.add("dark-mode");
+  } else {
+    document.body.classList.remove("dark-mode");
+  }
+};
+
+watch(
+  isDark,
+  (newValue) => {
+    updateBodyClass(newValue);
+  },
+  { immediate: true }
+);
+
+onMounted(() => {
+  updateBodyClass(isDark.value);
+});
+
+onUnmounted(() => {
+  document.body.classList.remove("dark-mode");
+});
 </script>
 
 <style>
+/* Dark Mode Styles */
+.dark-mode .hljs {
+  color: #61afee;
+}
+.dark-mode .hljs-name,
+.dark-mode .hljs-number {
+  color: #e5c07b;
+}
+.dark-mode .hljs-keyword {
+  color: #c678dd;
+}
+.dark-mode .hljs-string {
+  color: #98c379;
+}
+.dark-mode .hljs-attr,
+.dark-mode .hljs-params {
+  color: #df6c75;
+}
+
+/* Light Mode Styles */
+.hljs {
+  color: #007ee4; /* Light Mode */
+}
+.hljs-name,
+.hljs-number {
+  color: #dfaa00; /* Light Mode */
+}
+.hljs-keyword {
+  color: #8b0eaf; /* Light Mode */
+}
+.hljs-string {
+  color: #4bb300; /* Light Mode */
+}
+.hljs-attr,
+.hljs-params {
+  color: #d70011; /* Light Mode */
+}
+
 pre code.hljs {
   display: block;
   overflow-x: auto;
@@ -94,15 +157,8 @@ code.hljs {
   padding: 1px 3px;
   line-height: 1.5em !important;
 }
-/*
 
-XCode style (c) Angel Garcia <angelgarcia.mail@gmail.com>
 
-*/
-.hljs {
-  color: #61afee;
-}
-/* Gray DOCTYPE selectors like WebKit */
 .xml .hljs-meta {
   color: #c0c0c0;
 }
@@ -116,26 +172,14 @@ XCode style (c) Angel Garcia <angelgarcia.mail@gmail.com>
 .hljs-literal {
   color: gray;
 }
-.hljs-name,
-.hljs-number {
-  color: #e5c07b;
-}
 
-.hljs-keyword {
-  color: #c678dd;
-}
 .hljs-variable,
 .hljs-template-variable {
   color: #3f6e74;
 }
 .hljs-code,
-.hljs-string,
 .hljs-meta {
   color: gray;
-}
-
-.hljs-string {
-  color: #98c379;
 }
 
 .hljs-regexp,
@@ -157,10 +201,7 @@ XCode style (c) Angel Garcia <angelgarcia.mail@gmail.com>
 .hljs-built_in {
   color: gray;
 }
-.hljs-attr,
-.hljs-params {
-  color: #df6c75;
-}
+
 .hljs-subst {
   color: #61afee;
 }

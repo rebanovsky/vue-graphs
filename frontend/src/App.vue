@@ -44,6 +44,11 @@ h1 {
   font-size: 24px !important;
 }
 
+h2 {
+  font-weight: 500 !important;
+  font-size: 16px !important;
+}
+
 p {
   padding: 0;
 }
