@@ -17,7 +17,7 @@
           v-highlightjs
         ><code class="javascript">{{ code }}</code></pre>
       </div>
-      <div class="flex mt-[16px] absolute right-[12px] items-center">
+      <div class="flex mt-[12px] absolute right-[12px] items-center">
         <Transition name="slide-left">
           <div
             class="copy mx-[4px] font-normal text-[12px] h-[20px] flex items-center"

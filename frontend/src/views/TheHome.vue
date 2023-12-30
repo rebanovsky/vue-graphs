@@ -99,8 +99,6 @@
 </template>
 
 <script setup>
-import { line1 } from "@/data/dummyMultiLine";
-import { ref } from "vue";
 //Sections
 import TheInstallation from "@/components/home/TheInstallation.vue";
 //Examples
@@ -137,103 +135,6 @@ const sections = {
     content: "State the type of license the library is released under.",
   },
 };
-
-//
-
-//
-
-//
-
-// Data for graphs
-
-//
-
-//
-
-// LINECHART DATA
-const formattedLineData = line1.map((item) => ({
-  x: item.Date,
-  y: item.Close,
-}));
-
-const lineData = ref([
-  {
-    color: "#061826",
-    values: formattedLineData,
-  },
-]);
-
-// animation check
-
-const isAnimate = ref(false);
-
-// List of graphs
-const graphs = [
-  {
-    name: "Linechart",
-  },
-  {
-    name: "Barchart",
-  },
-  {
-    name: "Piechart",
-  },
-  {
-    name: "Area chart",
-  },
-  {
-    name: "Scatterplot",
-  },
-  {
-    name: "Heatmap",
-  },
-  {
-    name: "Bubblechart",
-  },
-  {
-    name: "Treemap",
-  },
-];
-
-const steps = [
-  {
-    stepNr: "1",
-    stepTitle: "Installation",
-    content: "npm i vue-graphs",
-  },
-  {
-    stepNr: "2",
-    stepTitle: "Customize graph",
-    content: "docs",
-  },
-  {
-    stepNr: "3",
-    stepTitle: "Bind data",
-    content: ':data="array"',
-  },
-];
-
-// BARCHART DATA
-const earnings = [
-  {
-    entity: "AAPL",
-    data: [
-      { x: "Q1 2023", y: 90000000 },
-      { x: "Q2 2023", y: 110000000 },
-      { x: "Q3 2023", y: 105000000 },
-      { x: "Q4 2023", y: 120000000 },
-    ],
-  },
-];
-
-//PIECHART DATA
-const sectors = [
-  { label: "Others", value: 10 },
-  { label: "Energy", value: 15 },
-  { label: "Finance", value: 25 },
-  { label: "Technology", value: 30 },
-  { label: "Healthcare", value: 20 },
-];
 </script>
 
 <style lang="scss" scoped></style>

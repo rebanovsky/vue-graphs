@@ -129,7 +129,7 @@
                   class="preview-data-content m-[20px] text-[12px] text-slate-500 font-mono font-light"
                 >
                   [
-                  <div class="key-values-wrapper px-[16px]">
+                  <div class="key-values-wrapper px-[16px] leading-5">
                     <div
                       class="key-values"
                       v-for="object in previewData.json"

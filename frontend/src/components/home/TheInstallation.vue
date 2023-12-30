@@ -184,24 +184,34 @@ const vgUsage = computed(() =>
 import { ref } from 'vue';
 import { LineChart } from 'vue-graphs';
 
-const chartData = ref({
-  // Define your chart data here
-});
+const chartData = ref();
 </${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")
 );
 
 const vgCustomization = computed(() =>
   `<template>
-  <BarChart :data="barData" :width="500" :height="300" />
+  <BarChart 
+    :data="barData" 
+    :width="500" 
+    :height="300" 
+  />
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { BarChart } from 'vue-graphs';
 
-const barData = ref({
-  // Your bar chart data
-});
+const barData = ref([
+  {
+    entity: "AAPL",
+    data: [
+      { x: "Q1 2023", y: 9000 },
+      { x: "Q2 2023", y: 11000 },
+      { x: "Q3 2023", y: 10500 },
+      { x: "Q4 2023", y: 12000 },
+    ],
+  },
+]);
 </${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")
 );
 </script>
