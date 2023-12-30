@@ -25,7 +25,7 @@ module.exports = {
       },
       harlequin: {
         50: "#e6f7e6",
-        100: "#caf8c5",
+        100: "#edf5ed",
         200: "#00fc77",
         300: "#2bd81d",
         400: "#35d00d",

@@ -42,7 +42,7 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  animation: {
+  animations: {
     type: Boolean,
   },
   xAxis: {
@@ -174,13 +174,13 @@ const drawChart = () => {
       .append("stop")
       .attr("offset", "0%")
       .attr("stop-color", "rgb(204,0,0)")
-      .attr("stop-opacity", 0.4);
+      .attr("stop-opacity", 0.3);
 
     gradient
       .append("stop")
       .attr("offset", "40%")
       .attr("stop-color", "rgb(255, 0, 106)")
-      .attr("stop-opacity", 0.05);
+      .attr("stop-opacity", 0.005);
 
     gradient
       .append("stop")
@@ -191,13 +191,13 @@ const drawChart = () => {
       .append("stop")
       .attr("offset", "60%")
       .attr("stop-color", "rgb(0, 128, 0)")
-      .attr("stop-opacity", 0.05);
+      .attr("stop-opacity", 0.005);
 
     gradient
       .append("stop")
       .attr("offset", "100%")
       .attr("stop-color", "rgb(0, 128, 0)")
-      .attr("stop-opacity", 0.4);
+      .attr("stop-opacity", 0.3);
 
     const colorScaleRed = d3
       .scaleLinear()
@@ -266,7 +266,7 @@ const drawChart = () => {
       .attr("style", `stroke: ${props.lineColor} !important;`)
       .attr("fill", "none");
 
-    if (props.animation) {
+    if (props.animations) {
       path.each(function () {
         const totalLength = this.getTotalLength();
         d3.select(this)
@@ -365,7 +365,7 @@ const drawChart = () => {
           .attr("cx", cx)
           .attr("cy", cy)
           .attr("r", 36)
-          .attr("fill", "rgba(61, 151, 255, 0.1)");
+          .attr("fill", "rgba(61, 151, 255, 0)");
 
         // Small circle
         hoverCirclesGroup
@@ -373,7 +373,7 @@ const drawChart = () => {
           .attr("cx", cx)
           .attr("cy", cy)
           .attr("r", 4)
-          .attr("class", "fill-[#0072ff] dark:fill-[#49B7F7]");
+          .attr("class", "fill-[#000000] dark:fill-[#ffffff]");
 
         // Append text label for the y value
         hoverCirclesGroup
@@ -422,22 +422,10 @@ const animateLine = () => {
   });
 };
 
-watch(
-  () => props.animation,
-  (newVal) => {
-    if (newVal) {
-      animateLine();
-    }
-  }
-);
-
 watchEffect(() => {
   drawChart();
 });
 </script>
 
 <style scoped>
-.line {
-  stroke-width: 1px;
-}
 </style>

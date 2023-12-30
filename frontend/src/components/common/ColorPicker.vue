@@ -1,20 +1,15 @@
 <template>
-  <div class="flex justify-between text-[12px] w-[176px] items-center">
+  <div class="flex flex-col text-[12px] gap-[4px]">
     <div class="config-title flex w-[100px] flex-1 whitespace-nowrap">
       {{ title }}
     </div>
     <div
-      class="color-group border-[1px] px-[4px] flex-1 h-[24px] border-slate-200 dark:border-slate-800 hover:border-blue-400 transition ease rounded p-[2px] flex gap-[4px] items-center"
+      class="color-group px-[4px] flex-1 h-[24px] transition ease rounded p-[2px] flex gap-[4px] items-center"
     >
       <input
         type="color"
         class="cursor-pointer flex w-[14px] h-[14px] bg-transparent"
         @input="updateColor"
-      />
-      <input
-        type="text"
-        class="bg-slate-100 dark:bg-slate-900 w-[60px] px-[2px] transition ease flex placeholder:font-light text-[14px] placeholder:text-[14px] w-[140px] placeholder:tracking-wider"
-        :placeholder="color"
       />
     </div>
   </div>

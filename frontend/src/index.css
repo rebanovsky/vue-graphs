@@ -10,96 +10,77 @@
     border-style: dashed;
     border-color: theme("colors.slate.300");
     @apply dark:border-slate-700;
-    transition: all 0.2s ease-in-out;
   }
   .chart-border {
     border-width: 1px;
     border-radius: 12px;
     border-color: theme("colors.slate.200");
     @apply dark:border-slate-800;
-    transition: all 0.2s ease-in-out;
   }
   .text-100 {
     color: theme("colors.slate.100");
     @apply dark:text-slate-900;
-    transition: all 0.2s ease-in-out;
   }
   .text-200 {
     color: theme("colors.slate.200");
     @apply dark:text-slate-800;
-    transition: all 0.2s ease-in-out;
   }
   .text-300 {
     color: theme("colors.slate.300");
     @apply dark:text-slate-700;
-    transition: all 0.2s ease-in-out;
   }
   .text-400 {
     color: theme("colors.slate.400");
     @apply dark:text-slate-600;
-    transition: all 0.2s ease-in-out;
   }
   .text-500 {
     color: theme("colors.slate.500");
-    transition: all 0.2s ease-in-out;
   }
   .text-600 {
     color: theme("colors.slate.600");
     @apply dark:text-slate-400;
-    transition: all 0.2s ease-in-out;
   }
   .text-700 {
     color: theme("colors.slate.700");
     @apply dark:text-slate-400;
-    transition: all 0.2s ease-in-out;
   }
   .text-800 {
     color: theme("colors.slate.800");
     @apply dark:text-slate-200;
-    transition: all 0.2s ease-in-out;
   }
   .text-900 {
     color: theme("colors.slate.900");
     @apply dark:text-slate-100;
-    transition: all 0.2s ease-in-out;
   }
   .bg-100 {
     background-color: theme("colors.slate.100");
     @apply dark:bg-slate-900;
-    transition: all 0.2s ease-in-out;
   }
   .bg-200 {
     background-color: theme("colors.slate.200");
     @apply dark:bg-slate-800;
-    transition: all 0.2s ease-in-out;
   }
   .bg-300 {
     background-color: theme("colors.slate.300");
     @apply dark:bg-slate-700;
-    transition: all 0.2s ease-in-out;
   }
   .bg-400 {
     background-color: theme("colors.slate.400");
     @apply dark:bg-slate-600;
-    transition: all 0.2s ease-in-out;
   }
   .bg-500 {
     background-color: theme("colors.slate.500");
-    transition: all 0.2s ease-in-out;
   }
   .border-100 {
     border-color: theme("colors.slate.100");
     @apply dark:border-slate-900;
-    transition: all 0.2s ease-in-out;
   }
   .border-200 {
     border-color: theme("colors.slate.200");
-    @apply dark:border-slate-800;
-    transition: all 0.2s ease-in-out;
+    @apply dark:border-slate-700;
   }
   .border-300 {
     border-color: theme("colors.slate.300");
     @apply dark:border-slate-700;
-    transition: all 0.2s ease-in-out;
   }
 }

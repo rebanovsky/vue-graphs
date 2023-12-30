@@ -20,6 +20,7 @@
       :tooltip="tooltipBoolean"
       :gridlines="gridlinesBoolean"
       :animations="animationsBoolean"
+      :gradient="gradientBoolean"
     />
     <template #config>
       <ColorPicker
@@ -46,6 +47,12 @@
         title="Animations"
         name="animations"
       />
+      <RadioButton
+        v-model="config.gradient"
+        :options="radioConfigs.gradient.config"
+        title="Gradient"
+        name="gradient"
+      />
     </template>
     <template #code-block>
       <div
@@ -67,7 +74,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch, onMounted } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 import SingleLine from "@/components/graphs/SingleLine.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import RadioToggle from "@/components/common/RadioToggle.vue";
@@ -127,16 +134,29 @@ const radioConfigs = {
       { id: nanoid(10), label: "Off", value: "false" },
     ],
   },
+  gradient: {
+    title: "Gradient",
+    config: [
+      { id: nanoid(10), label: "On", value: "true" },
+      { id: nanoid(10), label: "Off", value: "false" },
+    ],
+  },
 };
 
 const tooltipBoolean = computed(() => config.tooltip === "true");
 const gridlinesBoolean = computed(() => config.gridlines === "true");
 const animationsBoolean = computed(() => config.animations === "true");
+const gradientBoolean = computed(() => config.gradient === "true");
 
 const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
 
 const mapDisplayValue = (key, value) => {
-  if (key === "tooltip" || key === "gridlines" || key === "animations") {
+  if (
+    key === "tooltip" ||
+    key === "gridlines" ||
+    key === "animations" ||
+    key === "gradient"
+  ) {
     return value === "true" ? "true" : null;
   }
   return JSON.stringify(value);
@@ -148,6 +168,7 @@ const config = reactive({
   tooltip: "false",
   gridlines: "false",
   animations: "false",
+  gradient: "false",
 });
 
 const chartProps = computed(() => {
