@@ -1,8 +1,8 @@
 <template>
-  <!-- SingleLine.vue -->
+  <!-- LineChart.vue -->
   <ChartContainer
     title="Line Chart"
-    chart-title="SingleLine.vue"
+    chart-title="LineChart.vue"
     :code="code"
     :chart-props="chartProps"
     :component-props="lineProps"
@@ -11,16 +11,19 @@
     <template #intro>
       <div v-html="texts.intro"></div>
     </template>
-    <SingleLine
+    <LineChart
       :width="560"
       :height="280"
       :data="lineData"
-      dateFormat="%Y-%m-%d"
+      dateParse="%Y-%m-%d"
+      dateFormat="%b"
       :line-color="lineColor"
       :tooltip="tooltipBoolean"
       :gridlines="gridlinesBoolean"
       :animations="animationsBoolean"
       :gradient="gradientBoolean"
+      :x-axis="xAxisBoolean"
+      :y-axis="yAxisBoolean"
     />
     <template #config>
       <ColorPicker
@@ -32,7 +35,7 @@
       <RadioButton
         v-model="config.tooltip"
         :options="radioConfigs.tooltip.config"
-        title="Tooltip"
+        :title="radioConfigs.tooltip.title"
         name="tooltip"
       />
       <RadioButton
@@ -50,37 +53,31 @@
       <RadioButton
         v-model="config.gradient"
         :options="radioConfigs.gradient.config"
-        title="Gradient"
+        :title="radioConfigs.gradient.title"
         name="gradient"
       />
-    </template>
-    <template #code-block>
-      <div
-        class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%]"
-      >
-        <div
-          class="copy-code w-[100%] flex gap-[8px] h-[40px] justify-end border-b-[1px] border-b-slate-300 dark:border-b-slate-800 pb-[8px]"
-        >
-          <Transition name="slide-up">
-            <SvgIcon
-              name="copy"
-              dynamicClass="hover:fill-slate-900 cursor-pointer p-[2px] dark:hover:!fill-slate-200"
-            />
-          </Transition>
-        </div>
-      </div>
+      <RadioButton
+        v-model="config.xAxis"
+        :options="radioConfigs.xAxis.config"
+        :title="radioConfigs.xAxis.title"
+        name="xAxis"
+      />
+      <RadioButton
+        v-model="config.yAxis"
+        :options="radioConfigs.yAxis.config"
+        :title="radioConfigs.yAxis.title"
+        name="yAxis"
+      />
     </template>
   </ChartContainer>
 </template>
 
 <script setup>
 import { ref, reactive, computed, watch } from "vue";
-import SingleLine from "@/components/graphs/SingleLine.vue";
+import LineChart from "@/components/graphs/LineChart.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
-import RadioToggle from "@/components/common/RadioToggle.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
-import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 // data imports
 import { line1 } from "@/data/dummyMultiLine";
@@ -141,12 +138,28 @@ const radioConfigs = {
       { id: nanoid(10), label: "Off", value: "false" },
     ],
   },
+  yAxis: {
+    title: "Y-Axis",
+    config: [
+      { id: nanoid(10), label: "On", value: "true" },
+      { id: nanoid(10), label: "Off", value: "false" },
+    ],
+  },
+  xAxis: {
+    title: "X-Axis",
+    config: [
+      { id: nanoid(10), label: "On", value: "true" },
+      { id: nanoid(10), label: "Off", value: "false" },
+    ],
+  },
 };
 
 const tooltipBoolean = computed(() => config.tooltip === "true");
 const gridlinesBoolean = computed(() => config.gridlines === "true");
 const animationsBoolean = computed(() => config.animations === "true");
 const gradientBoolean = computed(() => config.gradient === "true");
+const xAxisBoolean = computed(() => config.xAxis === "true");
+const yAxisBoolean = computed(() => config.yAxis === "true");
 
 const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
 
@@ -155,7 +168,9 @@ const mapDisplayValue = (key, value) => {
     key === "tooltip" ||
     key === "gridlines" ||
     key === "animations" ||
-    key === "gradient"
+    key === "gradient" ||
+    key === "yAxis" ||
+    key === "xAxis"
   ) {
     return value === "true" ? "true" : null;
   }
@@ -166,9 +181,11 @@ const config = reactive({
   data: "lineData",
   lineColor: "#fff",
   tooltip: "false",
-  gridlines: "false",
+  gridlines: "true",
   animations: "false",
   gradient: "false",
+  xAxis: "true",
+  yAxis: "true",
 });
 
 const chartProps = computed(() => {
@@ -187,7 +204,7 @@ const texts = {
               <strong>Data Structure:</strong> It is crucial to format your data correctly for the line chart. Each data point in the series should be an object with <em>x</em> and <em>y</em> properties, where <em>x</em> represents the label (in this case, the month) and <em>y</em> is the corresponding value (monthly sales figures).
             </li>
             <li class=my-[20px]>
-              <strong>Component Usage:</strong> The <em>SingleLine</em> component from our chart library is used to render the line chart. This component accepts props like <em>data</em>, <em>width</em>, <em>height</em>, <em>dotColor</em>, <em>lineColor</em>, and more, allowing for extensive customization of the chart's appearance.
+              <strong>Component Usage:</strong> The <em>LineChart</em> component from our chart library is used to render the line chart. This component accepts props like <em>data</em>, <em>width</em>, <em>height</em>, <em>dotColor</em>, <em>lineColor</em>, and more, allowing for extensive customization of the chart's appearance.
             </li>
             <li class=my-[20px]>
               <strong>Responsive and Interactive:</strong> The chart is designed to be responsive and interactive, with features like tooltips and gridlines enabled for a better user experience.

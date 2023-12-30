@@ -23,6 +23,10 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  dateParse: {
+    type: String,
+    default: null,
+  },
   title: {
     type: String,
     default: "Title",
@@ -48,25 +52,35 @@ const props = defineProps({
   xAxis: {
     type: Boolean,
   },
+  yAxis: {
+    type: Boolean,
+    default: true
+  },
   gradient: {
     type: Boolean,
   },
 });
 const chart = ref(null);
-const parseDate = props.dateFormat ? d3.timeParse(props.dateFormat) : null;
+const parseDate = d3.timeParse(props.dateParse);
+const formatDate = d3.timeFormat(props.dateFormat);
+
+const margin = { top: 20, right: 40, bottom: 30, left: 40 };
+
+const adjustedWidth = props.width - margin.left - margin.right;
+const adjustedHeight = props.height - margin.top - margin.bottom;
 
 const drawChart = () => {
   if (!chart.value) return;
 
   d3.select(chart.value).selectAll("*").remove();
 
-  console.log(props.data);
-
   const svg = d3
     .select(chart.value)
     .append("svg")
     .attr("width", props.width)
-    .attr("height", props.height);
+    .attr("height", props.height)
+    .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
 
   //
   // X-axis
@@ -82,20 +96,18 @@ const drawChart = () => {
       d3.min(props.data, (d) => d3.min(d.values, (pt) => parseDate(pt.x))),
       d3.max(props.data, (d) => d3.max(d.values, (pt) => parseDate(pt.x))),
     ];
-    xScale = d3.scaleTime().domain(xDomain).range([0, props.width]);
+    xScale = d3.scaleTime().domain(xDomain).range([0, adjustedWidth]);
   } else if (isNumber) {
     const xDomain = [
       d3.min(props.data, (d) => d3.min(d.values, (pt) => pt.x)),
       d3.max(props.data, (d) => d3.max(d.values, (pt) => pt.x)),
     ];
-    xScale = d3.scaleLinear().domain(xDomain).range([0, props.width]);
+    xScale = d3.scaleLinear().domain(xDomain).range([0, adjustedWidth]);
   } else {
-    // For string values
     xScale = d3
       .scalePoint()
       .domain(props.data[0].values.map((d) => d.x))
-      .range([0, props.width])
-      .padding(0.5);
+      .range([0, adjustedWidth]);
   }
 
   let yMin = d3.min(props.data, (d) => d3.min(d.values, (pt) => pt.y));
@@ -109,21 +121,36 @@ const drawChart = () => {
   yMin -= yPadding;
   yMax += yPadding;
 
-  const yScale = d3.scaleLinear().domain([yMin, yMax]).range([props.height, 0]);
+  const yScale = d3
+    .scaleLinear()
+    .domain([yMin, yMax])
+    .range([adjustedHeight, 0]);
+
+  if (props.yAxis) {
+    const yAxis = svg
+      .append("g")
+      .attr("class", "y axis translate-x-[-8px]")
+      .call(d3.axisLeft(yScale).ticks(3).tickSize(0)); // Set the number of ticks to 3
+
+    // Remove the domain line
+    yAxis.select(".domain").remove();
+  }
 
   //
   // Gridlines
   //
 
   function make_y_gridlines() {
-    return d3.axisLeft(yScale).ticks(2).tickSize(-props.width).tickFormat("");
+    return d3.axisLeft(yScale).ticks(2).tickSize(-adjustedWidth).tickFormat("");
   }
 
   if (props.gridlines) {
-    svg
+    const yAxis = svg
       .append("g")
-      .call(make_y_gridlines().tickSize(-props.width).tickFormat(""))
+      .call(make_y_gridlines().tickSize(-adjustedWidth).tickFormat(""))
       .attr("class", "text-slate-200 dark:text-slate-800");
+    // Remove the domain line
+    yAxis.select(".domain").remove();
   }
 
   //
@@ -283,13 +310,13 @@ const drawChart = () => {
   if (props.dateFormat) {
     const xAxis = svg
       .append("g")
-      .attr("class", "axis")
-      .attr("transform", `translate(0,${props.height})`)
+      .attr("class", "x axis")
+      .attr("transform", `translate(0,${adjustedHeight})`)
       .call(
         d3
           .axisBottom(xScale)
-          .ticks(d3.timeDay.every(1))
-          .tickFormat(d3.timeFormat(props.dateFormat))
+          .ticks(d3.timeDay.every(90))
+          .tickFormat((d) => formatDate(d))
       );
 
     xAxis
@@ -300,7 +327,7 @@ const drawChart = () => {
     const xAxis = svg
       .append("g")
       .attr("class", "axis")
-      .attr("transform", `translate(0,${props.height})`)
+      .attr("transform", `translate(0,${adjustedHeight})`)
       .call(d3.axisBottom(xScale));
 
     xAxis
@@ -310,12 +337,14 @@ const drawChart = () => {
   }
 
   if (!props.xAxis) {
-    svg.select(".domain").remove();
+    svg.select(".x.axis").remove();
   }
 
   if (props.tooltip) {
     const hoverVerticalLineGroup = svg
       .append("g")
+      .attr("width", adjustedWidth)
+      .attr("height", adjustedHeight)
       .attr("class", "hover-vertical-line");
 
     const hoverCirclesGroup = svg.append("g").attr("class", "hover-circles");
@@ -365,7 +394,7 @@ const drawChart = () => {
           .attr("cx", cx)
           .attr("cy", cy)
           .attr("r", 36)
-          .attr("fill", "rgba(61, 151, 255, 0)");
+          .attr("fill", "rgba(61, 151, 255, 0.1)");
 
         // Small circle
         hoverCirclesGroup
@@ -375,7 +404,7 @@ const drawChart = () => {
           .attr("r", 4)
           .attr("class", "fill-[#000000] dark:fill-[#ffffff]");
 
-        // Append text label for the y value
+        // Text/data
         hoverCirclesGroup
           .append("text")
           .attr("x", cx)
@@ -393,7 +422,7 @@ const drawChart = () => {
           .attr("x1", cx)
           .attr("x2", cx)
           .attr("y1", 0)
-          .attr("y2", props.height)
+          .attr("y2", adjustedHeight)
           .attr("class", "stroke-slate-400 dark:stroke-slate-600")
           .attr("stroke-dasharray", "3,3");
       }
@@ -408,24 +437,9 @@ const drawChart = () => {
 
 onMounted(drawChart);
 
-const animateLine = () => {
-  const paths = d3.select(chart.value).selectAll(".line");
-  paths.each(function () {
-    const totalLength = this.getTotalLength();
-    d3.select(this)
-      .attr("stroke-dasharray", `${totalLength} ${totalLength}`)
-      .attr("stroke-dashoffset", totalLength)
-      .transition()
-      .duration(420)
-      .ease(d3.easeCubicInOut)
-      .attr("stroke-dashoffset", 0);
-  });
-};
-
 watchEffect(() => {
   drawChart();
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

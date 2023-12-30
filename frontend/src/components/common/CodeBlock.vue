@@ -1,6 +1,6 @@
 <template>
   <div
-    class="code-line rounded-[8px] w-[100%] bg-slate-25 dark:bg-slate-800 chart-border w-[480px]"
+    class="code-line w-[100%] bg-slate-25 dark:bg-slate-800 chart-border w-[480px]"
   >
     <div class="code-header w-[100%] flex px-[12px] relative">
       <div

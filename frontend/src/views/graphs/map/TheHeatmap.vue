@@ -1,7 +1,10 @@
 <template>
   <!-- TheHeatmap.vue -->
-  <ChartContainer title="TheHeatmap.vue" :component-props="heatmapProps">
-    <TheHeatmap :geo-json-data="geoJson" />
+  <ChartContainer title="Heat Map" chart-title="HeatMap.vue" :code="code" :component-props="heatmapProps" :chart-props="chartProps">
+    <template #intro>
+      <div v-html="texts.intro"></div>
+    </template>
+    <TheHeatmap :geo-json-data="geoJson"/>
     <template #config>
       <RadioButton
         v-model="config.tooltip"
@@ -21,59 +24,6 @@
         title="Animations"
         name="animations"
       />
-      <MultiSelect
-        v-model="config.selectedStocks"
-        :title="stockOptions.title"
-        :options="stockOptions.configs"
-      />
-      <ColorPicker
-        v-model="config.lineColor"
-        :options="colorOptions"
-        title="Line Color"
-      />
-    </template>
-    <template #code-block>
-      <div
-        class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%] font-mono"
-      >
-        <div
-          class="copy-code w-[100%] flex justify-end border-b-[1px] border-b-slate-300 dark:border-b-slate-800 pb-[8px]"
-        >
-          <SvgIcon
-            name="copy"
-            dynamicClass="hover:fill-slate-900 cursor-pointer p-[2px] dark:hover:!fill-slate-200"
-          />
-        </div>
-        <div class="flex gridlines h-[100%] items-center justify-center">
-          <div class="flex flex-col relative" v-if="chartProps.length > 0">
-            <div class="top flex">
-              {{ "<" }}
-              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                TheHeatmap
-              </div>
-            </div>
-            <transition-group name="list" tag="div">
-              <div
-                class="props pl-[16px] flex max-w-[180px]"
-                v-for="prop in chartProps"
-                :key="prop.name"
-              >
-                :
-                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                  {{ prop.name }}
-                </div>
-                =
-                <div
-                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
-                >
-                  {{ prop.value }}
-                </div>
-              </div>
-            </transition-group>
-            <div class="bottom">{{ "/>" }}</div>
-          </div>
-        </div>
-      </div>
     </template>
   </ChartContainer>
 </template>
@@ -90,15 +40,6 @@ import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 // Data imports
 import { heatmapProps } from "@/data/props";
-
-// PIECHART DATA
-const sectors = [
-  { label: "Others", value: 10 },
-  { label: "Energy", value: 15 },
-  { label: "Finance", value: 25 },
-  { label: "Technology", value: 30 },
-  { label: "Healthcare", value: 20 },
-];
 
 //Radio configs
 const radioConfigs = {
@@ -129,16 +70,6 @@ const tooltipBoolean = computed(() => config.tooltip === "on");
 const gridlinesBoolean = computed(() => config.gridlines === "on");
 const animationsBoolean = computed(() => config.animations === "on");
 
-// Adding/removing stocks
-const stockOptions = {
-  title: "Add/remove Bars",
-  configs: [
-    { label: "AAPL", value: "AAPL" },
-    { label: "MSFT", value: "MSFT" },
-    { label: "NVDA", value: "NVDA" },
-  ],
-};
-
 const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
 
 const mapDisplayValue = (key, value) => {
@@ -166,79 +97,43 @@ const chartProps = computed(() => {
     .filter((prop) => prop.value !== null);
 });
 
-// PROPS
-const props = [
-  {
-    name: "data",
-    type: "Array",
-    default: "null",
-    description:
-      "The dataset for the line chart, consisting of an array of data points.",
-  },
-  {
-    name: "width",
-    type: "Number",
-    default: "400",
-    description: "Specifies the width of the chart in pixels.",
-  },
-  {
-    name: "height",
-    type: "Number",
-    default: "200",
-    description: "Specifies the height of the chart in pixels.",
-  },
-  {
-    name: "dateFormat",
-    type: "String",
-    default: "null",
-    description:
-      "Defines the format for date values in the dataset. If null, no formatting is applied.",
-  },
-  {
-    name: "title",
-    type: "String",
-    default: '"Title"',
-    description: "The title of the line chart.",
-  },
-  {
-    name: "dotColor",
-    type: "String",
-    default: '"#05D9FF"',
-    description: "The color of the dots on the line chart.",
-  },
-  {
-    name: "lineColor",
-    type: "String",
-    default: "null",
-    description:
-      "The color of the line in the chart. If not specified, a default color is used.",
-  },
-  {
-    name: "tooltip",
-    type: "Boolean",
-    default: "false",
-    description: "Determines whether tooltips are shown on hover.",
-  },
-  {
-    name: "gridlines",
-    type: "Boolean",
-    default: "false",
-    description: "Controls the visibility of gridlines in the chart.",
-  },
-  {
-    name: "animation",
-    type: "Boolean",
-    default: "false",
-    description: "Controls whether animation is used on load.",
-  },
-  {
-    name: "xAxis",
-    type: "Boolean",
-    default: "null",
-    description:
-      "Controls the visibility of the X-axis. If not specified, default behavior is applied.",
-  },
-];
+// Texts for Heatmap Component
+
+const texts = {
+  intro: `<div> The Heatmap component, integrating Vue and D3.js, is a dynamic tool for visualizing geographical data. It's perfect for applications requiring a visual representation of data variations across different regions. Easy to integrate and interact with, this component enhances the user's data interpretation experience.</div>
+          <ol>
+            <li class="my-[20px]">
+              <strong>Dynamic Data Visualization:</strong> Effortlessly handle and visualize geographical data, ideal for representing regional variations.
+            </li>
+            <li class="my-[20px]">
+              <strong>Customizable Mapping:</strong> Adapt the component to various geographical representations, including countries or custom geoJSON data.
+            </li>
+            <li class="my-[20px]">
+              <strong>Interactive User Experience:</strong> Engage users with interactive features like hover effects to display detailed data about each region.
+            </li>
+            <li class="my-[20px]">
+              <strong>Aesthetic and Customizable Design:</strong> Customize the color scale to match your data set or design preferences, enhancing the aesthetic appeal.
+            </li>
+            <li class="my-[20px]">
+              <strong>Responsive and Scalable:</strong> Ensure a consistent user experience across various devices with responsive and scalable design.
+            </li>
+          </ol>`,
+};
+
+// Code block
+const placeholder = "SCRIPT_TAG_PLACEHOLDER"; // helper
+
+const code = computed(() =>
+  `</template>
+
+<script setup>
+import { ref } from 'vue';
+import { HeatMap } from 'vue-graphs';
+import { geoJson } from '@/data'
+
+</${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")
+);
+
 </script>
 
 <style lang="scss" scoped>

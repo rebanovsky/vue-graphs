@@ -1,6 +1,15 @@
 <template>
   <!-- TheTreemap.vue -->
-  <ChartContainer title="TheTreemap.vue" :component-props="treemapProps">
+  <ChartContainer
+    title="Tree Map"
+    chart-title="TreeMap.vue"
+    :code="code"
+    :chart-props="chartProps"
+    :component-props="treemapProps"
+  >
+    <template #intro>
+      <div v-html="texts.intro"></div>
+    </template>
     <TheTreemap :data="sampleTreeData" />
     <template #config>
       <RadioButton
@@ -21,59 +30,6 @@
         title="Animations"
         name="animations"
       />
-      <MultiSelect
-        v-model="config.selectedStocks"
-        :title="stockOptions.title"
-        :options="stockOptions.configs"
-      />
-      <ColorPicker
-        v-model="config.lineColor"
-        :options="colorOptions"
-        title="Line Color"
-      />
-    </template>
-    <template #code-block>
-      <div
-        class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%] font-mono"
-      >
-        <div
-          class="copy-code w-[100%] flex justify-end border-b-[1px] border-b-slate-300 dark:border-b-slate-800 pb-[8px]"
-        >
-          <SvgIcon
-            name="copy"
-            dynamicClass="hover:fill-slate-900 cursor-pointer p-[2px] dark:hover:!fill-slate-200"
-          />
-        </div>
-        <div class="flex gridlines h-[100%] items-center justify-center">
-          <div class="flex flex-col relative" v-if="chartProps.length > 0">
-            <div class="top flex">
-              {{ "<" }}
-              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                TheTreemap
-              </div>
-            </div>
-            <transition-group name="list" tag="div">
-              <div
-                class="props pl-[16px] flex max-w-[180px]"
-                v-for="prop in chartProps"
-                :key="prop.name"
-              >
-                :
-                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                  {{ prop.name }}
-                </div>
-                =
-                <div
-                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
-                >
-                  {{ prop.value }}
-                </div>
-              </div>
-            </transition-group>
-            <div class="bottom">{{ "/>" }}</div>
-          </div>
-        </div>
-      </div>
     </template>
   </ChartContainer>
 </template>
@@ -81,7 +37,6 @@
 <script setup>
 import { ref, computed, reactive } from "vue";
 import TheTreemap from "@/components/graphs/TheTreemap.vue";
-import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
@@ -137,16 +92,6 @@ const tooltipBoolean = computed(() => config.tooltip === "on");
 const gridlinesBoolean = computed(() => config.gridlines === "on");
 const animationsBoolean = computed(() => config.animations === "on");
 
-// Adding/removing stocks
-const stockOptions = {
-  title: "Add/remove Bars",
-  configs: [
-    { label: "AAPL", value: "AAPL" },
-    { label: "MSFT", value: "MSFT" },
-    { label: "NVDA", value: "NVDA" },
-  ],
-};
-
 const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
 
 const mapDisplayValue = (key, value) => {
@@ -174,79 +119,59 @@ const chartProps = computed(() => {
     .filter((prop) => prop.value !== null);
 });
 
-// PROPS
-const props = [
-  {
-    name: "data",
-    type: "Array",
-    default: "null",
-    description:
-      "The dataset for the line chart, consisting of an array of data points.",
-  },
-  {
-    name: "width",
-    type: "Number",
-    default: "400",
-    description: "Specifies the width of the chart in pixels.",
-  },
-  {
-    name: "height",
-    type: "Number",
-    default: "200",
-    description: "Specifies the height of the chart in pixels.",
-  },
-  {
-    name: "dateFormat",
-    type: "String",
-    default: "null",
-    description:
-      "Defines the format for date values in the dataset. If null, no formatting is applied.",
-  },
-  {
-    name: "title",
-    type: "String",
-    default: '"Title"',
-    description: "The title of the line chart.",
-  },
-  {
-    name: "dotColor",
-    type: "String",
-    default: '"#05D9FF"',
-    description: "The color of the dots on the line chart.",
-  },
-  {
-    name: "lineColor",
-    type: "String",
-    default: "null",
-    description:
-      "The color of the line in the chart. If not specified, a default color is used.",
-  },
-  {
-    name: "tooltip",
-    type: "Boolean",
-    default: "false",
-    description: "Determines whether tooltips are shown on hover.",
-  },
-  {
-    name: "gridlines",
-    type: "Boolean",
-    default: "false",
-    description: "Controls the visibility of gridlines in the chart.",
-  },
-  {
-    name: "animation",
-    type: "Boolean",
-    default: "false",
-    description: "Controls whether animation is used on load.",
-  },
-  {
-    name: "xAxis",
-    type: "Boolean",
-    default: "null",
-    description:
-      "Controls the visibility of the X-axis. If not specified, default behavior is applied.",
-  },
-];
+// Texts
+const texts = {
+  intro: `<div>
+  The Treemap component offers a unique and intuitive way to visualize hierarchical data using nested rectangles. Each branch of the tree is represented as a rectangle, with its size and color representing some metric, making it easy to compare different categories and subcategories at a glance.
+</div>
+<ol>
+  <li class="my-[20px]">
+    <strong>Efficient Data Representation:</strong> Efficiently display large amounts of hierarchical data in a compact space, highlighting important patterns and trends.
+  </li>
+  <li class="my-[20px]">
+    <strong>Customizable Color Scheme:</strong> Utilize a range of colors to differentiate between various levels of the hierarchy, enhancing the visual appeal and readability.
+  </li>
+  <li class="my-[20px]">
+    <strong>Interactive Tooltip:</strong> Feature tooltips that provide additional information when users hover over individual rectangles, offering a deeper insight into the data.
+  </li>
+  <li class="my-[20px]">
+    <strong>Dynamic Sizing:</strong> The rectangles' sizes are dynamically scaled according to the data values they represent, allowing for a quick assessment of relative metrics.
+  </li>
+  <li class="my-[20px]">
+    <strong>Flexible Data Input:</strong> The component is designed to accept a wide range of hierarchical data structures, making it versatile for various applications.
+  </li>
+</ol>`,
+};
+
+// Code block
+const placeholder = "SCRIPT_TAG_PLACEHOLDER"; // helper
+
+const code = computed(() =>
+  `</template>
+
+<script setup>
+import { ref } from 'vue';
+import { TreeMap } from 'vue-graphs';
+
+const treeMapData = ref({
+  name: "Root",
+  children: [
+    {
+      name: "Category 1",
+      children: [
+        { name: "Leaf A", value: 10 },
+        { name: "Leaf B", value: 20 },
+      ],
+    },
+    {
+      name: "Category 2",
+      children: [{ name: "Leaf C", value: 30 }],
+    },
+  ],
+});
+
+</${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")
+);
 </script>
 
 <style lang="scss" scoped>

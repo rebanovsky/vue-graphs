@@ -21,7 +21,7 @@ import SideMenu from "@/components/navigation/SideMenu.vue";
 import TheNavigation from "@/components/navigation/TheNavigation.vue";
 
 const sidenavItems = [
-  { title: "Home", name: "home" },
+  { title: "Home", name: "" },
   { title: "Line Chart", name: "linechart" },
   { title: "Candlestick", name: "candlestick" },
   { title: "Bar Chart", name: "barchart" },

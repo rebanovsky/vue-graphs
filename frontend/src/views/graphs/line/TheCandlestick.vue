@@ -3,6 +3,8 @@
   <ChartContainer
     title="Candlestick"
     chart-title="TheCandlestick.vue"
+    :code="code"
+    :chart-props="chartProps"
     :component-props="candlestickProps"
     :preview-data="linePreview"
   >
@@ -18,15 +20,6 @@
       :animations="animationsBoolean"
     />
     <template #config>
-      <RadioToggle title="Tooltip" />
-      <RadioToggle title="Gridlines" />
-      <RadioToggle title="Animations" />
-      <ColorPicker
-        v-model="config.lineColor"
-        :options="colorOptions"
-        title="Line Color"
-        @colorChange="handleValue"
-      />
       <RadioButton
         v-model="config.tooltip"
         :options="radioConfigs.tooltip.config"
@@ -46,49 +39,6 @@
         name="animations"
       />
     </template>
-    <template #code-block>
-      <div
-        class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%] font-mono"
-      >
-        <div
-          class="copy-code w-[100%] flex justify-end border-b-[1px] border-b-slate-300 dark:border-b-slate-800 pb-[8px]"
-        >
-          <SvgIcon
-            name="copy"
-            dynamicClass="hover:fill-slate-900 cursor-pointer p-[2px] dark:hover:!fill-slate-200"
-          />
-        </div>
-        <div class="flex gridlines h-[100%] items-center justify-center">
-          <div class="flex flex-col relative" v-if="chartProps.length > 0">
-            <div class="top flex">
-              {{ "<" }}
-              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                TheCandlestick
-              </div>
-            </div>
-            <transition-group name="list" tag="div">
-              <div
-                class="props pl-[16px] flex max-w-[180px]"
-                v-for="prop in chartProps"
-                :key="prop.name"
-              >
-                :
-                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                  {{ prop.name }}
-                </div>
-                =
-                <div
-                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
-                >
-                  {{ prop.value }}
-                </div>
-              </div>
-            </transition-group>
-            <div class="bottom">{{ "/>" }}</div>
-          </div>
-        </div>
-      </div>
-    </template>
   </ChartContainer>
 </template>
 
@@ -98,7 +48,6 @@ import { line1, line2 } from "@/data/dummyMultiLine";
 import TheCandlestick from "@/components/graphs/TheCandlestick.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
-import RadioToggle from "@/components/common/RadioToggle.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
@@ -182,6 +131,32 @@ const texts = {
     </li>
   </ul>`,
 };
+
+// Code block
+const placeholder = "SCRIPT_TAG_PLACEHOLDER"; // helper
+
+const code = computed(() =>
+  `</template>
+
+<script setup>
+import { ref } from 'vue';
+import { LineChart } from 'vue-graphs';
+import { data } from "@/data";
+
+const formattedLineData = data.map((item) => ({
+  x: item.Date,
+  y: item.Close,
+}));
+
+const lineData = ref([
+  {
+    color: "#fffff",
+    values: formattedLineData,
+  },
+]);
+
+</${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")
+);
 </script>
 
 <style lang="scss" scoped>

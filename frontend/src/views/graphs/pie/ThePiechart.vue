@@ -1,12 +1,22 @@
 <template>
   <!-- PieChart.vue -->
-  <ChartContainer title="ThePiechart.vue" :component-props="piechartProps">
+  <ChartContainer
+    title="Pie Chart"
+    chart-title="PieChart.vue"
+    :code="code"
+    :chart-props="chartProps"
+    :component-props="piechartProps"
+  >
+    <template #intro>
+      <div v-html="texts.intro"></div>
+    </template>
     <PieChart
       :data="sectors"
       :height="280"
       :width="560"
       :legend="legendBoolean"
       :labels="labelsBoolean"
+      :animations="animationsBoolean"
     />
     <template #config>
       <RadioButton
@@ -32,54 +42,6 @@
         :title="stockOptions.title"
         :options="stockOptions.configs"
       />
-      <ColorPicker
-        v-model="config.lineColor"
-        :options="colorOptions"
-        title="Line Color"
-      />
-    </template>
-    <template #code-block>
-      <div
-        class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%] font-mono"
-      >
-        <div
-          class="copy-code w-[100%] flex justify-end border-b-[1px] border-b-slate-300 dark:border-b-slate-800 pb-[8px]"
-        >
-          <SvgIcon
-            name="copy"
-            dynamicClass="hover:fill-slate-900 cursor-pointer p-[2px] dark:hover:!fill-slate-200"
-          />
-        </div>
-        <div class="flex gridlines h-[100%] items-center justify-center">
-          <div class="flex flex-col relative" v-if="chartProps.length > 0">
-            <div class="top flex">
-              {{ "<" }}
-              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                ThePiechart
-              </div>
-            </div>
-            <transition-group name="list" tag="div">
-              <div
-                class="props pl-[16px] flex max-w-[180px]"
-                v-for="prop in chartProps"
-                :key="prop.name"
-              >
-                :
-                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                  {{ prop.name }}
-                </div>
-                =
-                <div
-                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
-                >
-                  {{ prop.value }}
-                </div>
-              </div>
-            </transition-group>
-            <div class="bottom">{{ "/>" }}</div>
-          </div>
-        </div>
-      </div>
     </template>
   </ChartContainer>
 </template>
@@ -110,29 +72,29 @@ const radioConfigs = {
   animations: {
     title: "Animations",
     config: [
-      { id: nanoid(10), label: "On", value: "on" },
-      { id: nanoid(10), label: "Off", value: "off" },
+      { id: nanoid(10), label: "On", value: "true" },
+      { id: nanoid(10), label: "Off", value: "false" },
     ],
   },
   legend: {
     title: "Legend",
     config: [
-      { id: nanoid(10), label: "On", value: "on" },
-      { id: nanoid(10), label: "Off", value: "off" },
+      { id: nanoid(10), label: "On", value: "true" },
+      { id: nanoid(10), label: "Off", value: "false" },
     ],
   },
   labels: {
     title: "Labels",
     config: [
-      { id: nanoid(10), label: "On", value: "on" },
-      { id: nanoid(10), label: "Off", value: "off" },
+      { id: nanoid(10), label: "On", value: "true" },
+      { id: nanoid(10), label: "Off", value: "false" },
     ],
   },
 };
 
-const animationsBoolean = computed(() => config.animations === "on");
-const legendBoolean = computed(() => config.legend === "on");
-const labelsBoolean = computed(() => config.labels === "on");
+const animationsBoolean = computed(() => config.animations === "true");
+const legendBoolean = computed(() => config.legend === "true");
+const labelsBoolean = computed(() => config.labels === "true");
 
 // Adding/removing stocks
 const stockOptions = {
@@ -148,7 +110,7 @@ const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
 
 const mapDisplayValue = (key, value) => {
   if (key === "labels" || key === "legend" || key === "animations") {
-    return value === "on" ? "on" : null;
+    return value === "true" ? "true" : null;
   }
   return JSON.stringify(value);
 };
@@ -157,9 +119,9 @@ const config = reactive({
   lineData: [],
   selectedStocks: [],
   lineColor: "#fff",
-  labels: "on",
-  legend: "off",
-  animations: "off",
+  labels: "true",
+  legend: "true",
+  animations: "false",
 });
 
 const chartProps = computed(() => {
@@ -170,6 +132,54 @@ const chartProps = computed(() => {
     }))
     .filter((prop) => prop.value !== null);
 });
+
+// Code block
+const placeholder = "SCRIPT_TAG_PLACEHOLDER"; // helper
+
+const code = computed(() =>
+  `</template>
+
+<script setup>
+import { ref } from 'vue';
+import { LineChart } from 'vue-graphs';
+import { data } from "@/data";
+
+const formattedLineData = data.map((item) => ({
+  x: item.Date,
+  y: item.Close,
+}));
+
+const lineData = ref([
+  {
+    color: "#fffff",
+    values: formattedLineData,
+  },
+]);
+
+</${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")
+);
+
+// Texts
+const texts = {
+  intro: `<div>  Pie Chart component, designed for Vue 3 applications, is a versatile and visually appealing way to display data in a circular graph format. This component is built with Vue 3's Composition API and D3.js, ensuring a smooth and interactive user experience.</div>
+          <ol>
+            <li class=my-[20px]>
+              <strong>Customizable Dimensions:</strong> Set the width and height to fit the pie chart perfectly within your UI.
+            </li>
+            <li class=my-[20px]>
+              <strong>Data Representation:</strong> Ideal for showcasing proportional data, with each slice representing a part of the whole.
+            </li>
+            <li class=my-[20px]>
+              <strong>Color Customization:</strong> Use a predefined set of colors or implement your custom color scheme for the pie slices.
+            </li>
+            <li class=my-[20px]>
+              <strong>Interactive Legends and Labels:</strong> Optionally add legends and labels to make the chart more informative and user-friendly.
+            </li>
+            <li class=my-[20px]>
+              <strong>Responsive and Reactive:</strong> Adapts to different screen sizes and dynamically updates when data changes.
+            </li>
+          </ol>`,
+};
 </script>
 
 <style lang="scss" scoped>

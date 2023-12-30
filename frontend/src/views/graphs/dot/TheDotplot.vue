@@ -3,9 +3,14 @@
   <ChartContainer
     title="Dot plot"
     chart-title="DotGraph.vue"
+    :code="code"
     :component-props="dotplotProps"
+    :chart-props="chartProps"
   >
-    <DotGraph :data="earnings1.AppleEarningsData" :width="480" :height="240" />
+    <template #intro>
+      <div v-html="texts.intro"></div>
+    </template>
+    <DotGraph :data="earnings.AppleEarningsData" :width="480" :height="240" />
     <template #config>
       <RadioButton
         v-model="config.tooltip"
@@ -30,61 +35,13 @@
         :title="stockOptions.title"
         :options="stockOptions.configs"
       />
-      <ColorPicker
-        v-model="config.lineColor"
-        :options="colorOptions"
-        title="Line Color"
-      />
-    </template>
-    <template #code-block>
-      <div
-        class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%] font-mono"
-      >
-        <div
-          class="copy-code w-[100%] flex justify-end border-b-[1px] border-b-slate-300 dark:border-b-slate-800 pb-[8px]"
-        >
-          <SvgIcon
-            name="copy"
-            dynamicClass="hover:fill-slate-900 cursor-pointer p-[2px] dark:hover:!fill-slate-200"
-          />
-        </div>
-        <div class="flex gridlines h-[100%] items-center justify-center">
-          <div class="flex flex-col relative" v-if="chartProps.length > 0">
-            <div class="top flex">
-              {{ "<" }}
-              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                TheDotplot
-              </div>
-            </div>
-            <transition-group name="list" tag="div">
-              <div
-                class="props pl-[16px] flex max-w-[180px]"
-                v-for="prop in chartProps"
-                :key="prop.name"
-              >
-                :
-                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                  {{ prop.name }}
-                </div>
-                =
-                <div
-                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
-                >
-                  {{ prop.value }}
-                </div>
-              </div>
-            </transition-group>
-            <div class="bottom">{{ "/>" }}</div>
-          </div>
-        </div>
-      </div>
     </template>
   </ChartContainer>
 </template>
 
 <script setup>
 import { ref, computed, reactive } from "vue";
-import { earnings1 } from "@/data/earningsDummy";
+
 import DotGraph from "@/components/graphs/DotGraph.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
@@ -93,6 +50,7 @@ import ChartContainer from "@/components/templates/ChartContainer.vue";
 import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 //Data imports
+import { earnings } from "@/data/earningsDummy";
 import { dotplotProps } from "@/data/props";
 
 //Radio configs
@@ -160,6 +118,87 @@ const chartProps = computed(() => {
     }))
     .filter((prop) => prop.value !== null);
 });
+
+const texts = {
+  intro: `<div>The Dot Plot is a versatile and engaging visualization tool that presents data in a clear, concise format, ideal for comparing multiple variables or tracking changes over time. In this particular implementation, using Vue 3 and D3.js, the Dot Plot focuses on presenting EPS (Earnings Per Share) data, although its application can be extended to various other types of data.</div>
+          <ul>
+            <li class="my-[20px]">
+              <strong>Dynamic Data Handling:</strong> The component is designed to handle an array of data, making it adaptable to different datasets. The primary focus is on displaying EPS data, both Actual and Estimate values, across different quarters.
+            </li>
+            <li class="my-[20px]">
+              <strong>Customizable Dimensions:</strong> The plot's width and height can be adjusted via props, allowing for seamless integration into various layouts and design frameworks.
+            </li>
+            <li class="my-[20px]">
+              <strong>Interactivity and Aesthetics:</strong> The use of D3.js brings the data to life with smooth transitions and interactive elements, enhancing the user experience. The design is further enriched with a harmonious color scheme that highlights key data points and trends.
+            </li>
+            <li class="my-[20px]">
+              <strong>Axis and Gridlines:</strong> The X and Y axes are clearly defined, with the X-axis representing quarters and the Y-axis showing EPS values. Gridlines are added for better readability and precision in data interpretation.
+            </li>
+            <li class="my-[20px]">
+              <strong>Responsive and Scalable:</strong> Built with responsiveness in mind, the plot adjusts to different screen sizes and resolutions, ensuring a consistent user experience across devices.
+            </li>
+          </ul>`,
+};
+
+// Code block
+const placeholder = "SCRIPT_TAG_PLACEHOLDER"; // helper
+
+const code = computed(() =>
+  `</template>
+
+<script setup>
+import { ref } from 'vue';
+import { DotPlot } from 'vue-graphs';
+
+const dotplotData = ref([
+    {
+      Quarter: "Q1 23",
+      Earnings: {
+        TotalRevenue: 100000000000,
+        NetIncome: 20000000000,
+      },
+      EPS: {
+        Actual: 1.2,
+        Estimate: 1.15,
+      },
+    },
+    {
+      Quarter: "Q2 23",
+      Earnings: {
+        TotalRevenue: 105000000000,
+        NetIncome: 21000000000,
+      },
+      EPS: {
+        Actual: 1.25,
+        Estimate: 1.2,
+      },
+    },
+    {
+      Quarter: "Q3 23",
+      Earnings: {
+        TotalRevenue: 110000000000,
+        NetIncome: 22000000000,
+      },
+      EPS: {
+        Actual: 1.3,
+        Estimate: 1.25,
+      },
+    },
+    {
+      Quarter: "Q4 23",
+      Earnings: {
+        TotalRevenue: 115000000000,
+        NetIncome: 23000000000,
+      },
+      EPS: {
+        Actual: 1.35,
+        Estimate: 1.3,
+      },
+    },
+  ]);
+
+</${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")
+);
 </script>
 
 <style lang="scss" scoped>

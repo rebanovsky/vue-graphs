@@ -19,6 +19,15 @@ const props = defineProps({
     type: String,
     default: "Title",
   },
+  gridlines: {
+    type: Boolean,
+  },
+  animations: {
+    type: Boolean,
+  },
+  tooltip: {
+    type: Boolean,
+  },
 });
 
 const chart = ref(null);
@@ -67,7 +76,7 @@ const customDarkColors = [
   "#318CE7", // Indigo
 ];
 
-const customColors = isDark.value ? customDarkColors : customLightColors;
+// const customColors = isDark.value ? customDarkColors : customLightColors;
 
 //ANIMATION DURATION AND DELAY CONSTANTS
 const barAnimationDuration = 800;
@@ -121,7 +130,7 @@ const drawChart = () => {
   // Process data
   const x0 = d3.scaleBand().rangeRound([0, width]).paddingInner(0.4);
 
-  const x1 = d3.scaleBand().padding(0.2);
+  const x1 = d3.scaleBand().padding(0.25);
 
   const y = d3.scaleLinear().rangeRound([height, 0]);
 
@@ -141,7 +150,7 @@ const drawChart = () => {
 
   const entityIndex = (d) => entities.indexOf(d.entity);
 
-  svg
+  let bars = svg
     .append("g")
     .selectAll("g")
     .data(groups)
@@ -161,57 +170,79 @@ const drawChart = () => {
     )
     .enter()
     .append("path")
-    .attr("d", (d) => roundedRect(x1(d.entity), height, x1.bandwidth(), 0, 2))
+    .attr(
+      "d",
+      (d) =>
+        props.animations
+          ? roundedRect(x1(d.entity), height, x1.bandwidth(), 0, 2)
+          : roundedRect(
+              x1(d.entity),
+              y(d.value),
+              x1.bandwidth(),
+              height - y(d.value),
+              2
+            )
+    )
     .attr("fill", (d) =>
       isDark.value
         ? customLightColors[entityIndex(d) % customLightColors.length]
         : customDarkColors[entityIndex(d) % customDarkColors.length]
-    )
-    .transition()
-    .duration(barAnimationDuration)
-    .attr("d", (d) =>
-      roundedRect(
-        x1(d.entity),
-        y(d.value),
-        x1.bandwidth(),
-        height - y(d.value),
-        2
-      )
     );
 
-  const textGroups = svg
-    .selectAll("g.value-group")
-    .data(groups)
-    .enter()
-    .append("g")
-    .attr("class", "value-group")
-    .attr("transform", (d) => `translate(${x0(d)},0)`);
+  if (props.animations) {
+    bars = bars
+      .transition()
+      .duration(barAnimationDuration)
+      .attr("d", (d) =>
+        roundedRect(
+          x1(d.entity),
+          y(d.value),
+          x1.bandwidth(),
+          height - y(d.value),
+          2
+        )
+      );
+  }
 
-  textGroups
-    .selectAll(".value-label")
-    .data((group) =>
-      props.data.map((entityData) => {
-        const dataPoint = entityData.data.find((dd) => dd.x === group);
-        return {
-          entity: entityData.entity,
-          period: group,
-          value: dataPoint ? dataPoint.y : 0,
-        };
+  //
+  // Tooltip
+  //
+
+  if (props.tooltip) {
+    const textGroups = svg
+      .selectAll("g.value-group")
+      .data(groups)
+      .enter()
+      .append("g")
+      .attr("class", "value-group")
+      .attr("transform", (d) => `translate(${x0(d)},0)`);
+
+    textGroups
+      .selectAll(".value-label")
+      .data((group) =>
+        props.data.map((entityData) => {
+          const dataPoint = entityData.data.find((dd) => dd.x === group);
+          return {
+            entity: entityData.entity,
+            period: group,
+            value: dataPoint ? dataPoint.y : 0,
+          };
+        })
+      )
+      .enter()
+      .append("text")
+      .attr("class", "value-label")
+      .text((d) => {
+        console.log("Label data:", d);
+        return formatNumber(d.value);
       })
-    )
-    .enter()
-    .append("text")
-    .attr("class", "value-label")
-    .text((d) => {
-      console.log("Label data:", d);
-      return formatNumber(d.value);
-    })
-    .attr("x", (d) => x1(d.entity) + x1.bandwidth() / 2)
-    .attr("y", (d) => y(d.value) - 8)
-    .attr("text-anchor", "middle")
-    .attr("fill", "white")
-    .attr("font-size", "0.7em")
-    .style("opacity", 0);
+      .attr("x", (d) => x1(d.entity) + x1.bandwidth() / 2)
+      .attr("y", (d) => y(d.value) - 8)
+      .attr("text-anchor", "middle")
+      .attr("fill", isDark.value ? "white" : "black")
+      .attr("font-size", "0.85em")
+      .style("opacity", 0);
+  }
 
   // Append Axes
   svg
@@ -237,19 +268,21 @@ const drawChart = () => {
     .attr("dx", "-0.5em")
     .attr("fill", "#666");
 
-  svg
-    .selectAll(".grid")
-    .data(y.ticks(3).filter((tick) => tick !== 0))
-    .enter()
-    .append("line")
-    .attr("class", "grid")
-    .attr("x1", 0)
-    .attr("x2", width)
-    .attr("y1", (d) => y(d))
-    .attr("y2", (d) => y(d))
-    .attr("class", "stroke-slate-300 dark:stroke-slate-700")
-    .attr("stroke-dasharray", "3,3")
-    .lower();
+  if (props.gridlines) {
+    svg
+      .selectAll(".grid")
+      .data(y.ticks(3).filter((tick) => tick !== 0))
+      .enter()
+      .append("line")
+      .attr("class", "grid")
+      .attr("x1", 0)
+      .attr("x2", width)
+      .attr("y1", (d) => y(d))
+      .attr("y2", (d) => y(d))
+      .attr("class", "stroke-slate-300 dark:stroke-slate-700")
+      .attr("stroke-dasharray", "3,3")
+      .lower();
+  }
 
   // Applying handlers to bars
   svg

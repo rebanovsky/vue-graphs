@@ -1,4 +1,4 @@
-export const earnings1 = {
+export const earnings = {
   Currency: "USD",
   CurrencySymbol: "$",
   AppleEarningsData: [

@@ -3,71 +3,23 @@
   <ChartContainer
     title="Bubble chart"
     chart-title="BubbleChart.vue"
+    :code="code"
     :component-props="bubblechartProps"
+    :chart-props="chartProps"
     :preview-data="linePreview"
   >
     <template #intro>
-      <!-- <div v-html="texts.intro"></div> -->
+      <div v-html="texts.intro"></div>
     </template>
     <BubbleChart :data="bubbleData" :width="560" :height="280" />
-
-    <template #config>
-      <RadioToggle title="Tooltip" />
-      <RadioToggle title="Gridlines" />
-      <RadioToggle title="Animations" />
-    </template>
-    <template #code-block>
-      <div
-        class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%] font-mono"
-      >
-        <div
-          class="copy-code w-[100%] flex justify-end border-b-[1px] border-b-slate-300 dark:border-b-slate-800 pb-[8px]"
-        >
-          <SvgIcon
-            name="copy"
-            dynamicClass="hover:fill-slate-900 cursor-pointer p-[2px] dark:hover:!fill-slate-200"
-          />
-        </div>
-        <div class="flex gridlines h-[100%] items-center justify-center">
-          <div class="flex flex-col relative" v-if="chartProps.length > 0">
-            <div class="top flex">
-              {{ "<" }}
-              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                Bubblechart
-              </div>
-            </div>
-            <transition-group name="list" tag="div">
-              <div
-                class="props pl-[16px] flex max-w-[180px]"
-                v-for="prop in chartProps"
-                :key="prop.name"
-              >
-                :
-                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                  {{ prop.name }}
-                </div>
-                =
-                <div
-                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
-                >
-                  {{ prop.value }}
-                </div>
-              </div>
-            </transition-group>
-            <div class="bottom">{{ "/>" }}</div>
-          </div>
-        </div>
-      </div>
-    </template>
+    <template #config> </template>
   </ChartContainer>
 </template>
 
 <script setup>
 import { computed, reactive } from "vue";
 import BubbleChart from "@/components/graphs/BubbleChart.vue";
-import RadioToggle from "@/components/common/RadioToggle.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
-import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 //Data imports
 import { bubbleData } from "@/data/dummyBubble";
@@ -122,6 +74,80 @@ const chartProps = computed(() => {
     }))
     .filter((prop) => prop.value !== null);
 });
+
+//Texts
+
+const texts = {
+  intro: `<div>
+  The Bubble Chart is an effective visualization tool for representing complex datasets with multiple dimensions. In this Vue 3 and D3.js implementation, the chart is particularly adept at showcasing data points with variables like performance, ownership, and weight across different sectors.
+</div>
+<ul>
+  <li class="my-[20px]">
+    <strong>Dynamic Data Representation:</strong> Capable of displaying diverse datasets, this chart can visualize various data aspects like performance percentages, ownership, and weight, offering a multi-dimensional view of the data.
+  </li>
+  <li class="my-[20px]">
+    <strong>Customizable Scales and Colors:</strong> The chart's axes are fully scalable to accommodate different ranges of data, and it features a customizable color scheme to differentiate between data categories effectively.
+  </li>
+  <li class="my-[20px]">
+    <strong>Interactive Elements:</strong> Enhanced user engagement through interactive tooltips that provide additional information about each data point, offering a more detailed understanding of the underlying data.
+  </li>
+  <li class="my-[20px]">
+    <strong>Responsive Design:</strong> The chart is built to be responsive, ensuring it adapts to various screen sizes and resolutions, making it suitable for a wide range of devices.
+  </li>
+  <li class="my-[20px]">
+    <strong>Configurable Layout:</strong> With adjustable width and height, the bubble chart can be seamlessly integrated into different layouts, providing flexibility in its usage across various user interfaces.
+  </li>
+</ul>`,
+};
+
+// Code block
+const placeholder = "SCRIPT_TAG_PLACEHOLDER"; // helper
+
+const code = computed(() =>
+  `</template>
+
+<script setup>
+import { ref } from 'vue';
+import { BubbleChart } from 'vue-graphs';
+
+const bubbleData = [
+  {
+    performancePercentage: 10.5,
+    ownership: 10.3,
+    weight: 15.2,
+    sector: "Energy",
+    securityName: "Company A",
+    symbol: "COMPA",
+  },
+  {
+    performancePercentage: 5.7,
+    ownership: 25.1,
+    weight: 10.0,
+    sector: "Materials",
+    securityName: "Company B",
+    symbol: "COMPB",
+  },
+  {
+    performancePercentage: 15.2,
+    ownership: 20.5,
+    weight: 20.3,
+    sector: "Industrials",
+    securityName: "Company C",
+    symbol: "COMPC",
+  },
+  {
+    performancePercentage: -15.2,
+    ownership: 0.5,
+    weight: 10.3,
+    sector: "Technology",
+    securityName: "Company D",
+    symbol: "COMPD",
+  },
+];
+
+
+</${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")
+);
 </script>
 
 <style lang="scss" scoped>

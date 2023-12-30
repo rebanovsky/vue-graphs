@@ -43,6 +43,25 @@ export const linePreview = {
 
 export const barPreview = {
   title: "barData.json",
-  arrLength: 300,
-  json: []
-}
+  arrLength: 2,
+  json: [
+    {
+      entity: "AAPL",
+      data: [
+        { x: "Q1 2023", y: 90000000 },
+        { x: "Q2 2023", y: 110000000 },
+        { x: "Q3 2023", y: 105000000 },
+        { x: "Q4 2023", y: 120000000 },
+      ],
+    },
+    {
+      entity: "MSFT",
+      data: [
+        { x: "Q1 2023", y: 100000000 },
+        { x: "Q2 2023", y: 120000000 },
+        { x: "Q3 2023", y: 100000000 },
+        { x: "Q4 2023", y: 100000000 },
+      ],
+    },
+  ],
+};

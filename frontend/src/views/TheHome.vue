@@ -54,25 +54,7 @@
       </section>
 
       <!-- Contact & support -->
-      <section class="home-section w-[800px] gridlines flex gap-[12px]">
-        <div class="h-[36px] flex items-center">
-          <div
-            class="hash text-harlequin-500 text-[24px] cursor-pointer flex items-center justify-center h-[24px] opacity-0 hover:opacity-[1] transition ease"
-          >
-            #
-          </div>
-        </div>
-        <div class="flex flex-col gap-[20px] w-[600px]">
-          <h1 class="font-medium text-[24px]">
-            {{ sections.contactAndSupport.title }}
-          </h1>
-          <div
-            class="home-paragraph text-slate-800 dark:text-slate-300 font-light text-[14px] leading-7"
-          >
-            {{ sections.contactAndSupport.content }}
-          </div>
-        </div>
-      </section>
+      <TheSupport />
 
       <!-- License -->
       <section class="home-section w-[800px] gridlines flex gap-[12px]">
@@ -101,6 +83,7 @@
 <script setup>
 //Sections
 import TheInstallation from "@/components/home/TheInstallation.vue";
+import TheSupport from "@/components/home/TheSupport.vue";
 //Examples
 import LineChart from "@/components/home/examples/LineChart.vue";
 
@@ -119,7 +102,7 @@ const sections = {
     title: "Examples",
     charts: {
       line: {
-        intro: `<p>This example demonstrates how to create an interactive line chart using Vue 3's Composition API and D3.js. The chart showcases monthly sales data across a year. For more details, visit <a class="text-harlequin-500" href="line/linechart">line/linechart</a>.</p>`,
+        intro: `<p>This example demonstrates how to create an interactive line chart using Vue 3's Composition API and D3.js. The chart showcases monthly sales data across a year. For more details, visit <a class="text-harlequin-500" href="linechart">linechart</a>.</p>`,
       },
     },
   },

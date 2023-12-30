@@ -10,7 +10,7 @@
         <g class="grid-lines" />
       </svg>
     </div>
-    <div id="bubble-tooltip"></div>
+    <div id="bubble-tooltip" class="absolute"></div>
   </div>
 </template>
 
@@ -177,20 +177,17 @@ onMounted(() => {
   };
 
   const moveTooltip = function (event) {
-    let tooltip = select("#bubble-tooltip");
+  const tooltip = select("#bubble-tooltip");
 
-    // Get the bounding rectangle of the SVG
-    let svgRect = svgNode.getBoundingClientRect();
+  // Adjust these offsets as needed
+  const offsetX = 20;
+  const offsetY = -30;
 
-    // Adjust these values based on the size of the tooltip, bubble, and SVG position
-    let offsetX = 20;
-    let offsetY = -30;
-
-    // Adjust the position based on the SVG position
-    tooltip
-      .style("left", `${event.pageX - svgRect.left + offsetX}px`)
-      .style("top", `${event.pageY - svgRect.top + offsetY}px`);
-  };
+  // Position tooltip relative to the chart container
+  tooltip
+    .style("left", (event.clientX - svgNode.getBoundingClientRect().left + offsetX) + "px")
+    .style("top", (event.clientY - svgNode.getBoundingClientRect().top + offsetY) + "px");
+};
 
   const hideTooltip = (event, d) => {
     let tooltip = select("#bubble-tooltip");

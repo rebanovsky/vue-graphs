@@ -1,101 +1,54 @@
 <template>
   <!-- BarChart.vue -->
   <ChartContainer
-    title="TheBarchart.vue"
+    title="Bar Chart"
+    chart-title="BarChart.vue"
+    :code="code"
+    :chart-props="chartProps"
     :component-props="barProps"
     :preview-data="barPreview"
   >
-    <TheBarchart
+    <template #intro>
+      <div v-html="texts.intro"></div>
+    </template>
+    <BarChart
       :data="barData"
-      :tooltip="true"
-      :animations="true"
       :width="560"
       :height="280"
+      :tooltip="tooltipBoolean"
+      :gridlines="gridlinesBoolean"
+      :animations="animationsBoolean"
     />
     <template #config>
       <RadioButton
         v-model="config.tooltip"
         :options="radioConfigs.tooltip.config"
-        title="Tooltip"
+        :title="radioConfigs.tooltip.title"
         name="tooltip"
       />
       <RadioButton
         v-model="config.gridlines"
         :options="radioConfigs.gridlines.config"
-        title="Gridlines"
+        :title="radioConfigs.gridlines.title"
         name="gridlines"
       />
       <RadioButton
         v-model="config.animations"
         :options="radioConfigs.animations.config"
-        title="Animations"
+        :title="radioConfigs.animations.title"
         name="animations"
       />
-      <!-- <MultiSelect
-        v-model="config.selectedStocks"
-        :title="stockOptions.title"
-        :options="stockOptions.configs"
-      /> -->
-      <ColorPicker
-        v-model="config.lineColor"
-        :options="colorOptions"
-        title="Bar color"
-      />
-    </template>
-    <template #code-block>
-      <div
-        class="codeblock h-[100%] text-[12px] transition ease duration-100 flex flex-col gap-[8px] w-[100%] font-mono"
-      >
-        <div
-          class="copy-code w-[100%] flex justify-end border-b-[1px] border-b-slate-300 dark:border-b-slate-800 pb-[8px]"
-        >
-          <SvgIcon
-            name="copy"
-            dynamicClass="hover:fill-slate-900 cursor-pointer p-[2px] dark:hover:!fill-slate-200"
-          />
-        </div>
-        <div class="flex gridlines h-[100%] items-center justify-center">
-          <div class="flex flex-col relative" v-if="chartProps.length > 0">
-            <div class="top flex">
-              {{ "<" }}
-              <div class="component-name text-[#e85700] dark:text-[#f8d339]">
-                TheBarchart
-              </div>
-            </div>
-            <transition-group name="list" tag="div">
-              <div
-                class="props pl-[16px] flex max-w-[180px]"
-                v-for="prop in chartProps"
-                :key="prop.name"
-              >
-                :
-                <div class="props-name text-[#000cd4] dark:text-[#f765f0]">
-                  {{ prop.name }}
-                </div>
-                =
-                <div
-                  class="props-value text-[#c330ba] dark:text-[#ffb648] truncate"
-                >
-                  {{ prop.value }}
-                </div>
-              </div>
-            </transition-group>
-            <div class="bottom">{{ "/>" }}</div>
-          </div>
-        </div>
-      </div>
     </template>
   </ChartContainer>
 </template>
 
 <script setup>
 import { ref, computed, reactive } from "vue";
-import TheBarchart from "@/components/graphs/TheBarchart.vue";
+import BarChart from "@/components/graphs/BarChart.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
-import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 // data imports
 import { barProps } from "@/data/props";
@@ -125,15 +78,15 @@ const barData = [
 
 //Radio configs
 const radioConfigs = {
-  animations: {
-    title: "Animations",
+  gridlines: {
+    title: "Gridlines",
     config: [
       { id: nanoid(10), label: "On", value: "true" },
       { id: nanoid(10), label: "Off", value: "false" },
     ],
   },
-  gridlines: {
-    title: "Gridlines",
+  animations: {
+    title: "Animations",
     config: [
       { id: nanoid(10), label: "On", value: "true" },
       { id: nanoid(10), label: "Off", value: "false" },
@@ -147,10 +100,6 @@ const radioConfigs = {
     ],
   },
 };
-
-const tooltipBoolean = computed(() => config.tooltip === "true");
-const gridlinesBoolean = computed(() => config.gridlines === "true");
-const animationsBoolean = computed(() => config.animations === "true");
 
 // Adding/removing stocks
 const stockOptions = {
@@ -166,7 +115,7 @@ const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
 
 const mapDisplayValue = (key, value) => {
   if (key === "tooltip" || key === "gridlines" || key === "animations") {
-    return value === "on" ? "on" : null;
+    return value === "true" ? "true" : null;
   }
   return JSON.stringify(value);
 };
@@ -179,6 +128,10 @@ const config = reactive({
   animations: "false",
 });
 
+const tooltipBoolean = computed(() => config.tooltip === "true");
+const gridlinesBoolean = computed(() => config.gridlines === "true");
+const animationsBoolean = computed(() => config.animations === "true");
+
 const chartProps = computed(() => {
   return Object.entries(config)
     .map(([key, value]) => ({
@@ -187,6 +140,63 @@ const chartProps = computed(() => {
     }))
     .filter((prop) => prop.value !== null);
 });
+
+//Texts
+
+const texts = {
+  intro: `<div> To use the Bar Chart component, simply import it into your Vue file, pass the required props, and place it within your template. The component handles the rest, rendering a fully interactive and responsive bar chart based on your data.</div>
+          <ol>
+            <li class=my-[20px]>
+              <strong>Customize Dimensions:</strong> Adjust the width and height of the chart to fit the design of your application.
+            </li>
+            <li class=my-[20px]>
+              <strong>Data Visualization:</strong> Represent a wide range of data effectively, ideal for displaying comparisons between categories.
+            </li>
+            <li class=my-[20px]>
+              <strong>Dynamic Styling:</strong> Choose between light and dark color schemes, or implement your own custom color palette.
+            </li>
+            <li class=my-[20px]>
+              <strong>Interactive Features:</strong> Enable tooltips for a more informative user experience and add animations for a dynamic presentation.
+            </li>
+            <li class=my-[20px]>
+              <strong>Gridlines & Labels:</strong>  Enhance readability with optional gridlines and value labels.
+            </li>
+          </ol>`,
+};
+
+// Code block
+const placeholder = "SCRIPT_TAG_PLACEHOLDER"; // helper
+
+const code = computed(() =>
+  `</template>
+
+<script setup>
+import { ref } from 'vue';
+import { BarChart } from 'vue-graphs';
+
+const barData = ref([
+  {
+    entity: "AAPL",
+    data: [
+      { x: "Q1 2023", y: 90000000 },
+      { x: "Q2 2023", y: 110000000 },
+      { x: "Q3 2023", y: 105000000 },
+      { x: "Q4 2023", y: 120000000 },
+    ],
+  },
+  {
+    entity: "MSFT",
+    data: [
+      { x: "Q1 2023", y: 100000000 },
+      { x: "Q2 2023", y: 120000000 },
+      { x: "Q3 2023", y: 100000000 },
+      { x: "Q4 2023", y: 100000000 },
+    ],
+  },
+]);
+
+</${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")
+);
 </script>
 
 <style lang="scss" scoped>

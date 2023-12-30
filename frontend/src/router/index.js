@@ -6,7 +6,7 @@ const routes = [
     component: () => import("@/layouts/AppLayout.vue"),
     children: [
       {
-        path: "home",
+        path: "",
         name: "home",
         component: () => import("@/views/TheHome.vue"),
         props: true,
@@ -15,7 +15,7 @@ const routes = [
         path: "linechart",
         name: "linechart",
         props: true,
-        component: () => import("@/views/graphs/line/TheSingleline.vue"),
+        component: () => import("@/views/graphs/line/LineChart.vue"),
       },
       {
         path: "multiline",

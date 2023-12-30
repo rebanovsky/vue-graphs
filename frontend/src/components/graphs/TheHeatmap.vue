@@ -1,5 +1,5 @@
 <template>
-  <div class="county-name h-[40px] flex items-center gap-[16px]">
+  <div class="county-name h-[40px] flex items-center gap-[16px] gridlines">
     <div class="hovered-name min-w-[80px] flex items-start">
       {{ hoveredName }}
     </div>
@@ -9,7 +9,7 @@
   </div>
   <div
     ref="mapContainer"
-    class="chart-border flex items-center justify-center"
+    class="gridlines flex items-center justify-center"
   ></div>
 </template>
 
@@ -25,7 +25,7 @@ const hoveredName = ref("");
 const hoveredValue = ref("");
 
 const drawMap = () => {
-  const width = 600;
+  const width = 500;
   const height = 400;
   const projection = d3
     .geoAlbersUsa()
@@ -311,6 +311,7 @@ const drawMap = () => {
     .attr("fill", (d) => colorScale(d.properties.percentageChange))
     .attr("class", "stroke-slate-500 cursor-pointer")
     .style("stroke-dasharray", "1,1")
+    .style("stroke-width", "0.5px")
     .on("mouseover", function (event, d) {
       d3.select(this).style("fill-opacity", 0.8);
       hoveredName.value = d.properties.name;
@@ -321,6 +322,57 @@ const drawMap = () => {
       hoveredName.value = "";
       hoveredValue.value = "";
     });
+
+  //
+  // Legend
+  //
+
+  // Append a group for the legend
+  const legend = svg
+    .append("g")
+    .attr("class", "legend")
+    .attr("transform", "translate(20,20)"); // Adjust positioning as needed
+
+  // Define the width and height of the legend bar
+  const legendWidth = 200; // Adjust as needed
+  const legendHeight = 10; // Adjust as needed
+
+  // Create a linear gradient for the legend
+  const linearGradient = svg
+    .append("defs")
+    .append("linearGradient")
+    .attr("id", "linear-gradient");
+
+  // Define the gradient stops
+  colorScale.range().forEach((color, index, array) => {
+    linearGradient
+      .append("stop")
+      .attr("offset", `${(index / array.length) * 100}%`)
+      .attr("stop-color", color);
+  });
+
+  // Append a rectangle to visualize the gradient
+  legend
+    .append("rect")
+    .attr("width", legendWidth)
+    .attr("height", legendHeight)
+    .style("fill", "url(#linear-gradient)");
+
+  // Add labels for the min and max values
+  legend
+    .append("text")
+    .attr("x", 0)
+    .attr("y", legendHeight + 15) // Adjust the position below the rectangle
+    .text(colorScale.domain()[0]) // Min value
+    .attr("font-size", "10px");
+
+  legend
+    .append("text")
+    .attr("x", legendWidth)
+    .attr("y", legendHeight + 15) // Adjust the position below the rectangle
+    .text(colorScale.domain()[1]) // Max value
+    .attr("font-size", "10px")
+    .attr("text-anchor", "end");
 };
 
 watch(() => props.geoJsonData, drawMap, { immediate: true });

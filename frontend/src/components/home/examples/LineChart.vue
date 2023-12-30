@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-[40px]">
     <CodeBlock :code="lineCode" />
-    <SingleLine
+    <LineChart
       :data="lineData"
       :width="480"
       :height="200"
@@ -16,21 +16,21 @@
 <script setup>
 import { ref, computed } from "vue";
 import CodeBlock from "@/components/common/CodeBlock.vue";
-import SingleLine from "@/components/graphs/SingleLine.vue";
+import LineChart from "@/components/graphs/LineChart.vue";
 
 const monthlySales = [
-  { month: "January", value: 62 },
-  { month: "February", value: 69 },
-  { month: "March", value: 99 },
-  { month: "April", value: 136 },
+  { month: "Jan", value: 62 },
+  { month: "Feb", value: 69 },
+  { month: "Mar", value: 99 },
+  { month: "Apr", value: 136 },
   { month: "May", value: 144 },
-  { month: "June", value: 177 },
-  { month: "July", value: 199 },
-  { month: "August", value: 178 },
-  { month: "September", value: 240 },
-  { month: "October", value: 287 },
-  { month: "November", value: 297 },
-  { month: "December", value: 321 },
+  { month: "Jun", value: 177 },
+  { month: "Jul", value: 199 },
+  { month: "Aug", value: 178 },
+  { month: "Sep", value: 240 },
+  { month: "Oct", value: 287 },
+  { month: "Nov", value: 297 },
+  { month: "Dec", value: 321 },
 ];
 
 const formattedLineData = monthlySales.map((item) => ({
@@ -48,7 +48,7 @@ const lineData = ref([
 const placeholder = 'SCRIPT_TAG_PLACEHOLDER';
 
 const lineCode = computed(() => `<template>
-  <SingleLine
+  <LineChart
     :data="lineData"
     :width="400"
     :height="200"
@@ -61,7 +61,7 @@ const lineCode = computed(() => `<template>
 
 <script setup>
 import { ref } from "vue";
-import SingleLine from "vue-graphs";
+import LineChart from "vue-graphs";
 
 const monthlySales = [
   { month: "January", sales: 262 },
