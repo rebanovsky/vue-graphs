@@ -327,23 +327,19 @@ const drawMap = () => {
   // Legend
   //
 
-  // Append a group for the legend
   const legend = svg
     .append("g")
     .attr("class", "legend")
-    .attr("transform", "translate(20,20)"); // Adjust positioning as needed
+    .attr("transform", "translate(20,20)");
 
-  // Define the width and height of the legend bar
-  const legendWidth = 200; // Adjust as needed
-  const legendHeight = 10; // Adjust as needed
+  const legendWidth = 200;
+  const legendHeight = 10;
 
-  // Create a linear gradient for the legend
   const linearGradient = svg
     .append("defs")
     .append("linearGradient")
     .attr("id", "linear-gradient");
 
-  // Define the gradient stops
   colorScale.range().forEach((color, index, array) => {
     linearGradient
       .append("stop")
@@ -351,28 +347,28 @@ const drawMap = () => {
       .attr("stop-color", color);
   });
 
-  // Append a rectangle to visualize the gradient
   legend
     .append("rect")
     .attr("width", legendWidth)
     .attr("height", legendHeight)
     .style("fill", "url(#linear-gradient)");
 
-  // Add labels for the min and max values
   legend
     .append("text")
     .attr("x", 0)
-    .attr("y", legendHeight + 15) // Adjust the position below the rectangle
-    .text(colorScale.domain()[0]) // Min value
-    .attr("font-size", "10px");
+    .attr("y", legendHeight + 15)
+    .text(colorScale.domain()[0])
+    .attr("font-size", "10px")
+    .attr("class", "fill-slate-900 dark:fill-slate-100");
 
   legend
     .append("text")
     .attr("x", legendWidth)
-    .attr("y", legendHeight + 15) // Adjust the position below the rectangle
-    .text(colorScale.domain()[1]) // Max value
+    .attr("y", legendHeight + 15)
+    .text(colorScale.domain()[1])
     .attr("font-size", "10px")
-    .attr("text-anchor", "end");
+    .attr("text-anchor", "end")
+    .attr("class", "fill-slate-900 dark:fill-slate-100");
 };
 
 watch(() => props.geoJsonData, drawMap, { immediate: true });

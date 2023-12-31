@@ -28,6 +28,9 @@ const props = defineProps({
   tooltip: {
     type: Boolean,
   },
+  legend: {
+    type: Boolean,
+  },
 });
 
 const chart = ref(null);
@@ -88,11 +91,13 @@ const drawChart = () => {
 
   d3.select(chart.value).selectAll("*").remove();
 
-  const margin = { top: 2, right: 2, bottom: 3, left: 5 };
+  const margin = { top: 20, right: 90, bottom: 50, left: 60 };
   const width = props.width - margin.left - margin.right;
   const height = props.height - margin.top - margin.bottom;
 
   function handleMouseover(event, d) {
+    if (!d) return;
+
     svg
       .selectAll(".value-label")
       .filter(
@@ -106,6 +111,8 @@ const drawChart = () => {
   }
 
   function handleMouseout(event, d) {
+    if (!d) return;
+
     svg
       .selectAll(".value-label")
       .filter(
@@ -143,7 +150,6 @@ const drawChart = () => {
   x0.domain(groups);
   x1.domain(entities).rangeRound([0, x0.bandwidth()]);
 
-  // Calculate the max value from the data and add some padding
   const maxValue = d3.max(props.data, (d) => d3.max(d.data, (dd) => dd.y));
   const paddedMaxValue = maxValue * 1.2;
   y.domain([0, paddedMaxValue]);
@@ -170,18 +176,16 @@ const drawChart = () => {
     )
     .enter()
     .append("path")
-    .attr(
-      "d",
-      (d) =>
-        props.animations
-          ? roundedRect(x1(d.entity), height, x1.bandwidth(), 0, 2)
-          : roundedRect(
-              x1(d.entity),
-              y(d.value),
-              x1.bandwidth(),
-              height - y(d.value),
-              2
-            )
+    .attr("d", (d) =>
+      props.animations
+        ? roundedRect(x1(d.entity), height, x1.bandwidth(), 0, 2)
+        : roundedRect(
+            x1(d.entity),
+            y(d.value),
+            x1.bandwidth(),
+            height - y(d.value),
+            2
+          )
     )
     .attr("fill", (d) =>
       isDark.value
@@ -202,6 +206,47 @@ const drawChart = () => {
           2
         )
       );
+  }
+
+  //
+  // Legend
+  //
+
+  if (props.legend) {
+    const legend = svg
+      .append("g")
+      .attr("class", "legend")
+      .attr(
+        "transform",
+        `translate(${width - margin.right + 100},${margin.top})`
+      );
+
+    entities.forEach((entity, index) => {
+      const legendRow = legend
+        .append("g")
+        .attr("transform", `translate(0, ${index * 20})`);
+
+      legendRow
+        .append("rect")
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("rx", 2)
+        .attr(
+          "fill",
+          !isDark.value
+            ? customDarkColors[index % customDarkColors.length]
+            : customLightColors[index % customLightColors.length]
+        );
+
+      legendRow
+        .append("text")
+        .attr("x", 15)
+        .attr("y", 10)
+        .attr("class", "text-[12px]")
+        .attr("text-anchor", "start")
+        .style("text-transform", "capitalize")
+        .text(entity);
+    });
   }
 
   //
@@ -244,7 +289,6 @@ const drawChart = () => {
       .style("opacity", 0);
   }
 
-  // Append Axes
   svg
     .append("g")
     .attr("class", "axis axis--x")
@@ -284,7 +328,6 @@ const drawChart = () => {
       .lower();
   }
 
-  // Applying handlers to bars
   svg
     .selectAll("path")
     .on("mouseover", handleMouseover)

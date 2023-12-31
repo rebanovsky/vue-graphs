@@ -54,9 +54,12 @@ const props = defineProps({
   },
   yAxis: {
     type: Boolean,
-    default: true
+    default: true,
   },
   gradient: {
+    type: Boolean,
+  },
+  smooth: {
     type: Boolean,
   },
 });
@@ -161,8 +164,11 @@ const drawChart = () => {
     .line()
     .x((d) => xScale(isDate ? parseDate(d.x) : d.x))
     .y((d) => yScale(d.y))
-    // .curve(d3.curveMonotoneX) // !!! PROP !!! make curved an option
     .defined((d) => !isNaN(d.y)); // Handle missing data
+
+  if (props.smooth) {
+    line.curve(d3.curveMonotoneX);
+  }
 
   //
   // Gradient
@@ -347,32 +353,40 @@ const drawChart = () => {
       .attr("height", adjustedHeight)
       .attr("class", "hover-vertical-line");
 
-    const hoverCirclesGroup = svg.append("g").attr("class", "hover-circles");
+    const hoverCirclesGroup = svg
+      .append("g")
+      .attr("width", props.width)
+      .attr("height", props.height)
+      .attr("class", "hover-circles");
 
     svg.on("mousemove", (event) => {
       const [mx] = d3.pointer(event);
-
       let closestPt = null;
-      let closestDistance = Infinity;
 
-      if (!isDate && !isNumber) {
-        // For string-based x-axis
+      if (isDate || isNumber) {
+        // For continuous scales (dates or numbers)
+        const x0 = xScale.invert(mx);
+        const bisector = d3.bisector((d) =>
+          isDate ? parseDate(d.x) : d.x
+        ).left;
+        props.data.forEach((series) => {
+          const idx = bisector(series.values, x0, 1);
+          const pt0 = series.values[idx - 1];
+          const pt1 = series.values[idx];
+          if (!pt0 || !pt1) return;
+          closestPt =
+            x0 - (isDate ? parseDate(pt0.x) : pt0.x) >
+            (isDate ? parseDate(pt1.x) : pt1.x) - x0
+              ? pt1
+              : pt0;
+        });
+      } else {
+        // For discrete scales (strings or categories)
+        let closestDistance = Infinity;
         props.data.forEach((series) => {
           series.values.forEach((pt) => {
             const xPosition = xScale(pt.x);
             const distance = Math.abs(mx - xPosition);
-            if (distance < closestDistance) {
-              closestDistance = distance;
-              closestPt = pt;
-            }
-          });
-        });
-      } else {
-        const mouseXValue = xScale.invert(mx);
-        props.data.forEach((series) => {
-          series.values.forEach((pt) => {
-            const ptXValue = isDate ? parseDate(pt.x) : pt.x;
-            const distance = Math.abs(mouseXValue - ptXValue);
             if (distance < closestDistance) {
               closestDistance = distance;
               closestPt = pt;
@@ -388,13 +402,16 @@ const drawChart = () => {
         const cx = xScale(isDate ? parseDate(closestPt.x) : closestPt.x);
         const cy = yScale(closestPt.y);
 
+        //
+        // !!! TOOLTIP BUG: tooltip works only if hovered over large circle !!!
+        //
         // Large circle
         hoverCirclesGroup
           .append("circle")
           .attr("cx", cx)
           .attr("cy", cy)
-          .attr("r", 36)
-          .attr("fill", "rgba(61, 151, 255, 0.1)");
+          .attr("r", 600)
+          .attr("fill", "rgba(61, 151, 255, 0)");
 
         // Small circle
         hoverCirclesGroup

@@ -3,7 +3,7 @@
     <div class="home-section-wrapper flex flex-col gap-[64px]">
       <!-- About -->
       <section class="home-section w-[800px] gridlines flex gap-[12px]">
-        <div class="h-[36px] flex items-center">
+        <div class="h-[36px] flex items-start">
           <div
             class="hash text-harlequin-500 text-[24px] cursor-pointer flex items-center justify-center h-[24px] opacity-0 hover:opacity-[1] transition ease"
           >
@@ -26,7 +26,7 @@
 
       <!-- Examples -->
       <section class="home-section w-[800px] gridlines flex gap-[12px]">
-        <div class="h-[36px] flex items-center">
+        <div class="h-[36px] flex items-start">
           <div
             class="hash text-harlequin-500 text-[24px] cursor-pointer flex items-center justify-center h-[24px] opacity-0 hover:opacity-[1] transition ease"
           >
@@ -58,7 +58,7 @@
 
       <!-- License -->
       <section class="home-section w-[800px] gridlines flex gap-[12px]">
-        <div class="h-[36px] flex items-center">
+        <div class="h-[36px] flex items-start">
           <div
             class="hash text-harlequin-500 text-[24px] cursor-pointer flex items-center justify-center h-[24px] opacity-0 hover:opacity-[1] transition ease"
           >

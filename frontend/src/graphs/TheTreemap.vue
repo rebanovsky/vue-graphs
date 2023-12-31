@@ -58,8 +58,8 @@ const drawChart = () => {
     })
     .on("mousemove", (event) => {
       tooltip
-        .style("left", event.pageX + "px")
-        .style("top", event.pageY - 10 - tooltip.node().offsetHeight + "px");
+        .style("left", event.pageX + 10 + "px")
+        .style("top", event.pageY - 16 - tooltip.node().offsetHeight + "px");
     })
     .on("mouseout", () => {
       tooltip.style("opacity", 0);

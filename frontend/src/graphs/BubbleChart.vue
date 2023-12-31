@@ -132,9 +132,8 @@ onMounted(() => {
       "bg-slate-200 text-slate-700 border-[1px] border-boxborderlight shadow-boxshlight dark:bg-slate-800 dark:border-slate-600 dark:text-slate-300"
     );
 
-  const svgNode = svgRef.value; // Get the actual DOM node
+  const svgNode = svgRef.value;
 
-  // -2- Create 3 functions to show / update (when mouse move but stay on same circle) / hide the tooltip
   const showTooltip = (event, d) => {
     // select(event.currentTarget).transition().duration(0);
     tooltip
@@ -179,11 +178,9 @@ onMounted(() => {
   const moveTooltip = function (event) {
   const tooltip = select("#bubble-tooltip");
 
-  // Adjust these offsets as needed
   const offsetX = 20;
   const offsetY = -30;
 
-  // Position tooltip relative to the chart container
   tooltip
     .style("left", (event.clientX - svgNode.getBoundingClientRect().left + offsetX) + "px")
     .style("top", (event.clientY - svgNode.getBoundingClientRect().top + offsetY) + "px");
@@ -194,7 +191,6 @@ onMounted(() => {
     tooltip.style("display", "none");
   };
 
-  // // Add the y-axis title
   // svg
   //   .append("text")
   //   .attr(
@@ -217,7 +213,6 @@ onMounted(() => {
     .attr("cy", (d) => y(d.ownership))
     .attr("r", (d) => z(d.weight))
     .style("fill", (d) => myColor(d.sector))
-    // -3- Trigger the functions
     .on("mouseover", showTooltip)
     .on("mousemove", moveTooltip)
     .on("mouseleave", hideTooltip);

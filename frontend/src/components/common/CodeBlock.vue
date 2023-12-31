@@ -1,6 +1,6 @@
 <template>
   <div
-    class="code-line w-[100%] bg-slate-25 dark:bg-slate-800 chart-border w-[480px]"
+    class="code-line w-[100%] bg-slate-25 dark:bg-slate-800 transition ease chart-border w-[480px]"
   >
     <div class="code-header w-[100%] flex px-[12px] relative">
       <div
@@ -11,7 +11,7 @@
         <pre
           v-if="freeform"
           v-highlightjs
-        ><code class="bash w-[100%]" >{{ code }}</code></pre>
+        ><code class="bash w-[100%]">{{ code }}</code></pre>
         <pre
           v-else
           v-highlightjs
@@ -113,39 +113,49 @@ onUnmounted(() => {
 /* Dark Mode Styles */
 .dark-mode .hljs {
   color: #61afee;
+  transition: color 0.2s ease-in-out;
 }
 .dark-mode .hljs-name,
 .dark-mode .hljs-number {
   color: #e5c07b;
+  transition: color 0.2s ease-in-out;
 }
 .dark-mode .hljs-keyword {
   color: #c678dd;
+  transition: color 0.2s ease-in-out;
 }
 .dark-mode .hljs-string {
   color: #98c379;
+  transition: color 0.2s ease-in-out;
 }
 .dark-mode .hljs-attr,
 .dark-mode .hljs-params {
   color: #df6c75;
+  transition: color 0.2s ease-in-out;
 }
 
 /* Light Mode Styles */
 .hljs {
   color: #007ee4; /* Light Mode */
+  transition: color 0.2s ease-in-out;
 }
 .hljs-name,
 .hljs-number {
   color: #dfaa00; /* Light Mode */
+  transition: color 0.2s ease-in-out;
 }
 .hljs-keyword {
   color: #8b0eaf; /* Light Mode */
+  transition: color 0.2s ease-in-out;
 }
 .hljs-string {
   color: #4bb300; /* Light Mode */
+  transition: color 0.2s ease-in-out;
 }
 .hljs-attr,
 .hljs-params {
   color: #d70011; /* Light Mode */
+  transition: color 0.2s ease-in-out;
 }
 
 pre code.hljs {

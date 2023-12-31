@@ -2,7 +2,7 @@
   <div
     class="chart-container flex w-[100%] items-center mb-[20px] flex-col gap-[20px] p-[32px] overflow-y-auto"
   >
-    <div class="flex flex-col gap-[8px] w-[800px]">
+    <div class="flex flex-col gap-[32px] w-[800px]">
       <div class="chart-title flex py-[4px]">
         <h1>
           {{ title }}
@@ -56,7 +56,7 @@
                           </div>
                           <transition-group name="list" tag="div">
                             <div
-                              class="props ml-[32px] flex max-w-[180px]"
+                              class="props ml-[32px] flex"
                               v-for="prop in chartProps"
                               :key="prop.name"
                             >
@@ -111,7 +111,7 @@
                   </div>
                 </div>
               </div>
-              <div
+              <!-- <div
                 class="preview-data-wrapper p-[12px]"
                 v-if="appendix == 'data'"
               >
@@ -160,12 +160,12 @@
                   </div>
                   ]
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="flex flex-col gap-[20px]">
             <div class="config flex flex-col gap-[4px] text-[14px]">
-              <div class="config-search flex text-[14px]">
+              <!-- <div class="config-search flex text-[14px]">
                 <div class="gridlines w-[100%]">
                   <div class="ticker-searcher flex items-center px-[8px]">
                     <font-awesome-icon
@@ -179,7 +179,7 @@
                     />
                   </div>
                 </div>
-              </div>
+              </div> -->
               <div
                 class="flex flex-col gap-[12px] gridlines w-[200px] p-[12px] h-[600px] overflow-y-auto"
               >
@@ -242,11 +242,11 @@ const options = [
     value: "props",
     label: "Props",
   },
-  {
-    id: nanoid(10),
-    value: "data",
-    label: "Data",
-  },
+  // {
+  //   id: nanoid(10),
+  //   value: "data",
+  //   label: "Data",
+  // },
 ];
 
 function getType(value) {

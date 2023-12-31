@@ -44,16 +44,13 @@ watchEffect(() => {
   const width = props.width - margin.left - margin.right;
   const height = props.height - margin.top - margin.bottom;
 
-  // Clear previous SVG
   d3.select(graphContainer.value).selectAll("*").remove();
 
-  // Calculate y-axis range
   const epsValues = props.data.flatMap((d) => [d.EPS.Actual, d.EPS.Estimate]);
   const maxEps = d3.max(epsValues);
   const minEps = d3.min(epsValues);
   const padding = (maxEps - minEps) * 0.5;
 
-  // Create SVG container
   const svg = d3
     .select(graphContainer.value)
     .append("svg")
@@ -62,7 +59,6 @@ watchEffect(() => {
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-  // Create scales
   const xScale = d3
     .scaleBand()
     .domain(props.data.map((d) => d.Quarter))
@@ -88,7 +84,6 @@ watchEffect(() => {
     .attr("class", "stroke-slate-400 dark:stroke-slate-700")
     .attr("stroke-dasharray", "3,3");
 
-  // Draw dots for Actual EPS
   svg
     .selectAll(".dot-actual")
     .data(props.data)
@@ -132,7 +127,7 @@ watchEffect(() => {
     .call((g) => g.select(".domain").remove())
     .selectAll(".tick text")
     .attr("dx", "-0.5em")
-    .attr("fill", "#666"); // Remove the y-axis line;
+    .attr("fill", "#666");
 });
 </script>
 

@@ -2,7 +2,7 @@
   <!-- BarChart.vue -->
   <ChartContainer
     title="Bar Chart"
-    chart-title="BarChart.vue"
+    chart-title="BarChart"
     :code="code"
     :chart-props="chartProps"
     :component-props="barProps"
@@ -18,6 +18,7 @@
       :tooltip="tooltipBoolean"
       :gridlines="gridlinesBoolean"
       :animations="animationsBoolean"
+      :legend="legendBoolean"
     />
     <template #config>
       <RadioButton
@@ -38,13 +39,19 @@
         :title="radioConfigs.animations.title"
         name="animations"
       />
+      <RadioButton
+        v-model="config.legend"
+        :options="radioConfigs.legend.config"
+        :title="radioConfigs.legend.title"
+        name="legend"
+      />
     </template>
   </ChartContainer>
 </template>
 
 <script setup>
 import { ref, computed, reactive } from "vue";
-import BarChart from "@/components/graphs/BarChart.vue";
+import BarChart from "@/graphs/BarChart.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
@@ -99,6 +106,13 @@ const radioConfigs = {
       { id: nanoid(10), label: "Off", value: "false" },
     ],
   },
+  legend: {
+    title: "Legend",
+    config: [
+      { id: nanoid(10), label: "On", value: "true" },
+      { id: nanoid(10), label: "Off", value: "false" },
+    ],
+  },
 };
 
 // Adding/removing stocks
@@ -114,7 +128,12 @@ const stockOptions = {
 const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
 
 const mapDisplayValue = (key, value) => {
-  if (key === "tooltip" || key === "gridlines" || key === "animations") {
+  if (
+    key === "tooltip" ||
+    key === "gridlines" ||
+    key === "animations" ||
+    key === "legend"
+  ) {
     return value === "true" ? "true" : null;
   }
   return JSON.stringify(value);
@@ -123,14 +142,16 @@ const mapDisplayValue = (key, value) => {
 const config = reactive({
   data: "barData",
   lineColor: "#fff",
-  tooltip: "false",
-  gridlines: "false",
+  tooltip: "true",
+  gridlines: "true",
   animations: "false",
+  legend: "false",
 });
 
 const tooltipBoolean = computed(() => config.tooltip === "true");
 const gridlinesBoolean = computed(() => config.gridlines === "true");
 const animationsBoolean = computed(() => config.animations === "true");
+const legendBoolean = computed(() => config.legend === "true");
 
 const chartProps = computed(() => {
   return Object.entries(config)

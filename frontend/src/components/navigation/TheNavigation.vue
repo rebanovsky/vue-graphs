@@ -1,11 +1,11 @@
 <template>
   <div class="fixed w-[100%] z-[100] top-[0]">
     <div
-      class="content-navigation bg-slate-100 transition ease dark:bg-slate-900 border-b-[1px] border-200 px-[20px] text-[0.8em] gap-[20px] w-[100%] h-[50px] overflow-x-auto flex items-center justify-between"
+      class="content-navigation bg-100 border-b-[1px] border-200 px-[20px] text-[0.85em] gap-[20px] w-[100%] h-[50px] overflow-x-auto flex items-center justify-between"
     >
       <div class="left-side flex items-center gap-[12px]">
-        <div class="vue-graphs-icon w-[20px] h-[20px]">
-          <svg
+        <div class="vue-graphs-icon w-[24px] h-[24px]">
+          <!-- <svg
             version="1.1"
             viewBox="0 0 261.76 226.69"
             xmlns="http://www.w3.org/2000/svg"
@@ -24,16 +24,33 @@
                 />
               </g>
             </g>
+          </svg> -->
+          <svg
+            id="Layer_1"
+            data-name="Layer 1"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 256.08 242"
+          >
+
+            <polygon
+              class="cls-1 fill-[#34485e]"
+              points="38.46 74.83 96.19 175.31 160.13 64.05 218.93 166.37 256.08 166.37 160.48 0 95.76 112.61 73.67 74.83 38.46 74.83"
+            />
+            <polygon
+              class="cls-2 fill-[#40b883]"
+              points="0 74.83 96.19 242 160.48 128.34 182.26 166.37 218.93 166.37 160.13 64.05 96.19 175.31 38.46 74.83 0 74.83"
+            />
           </svg>
         </div>
         <div
-          class="comp-name cursor-pointer p-[4px] hover:text-slate-700 dark:hover:text-slate-400"
+          class="comp-name p-[4px] hover:text-slate-700 font-medium dark:hover:text-slate-400"
         >
           VueGraphs
         </div>
       </div>
-      <div class="right-side flex items-center gap-[20px]">
-        <div class="version-name cursor-pointer" >version 26-Dec-23</div>
+      <div class="right-side flex items-center gap-[24px]">
+        <div class="beta-tag rounded text-red-500 bg-red-100 dark:text-red-100 dark:bg-red-900 leading-5 px-[6px]">Beta</div>
+        <div class="version-name font-medium text-500">version 31-Dec-23</div>
         <!-- Version History -->
         <!-- <div
           class="version-history w-[180px] gridlines dark:bg-slate-800 rounded-[12px] p-[12px]"

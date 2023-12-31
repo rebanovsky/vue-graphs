@@ -2,7 +2,7 @@
   <!-- TheBubblechart.vue -->
   <ChartContainer
     title="Bubble chart"
-    chart-title="BubbleChart.vue"
+    chart-title="BubbleChart"
     :code="code"
     :component-props="bubblechartProps"
     :chart-props="chartProps"
@@ -18,7 +18,7 @@
 
 <script setup>
 import { computed, reactive } from "vue";
-import BubbleChart from "@/components/graphs/BubbleChart.vue";
+import BubbleChart from "@/graphs/BubbleChart.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
 import { nanoid } from "nanoid";
 //Data imports
@@ -63,7 +63,7 @@ const mapDisplayValue = (key, value) => {
 };
 
 const config = reactive({
-  bubbleData: [],
+  bubbleData: 'bubbleData',
 });
 
 const chartProps = computed(() => {

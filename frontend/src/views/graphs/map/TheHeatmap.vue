@@ -1,29 +1,11 @@
 <template>
   <!-- TheHeatmap.vue -->
-  <ChartContainer title="Heat Map" chart-title="HeatMap.vue" :code="code" :component-props="heatmapProps" :chart-props="chartProps">
+  <ChartContainer title="Heat Map" chart-title="HeatMap" :code="code" :component-props="heatmapProps" :chart-props="chartProps">
     <template #intro>
       <div v-html="texts.intro"></div>
     </template>
     <TheHeatmap :geo-json-data="geoJson"/>
     <template #config>
-      <RadioButton
-        v-model="config.tooltip"
-        :options="radioConfigs.tooltip.config"
-        title="Tooltip"
-        name="tooltip"
-      />
-      <RadioButton
-        v-model="config.gridlines"
-        :options="radioConfigs.gridlines.config"
-        title="Gridlines"
-        name="gridlines"
-      />
-      <RadioButton
-        v-model="config.animations"
-        :options="radioConfigs.animations.config"
-        title="Animations"
-        name="animations"
-      />
     </template>
   </ChartContainer>
 </template>
@@ -31,12 +13,11 @@
 <script setup>
 import { ref, computed, reactive } from "vue";
 import { geoJson } from "@/data/geoJson";
-import TheHeatmap from "@/components/graphs/TheHeatmap.vue";
+import TheHeatmap from "@/graphs/TheHeatmap.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
-import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 // Data imports
 import { heatmapProps } from "@/data/props";
@@ -80,7 +61,7 @@ const mapDisplayValue = (key, value) => {
 };
 
 const config = reactive({
-  lineData: [],
+  geoJsonData: 'geoJson',
   selectedStocks: [],
   lineColor: "#fff",
   tooltip: "off",

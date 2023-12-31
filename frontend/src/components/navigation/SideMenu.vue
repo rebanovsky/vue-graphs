@@ -11,7 +11,7 @@
       >
         <div
           :class="{
-            'border-harlequin-500 text-harlequin-500 hover:!border-harlequin-500': isActive(item.name),
+            'border-harlequin-500 text-harlequin-500 font-medium hover:!border-harlequin-500': isActive(item.name),
             'border-100 text-600': !isActive(item.name)
           }"
           class="text-[14px] border-l-[4px] py-[8px] px-[24px] hover:bg-slate-50 hover:border-slate-50 dark:hover:bg-slate-800 dark:hover:border-slate-800 cursor-pointer"
@@ -42,8 +42,6 @@ const isActive = (itemName) => {
   return route.path === `/${itemName}`;
 };
 </script>
-
-
 
 <style scoped>
 .active-class {

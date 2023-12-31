@@ -23,7 +23,7 @@ import TheNavigation from "@/components/navigation/TheNavigation.vue";
 const sidenavItems = [
   { title: "Home", name: "" },
   { title: "Line Chart", name: "linechart" },
-  { title: "Candlestick", name: "candlestick" },
+  { title: "Candle Stick", name: "candlestick" },
   { title: "Bar Chart", name: "barchart" },
   { title: "Pie Chart", name: "piechart" },
   { title: "Dot Plot", name: "dotplot" },

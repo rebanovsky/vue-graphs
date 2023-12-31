@@ -31,7 +31,7 @@ export default {
   },
   setup(props) {
     const chart = ref(null);
-    const parseDate = props.dateFormat ? d3.timeParse(props.dateFormat) : null; // Conditional parsing based on dateFormat
+    const parseDate = props.dateFormat ? d3.timeParse(props.dateFormat) : null;
 
     console.log("data: ", props.data);
 
@@ -63,11 +63,9 @@ export default {
         ? d3.scaleTime().domain(xDomain).range([0, props.width])
         : d3.scaleLinear().domain(xDomain).range([0, props.width]);
 
-      // Calculate the base min and max values for y
       let yMin = d3.min(props.data, (d) => d3.min(d.values, (pt) => pt.y));
       let yMax = d3.max(props.data, (d) => d3.max(d.values, (pt) => pt.y));
 
-      // Add padding to y-scale (for example, 5% of the range)
       let yPadding = (yMax - yMin) * 0.25;
       yMin -= yPadding;
       yMax += yPadding;
@@ -125,15 +123,12 @@ export default {
         .append("g")
         .attr("class", "hover-vertical-line");
 
-      // Then, create the hover circles group
       const hoverCirclesGroup = svg.append("g").attr("class", "hover-circles");
 
-      // Then, after drawing your lines:
       svg.on("mousemove", (event) => {
-        const [mx] = d3.pointer(event); // Get mouse x-coordinate relative to SVG
-        const mouseXValue = xScale.invert(mx); // Convert to data value
+        const [mx] = d3.pointer(event);
+        const mouseXValue = xScale.invert(mx);
 
-        // Clear the existing hover circles before drawing the new ones.
         hoverCirclesGroup.selectAll("circle").remove();
 
         props.data.forEach((series) => {
@@ -158,12 +153,11 @@ export default {
                 xScale(props.dateFormat ? parseDate(closestPt.x) : closestPt.x)
               )
               .attr("cy", yScale(closestPt.y))
-              .attr("r", 5) // You can adjust the size as needed.
+              .attr("r", 5)
               .attr("fill", series.color);
           }
         });
 
-        // Draw the vertical hover line.
         hoverVerticalLineGroup.selectAll("line").remove();
         hoverVerticalLineGroup
           .append("line")
@@ -175,7 +169,6 @@ export default {
           .attr("stroke-dasharray", "3,3");
       });
 
-      // Hide the circles and line when the mouse is not over the chart.
       svg.on("mouseleave", () => {
         hoverCirclesGroup.selectAll("circle").remove();
         hoverVerticalLineGroup.selectAll("line").remove();

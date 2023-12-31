@@ -2,7 +2,7 @@
   <!-- PieChart.vue -->
   <ChartContainer
     title="Pie Chart"
-    chart-title="PieChart.vue"
+    chart-title="PieChart"
     :code="code"
     :chart-props="chartProps"
     :component-props="piechartProps"
@@ -37,23 +37,15 @@
         title="Animations"
         name="animations"
       />
-      <MultiSelect
-        v-model="config.selectedStocks"
-        :title="stockOptions.title"
-        :options="stockOptions.configs"
-      />
     </template>
   </ChartContainer>
 </template>
 
 <script setup>
-import { ref, computed, reactive, watch } from "vue";
-import PieChart from "@/components/graphs/PieChart.vue";
-import MultiSelect from "@/components/common/MultiSelect.vue";
+import { ref, computed, reactive } from "vue";
+import PieChart from "@/graphs/PieChart.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
-import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
-import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 // Data imports
 import { piechartProps } from "@/data/props";
@@ -98,7 +90,7 @@ const labelsBoolean = computed(() => config.labels === "true");
 
 // Adding/removing stocks
 const stockOptions = {
-  title: "Add/remove Bars",
+  title: "Add/remove Sectors",
   configs: [
     { label: "AAPL", value: "AAPL" },
     { label: "MSFT", value: "MSFT" },
@@ -116,9 +108,7 @@ const mapDisplayValue = (key, value) => {
 };
 
 const config = reactive({
-  lineData: [],
-  selectedStocks: [],
-  lineColor: "#fff",
+  data: 'pieData',
   labels: "true",
   legend: "true",
   animations: "false",
@@ -141,19 +131,14 @@ const code = computed(() =>
 
 <script setup>
 import { ref } from 'vue';
-import { LineChart } from 'vue-graphs';
-import { data } from "@/data";
+import { PieChart } from 'vue-graphs';
 
-const formattedLineData = data.map((item) => ({
-  x: item.Date,
-  y: item.Close,
-}));
-
-const lineData = ref([
-  {
-    color: "#fffff",
-    values: formattedLineData,
-  },
+const pieData = ref([
+  { label: "Others", value: 10 },
+  { label: "Energy", value: 15 },
+  { label: "Finance", value: 25 },
+  { label: "Technology", value: 30 },
+  { label: "Healthcare", value: 20 },
 ]);
 
 </${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")

@@ -2,7 +2,7 @@
   <!-- BarChart.vue -->
   <ChartContainer
     title="Dot plot"
-    chart-title="DotGraph.vue"
+    chart-title="DotGraph"
     :code="code"
     :component-props="dotplotProps"
     :chart-props="chartProps"
@@ -12,7 +12,7 @@
     </template>
     <DotGraph :data="earnings.AppleEarningsData" :width="480" :height="240" />
     <template #config>
-      <RadioButton
+      <!-- <RadioButton
         v-model="config.tooltip"
         :options="radioConfigs.tooltip.config"
         title="Tooltip"
@@ -29,25 +29,16 @@
         :options="radioConfigs.animations.config"
         title="Animations"
         name="animations"
-      />
-      <MultiSelect
-        v-model="config.selectedStocks"
-        :title="stockOptions.title"
-        :options="stockOptions.configs"
-      />
+      /> -->
     </template>
   </ChartContainer>
 </template>
 
 <script setup>
 import { ref, computed, reactive } from "vue";
-
-import DotGraph from "@/components/graphs/DotGraph.vue";
-import MultiSelect from "@/components/common/MultiSelect.vue";
+import DotGraph from "@/graphs/DotGraph.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
-import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
-import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 //Data imports
 import { earnings } from "@/data/earningsDummy";
@@ -102,12 +93,7 @@ const mapDisplayValue = (key, value) => {
 };
 
 const config = reactive({
-  lineData: [],
-  selectedStocks: [],
-  lineColor: "#fff",
-  tooltip: "off",
-  gridlines: "off",
-  animations: "off",
+  data: 'dotPlotData',
 });
 
 const chartProps = computed(() => {
@@ -150,7 +136,7 @@ const code = computed(() =>
 import { ref } from 'vue';
 import { DotPlot } from 'vue-graphs';
 
-const dotplotData = ref([
+const dotPlotData = ref([
     {
       Quarter: "Q1 23",
       Earnings: {

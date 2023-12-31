@@ -2,7 +2,7 @@
   <!-- TheCandlestick.vue -->
   <ChartContainer
     title="Candlestick"
-    chart-title="TheCandlestick.vue"
+    chart-title="CandleStick"
     :code="code"
     :chart-props="chartProps"
     :component-props="candlestickProps"
@@ -20,7 +20,7 @@
       :animations="animationsBoolean"
     />
     <template #config>
-      <RadioButton
+      <!-- <RadioButton
         v-model="config.tooltip"
         :options="radioConfigs.tooltip.config"
         title="Tooltip"
@@ -31,28 +31,27 @@
         :options="radioConfigs.gridlines.config"
         title="Gridlines"
         name="gridlines"
-      />
-      <RadioButton
+      /> -->
+      <!-- <RadioButton
         v-model="config.animations"
         :options="radioConfigs.animations.config"
         title="Animations"
         name="animations"
-      />
+      /> -->
     </template>
   </ChartContainer>
 </template>
 
 <script setup>
 import { ref, reactive, computed } from "vue";
-import { line1, line2 } from "@/data/dummyMultiLine";
-import TheCandlestick from "@/components/graphs/TheCandlestick.vue";
+import TheCandlestick from "@/graphs/TheCandlestick.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
-import SvgIcon from "@/components/utils/SvgIcon.vue";
 import { nanoid } from "nanoid";
 //data imports
+import { line1 } from "@/data/dummyMultiLine";
 import { candlestickProps } from "@/data/props";
 import { linePreview } from "@/data/previewData";
 
@@ -98,7 +97,7 @@ const mapDisplayValue = (key, value) => {
 };
 
 const config = reactive({
-  data: "lineData",
+  data: "candleStickData",
   lineColor: "#fff",
   tooltip: "false",
   gridlines: "false",
@@ -139,21 +138,31 @@ const code = computed(() =>
   `</template>
 
 <script setup>
-import { ref } from 'vue';
-import { LineChart } from 'vue-graphs';
-import { data } from "@/data";
+import { CandleStick } from 'vue-graphs';
 
-const formattedLineData = data.map((item) => ({
-  x: item.Date,
-  y: item.Close,
-}));
-
-const lineData = ref([
+const candleStickData = [
   {
-    color: "#fffff",
-    values: formattedLineData,
+    Date: "2006-01-03",
+    Open: 10.34,
+    High: 10.68,
+    Low: 10.32,
+    Close: 10.68,
+    Volume: 201853036,
+    Name: "AAPL",
+    Normalized_Close: 100.0,
   },
-]);
+  {
+    Date: "2006-01-04",
+    Open: 10.73,
+    High: 10.85,
+    Low: 10.64,
+    Close: 10.71,
+    Volume: 155225609,
+    Name: "AAPL",
+    Normalized_Close: 100.2808988764,
+  },
+  // Array(50)
+]
 
 </${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")
 );

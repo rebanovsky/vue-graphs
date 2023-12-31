@@ -16,7 +16,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import CodeBlock from "@/components/common/CodeBlock.vue";
-import LineChart from "@/components/graphs/LineChart.vue";
+import LineChart from "@/graphs/LineChart.vue";
 
 const monthlySales = [
   { month: "Jan", value: 62 },

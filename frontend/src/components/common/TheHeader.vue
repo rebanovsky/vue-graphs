@@ -6,10 +6,6 @@
   </div>
 </template>
 
-<script setup>
-// Add any script logic here, if needed
-</script>
+<script setup></script>
 
-<style scoped>
-/* Add any component-specific styles here */
-</style>
+<style scoped></style>

@@ -86,7 +86,7 @@
 
 <script setup>
 import { ref, computed, reactive } from "vue";
-import TheBarchart from "@/components/graphs/TheBarchart.vue";
+import TheBarchart from "@/graphs/TheBarchart.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
