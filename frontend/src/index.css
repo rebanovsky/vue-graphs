@@ -6,7 +6,7 @@
 
 @layer utilities {
   .gridlines {
-    border-width: 1px;
+    border-width: 0px;
     border-style: dashed;
     border-color: theme("colors.slate.300");
     @apply dark:border-slate-700;
