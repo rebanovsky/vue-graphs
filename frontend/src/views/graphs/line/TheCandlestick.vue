@@ -11,7 +11,7 @@
     <template #intro>
       <div v-html="texts.intro"></div>
     </template>
-    <TheCandlestick
+    <CandleStick
       :data="candleStickData"
       :width="500"
       :height="230"
@@ -44,7 +44,7 @@
 
 <script setup>
 import { ref, reactive, computed } from "vue";
-import TheCandlestick from "@/graphs/TheCandlestick.vue";
+import CandleStick from "@/graphs/CandleStick.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
@@ -98,10 +98,8 @@ const mapDisplayValue = (key, value) => {
 
 const config = reactive({
   data: "candleStickData",
-  lineColor: "#fff",
-  tooltip: "false",
-  gridlines: "false",
-  animations: "false",
+  width: "500",
+  height: "230",
 });
 
 const chartProps = computed(() => {

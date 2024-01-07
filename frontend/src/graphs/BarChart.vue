@@ -31,12 +31,16 @@ const props = defineProps({
   legend: {
     type: Boolean,
   },
+  palette: {
+    type: Array,
+    default: ["#ccece6", "#65c2a3", "#228a44"]
+  }
 });
 
 const chart = ref(null);
 
 function roundedRect(x, y, width, height, radius) {
-  return `  
+  return `
             M${x + radius},${y}
             h${width - 2 * radius}
             a${radius},${radius} 0 0 1 ${radius},${radius}
@@ -69,15 +73,6 @@ function formatNumber(d) {
   return d.toString();
 }
 
-const customLightColors = [
-  "#FF0090",
-  "#0070FF", // Indigo
-];
-
-const customDarkColors = [
-  "#FF91A4",
-  "#318CE7", // Indigo
-];
 
 // const customColors = isDark.value ? customDarkColors : customLightColors;
 
@@ -135,9 +130,9 @@ const drawChart = () => {
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
   // Process data
-  const x0 = d3.scaleBand().rangeRound([0, width]).paddingInner(0.4);
+  const x0 = d3.scaleBand().rangeRound([0, width]).paddingInner(0.25);
 
-  const x1 = d3.scaleBand().padding(0.25);
+  const x1 = d3.scaleBand().padding(0.1);
 
   const y = d3.scaleLinear().rangeRound([height, 0]);
 
@@ -187,11 +182,7 @@ const drawChart = () => {
             2
           )
     )
-    .attr("fill", (d) =>
-      isDark.value
-        ? customLightColors[entityIndex(d) % customLightColors.length]
-        : customDarkColors[entityIndex(d) % customDarkColors.length]
-    );
+    .attr("fill", (d) => props.palette[entityIndex(d) % props.palette.length]);
 
   if (props.animations) {
     bars = bars
@@ -231,12 +222,7 @@ const drawChart = () => {
         .attr("width", 10)
         .attr("height", 10)
         .attr("rx", 2)
-        .attr(
-          "fill",
-          !isDark.value
-            ? customDarkColors[index % customDarkColors.length]
-            : customLightColors[index % customLightColors.length]
-        );
+        .attr("fill", props.palette[index % props.palette.length]);
 
       legendRow
         .append("text")

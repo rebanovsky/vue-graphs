@@ -10,15 +10,19 @@
     <template #intro>
       <div v-html="texts.intro"></div>
     </template>
-    <TheTreemap :data="sampleTreeData" />
-    <template #config>
-    </template>
+    <TreeMap
+      :data="sampleTreeData"
+      :width="560"
+      :height="280"
+      :palette="colorPalette"
+    />
+    <template #config> </template>
   </ChartContainer>
 </template>
 
 <script setup>
 import { ref, computed, reactive } from "vue";
-import TheTreemap from "@/graphs/TheTreemap.vue";
+import TreeMap from "@/graphs/TreeMap.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
@@ -28,21 +32,93 @@ import { treemapProps } from "@/data/props";
 
 // Treemap data
 const sampleTreeData = ref({
-  name: "Root",
+  name: "Global Industries",
   children: [
     {
-      name: "Category 1",
+      name: "Technology",
       children: [
-        { name: "Leaf A", value: 10 },
-        { name: "Leaf B", value: 20 },
+        {
+          name: "AAPL",
+          value: 300,
+        },
+        {
+          name: "MSFT",
+          value: 280,
+        },
+        {
+          name: "GOOG",
+          value: 270,
+        },
+        {
+          name: "AMZN",
+          value: 260,
+        },
       ],
     },
     {
-      name: "Category 2",
-      children: [{ name: "Leaf C", value: 30 }],
+      name: "Automotive",
+      children: [
+        {
+          name: "TSLA",
+          value: 200,
+        },
+        {
+          name: "TYO",
+          value: 180,
+        },
+        {
+          name: "F",
+          value: 160,
+        },
+        {
+          name: "VW",
+          value: 140,
+        },
+      ],
+    },
+    {
+      name: "Finance",
+      children: [
+        {
+          name: "JPM",
+          value: 220,
+        },
+        {
+          name: "GS",
+          value: 210,
+        },
+        {
+          name: "MS",
+          value: 205,
+        },
+        {
+          name: "BAC",
+          value: 200,
+        },
+      ],
+    },
+    {
+      name: "Telecommunications",
+      children: [
+        {
+          name: "VZ",
+          value: 150,
+        },
+        {
+          name: "T",
+          value: 145,
+        },
+        {
+          name: "TMUS",
+          value: 140,
+        },
+      ],
     },
   ],
 });
+
+// Palette
+const colorPalette = ["#57E2E5", "#FEC3A6", "#FFAC81", "#FF928B"];
 
 //Radio configs
 const radioConfigs = {
@@ -83,7 +159,10 @@ const mapDisplayValue = (key, value) => {
 };
 
 const config = reactive({
-  data: 'treeMapData',
+  data: "treeMapData",
+  width: "560",
+  height: "280",
+  palette: "colorPalette",
 });
 
 const chartProps = computed(() => {
@@ -130,18 +209,87 @@ import { ref } from 'vue';
 import { TreeMap } from 'vue-graphs';
 
 const treeMapData = ref({
-  name: "Root",
+  name: "Global Industries",
   children: [
     {
-      name: "Category 1",
+      name: "Technology",
       children: [
-        { name: "Leaf A", value: 10 },
-        { name: "Leaf B", value: 20 },
+        {
+          name: "AAPL",
+          value: 300,
+        },
+        {
+          name: "MSFT",
+          value: 280,
+        },
+        {
+          name: "GOOG",
+          value: 270,
+        },
+        {
+          name: "AMZN",
+          value: 260,
+        },
       ],
     },
     {
-      name: "Category 2",
-      children: [{ name: "Leaf C", value: 30 }],
+      name: "Automotive",
+      children: [
+        {
+          name: "TSLA",
+          value: 200,
+        },
+        {
+          name: "TYO",
+          value: 180,
+        },
+        {
+          name: "F",
+          value: 160,
+        },
+        {
+          name: "VW",
+          value: 140,
+        },
+      ],
+    },
+    {
+      name: "Finance",
+      children: [
+        {
+          name: "JPM",
+          value: 220,
+        },
+        {
+          name: "GS",
+          value: 210,
+        },
+        {
+          name: "MS",
+          value: 205,
+        },
+        {
+          name: "BAC",
+          value: 200,
+        },
+      ],
+    },
+    {
+      name: "Telecommunications",
+      children: [
+        {
+          name: "VZ",
+          value: 150,
+        },
+        {
+          name: "T",
+          value: 145,
+        },
+        {
+          name: "TMUS",
+          value: 140,
+        },
+      ],
     },
   ],
 });

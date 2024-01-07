@@ -12,6 +12,7 @@
     </template>
     <PieChart
       :data="sectors"
+      :palette="customColors"
       :height="280"
       :width="560"
       :legend="legendBoolean"
@@ -57,6 +58,15 @@ const sectors = [
   { label: "Finance", value: 25 },
   { label: "Technology", value: 30 },
   { label: "Healthcare", value: 20 },
+];
+
+//color palette
+const customColors = [
+  "#003f5c",
+  "#58508d",
+  "#bc5090",
+  "#ff6361",
+  "#ffa600",
 ];
 
 //Radio configs
@@ -108,7 +118,8 @@ const mapDisplayValue = (key, value) => {
 };
 
 const config = reactive({
-  data: 'pieData',
+  data: "pieData",
+  palette: "customColors",
   labels: "true",
   legend: "true",
   animations: "false",
@@ -140,6 +151,14 @@ const pieData = ref([
   { label: "Technology", value: 30 },
   { label: "Healthcare", value: 20 },
 ]);
+
+const customColors = [
+  "#003f5c",
+  "#58508d",
+  "#bc5090",
+  "#ff6361",
+  "#ffa600",
+];
 
 </${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")
 );

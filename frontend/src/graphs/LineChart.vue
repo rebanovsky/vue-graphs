@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watchEffect, watch } from "vue";
+import { ref, onMounted, watchEffect } from "vue";
 import * as d3 from "d3";
 
 const props = defineProps({
@@ -132,10 +132,9 @@ const drawChart = () => {
   if (props.yAxis) {
     const yAxis = svg
       .append("g")
-      .attr("class", "y axis translate-x-[-8px]")
-      .call(d3.axisLeft(yScale).ticks(3).tickSize(0)); // Set the number of ticks to 3
+      .attr("class", "y axis translate-x-[-8px] text-[12px]")
+      .call(d3.axisLeft(yScale).ticks(2).tickSize(0));
 
-    // Remove the domain line
     yAxis.select(".domain").remove();
   }
 
@@ -313,10 +312,11 @@ const drawChart = () => {
     }
   });
 
+  let xAxis;
   if (props.dateFormat) {
-    const xAxis = svg
+    xAxis = svg
       .append("g")
-      .attr("class", "x axis")
+      .attr("class", "x axis text-[12px]")
       .attr("transform", `translate(0,${adjustedHeight})`)
       .call(
         d3
@@ -324,29 +324,38 @@ const drawChart = () => {
           .ticks(d3.timeDay.every(90))
           .tickFormat((d) => formatDate(d))
       );
-
-    xAxis
-      .select(".domain")
-      .style("stroke", "rgb(210, 220, 231)")
-      .style("stroke-width", "1px");
   } else {
-    const xAxis = svg
+    xAxis = svg
       .append("g")
-      .attr("class", "axis")
+      .attr("class", "axis text-[12px]")
       .attr("transform", `translate(0,${adjustedHeight})`)
       .call(d3.axisBottom(xScale));
-
-    xAxis
-      .select(".domain")
-      .style("stroke", "rgb(173, 181, 189)")
-      .style("stroke-width", "1px");
   }
+
+  xAxis
+    .select(".domain")
+    .style("stroke", "rgba(100, 100, 100, 1)")
+    .style("stroke-width", "1px");
+
+  xAxis
+    .selectAll("line")
+    .style("stroke", "rgba(100, 100, 100, 1)")
+    .style("stroke-width", "1px");
+
+  xAxis.selectAll("text").attr("transform", `translate(0,4)`);
 
   if (!props.xAxis) {
     svg.select(".x.axis").remove();
   }
 
   if (props.tooltip) {
+    const hoverArea = svg
+      .append("rect")
+      .attr("width", adjustedWidth)
+      .attr("height", adjustedHeight)
+      .style("fill", "none")
+      .style("pointer-events", "all");
+
     const hoverVerticalLineGroup = svg
       .append("g")
       .attr("width", adjustedWidth)
@@ -359,7 +368,26 @@ const drawChart = () => {
       .attr("height", props.height)
       .attr("class", "hover-circles");
 
-    svg.on("mousemove", (event) => {
+    let hoverCircle = hoverCirclesGroup
+      .append("circle")
+      .attr("r", 4)
+      .attr("class", "fill-[#000000] dark:fill-[#ffffff]")
+      .style("visibility", "hidden");
+
+    let hoverText = hoverCirclesGroup
+      .append("text")
+      .attr("class", "fill-slate-500 text-[1em] gridlines")
+      .attr("text-anchor", "left")
+      .attr("alignment-baseline", "hanging")
+      .style("visibility", "hidden");
+
+    let hoverLine = hoverVerticalLineGroup
+      .append("line")
+      .attr("class", "stroke-slate-400 dark:stroke-slate-600")
+      .attr("stroke-dasharray", "3,3")
+      .style("visibility", "hidden");
+
+    hoverArea.on("mousemove", (event) => {
       const [mx] = d3.pointer(event);
       let closestPt = null;
 
@@ -402,16 +430,33 @@ const drawChart = () => {
         const cx = xScale(isDate ? parseDate(closestPt.x) : closestPt.x);
         const cy = yScale(closestPt.y);
 
-        //
-        // !!! TOOLTIP BUG: tooltip works only if hovered over large circle !!!
-        //
-        // Large circle
-        hoverCirclesGroup
-          .append("circle")
+        hoverCircle
           .attr("cx", cx)
           .attr("cy", cy)
-          .attr("r", 600)
-          .attr("fill", "rgba(61, 151, 255, 0)");
+          .style("visibility", "visible");
+
+        hoverText
+          .attr("x", cx)
+          .attr("y", cy)
+          .text(d3.format(".2f")(closestPt.y))
+          .attr("dx", "5px")
+          .attr("dy", "5px")
+          .style("visibility", "visible");
+
+        hoverLine
+          .attr("x1", cx)
+          .attr("x2", cx)
+          .attr("y1", 0)
+          .attr("y2", adjustedHeight)
+          .style("visibility", "visible");
+
+        // Large circle
+        // hoverCirclesGroup
+        //   .append("circle")
+        //   .attr("cx", cx)
+        //   .attr("cy", cy)
+        //   .attr("r", 20)
+        //   .attr("fill", "rgba(61, 151, 255, 0.1)");
 
         // Small circle
         hoverCirclesGroup
@@ -445,6 +490,11 @@ const drawChart = () => {
       }
     });
 
+    hoverArea.on("mouseleave", () => {
+      hoverCircle.selectAll("*").remove();
+      hoverText.selectAll("*").remove();
+      hoverLine.selectAll("*").remove();
+    });
     svg.on("mouseleave", () => {
       hoverCirclesGroup.selectAll("*").remove();
       hoverVerticalLineGroup.selectAll("*").remove();

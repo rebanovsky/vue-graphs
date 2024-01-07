@@ -28,22 +28,22 @@
     />
     <template #config>
       <RadioButton
+        v-model="config.tooltip"
+        :options="radioConfigs.tooltip.config"
+        :title="radioConfigs.tooltip.title"
+        name="tooltip"
+      />
+      <RadioButton
+        v-model="config.smooth"
+        :options="radioConfigs.smooth.config"
+        :title="radioConfigs.smooth.title"
+        name="smooth"
+      />
+      <RadioButton
         v-model="config.gridlines"
         :options="radioConfigs.gridlines.config"
         title="Gridlines"
         name="gridlines"
-      />
-      <RadioButton
-        v-model="config.animations"
-        :options="radioConfigs.animations.config"
-        title="Animations"
-        name="animations"
-      />
-      <RadioButton
-        v-model="config.gradient"
-        :options="radioConfigs.gradient.config"
-        :title="radioConfigs.gradient.title"
-        name="gradient"
       />
       <RadioButton
         v-model="config.xAxis"
@@ -58,23 +58,23 @@
         name="yAxis"
       />
       <RadioButton
-        v-model="config.tooltip"
-        :options="radioConfigs.tooltip.config"
-        :title="radioConfigs.tooltip.title"
-        name="tooltip"
+        v-model="config.animations"
+        :options="radioConfigs.animations.config"
+        title="Animations"
+        name="animations"
       />
       <RadioButton
-        v-model="config.smooth"
-        :options="radioConfigs.smooth.config"
-        :title="radioConfigs.smooth.title"
-        name="smooth"
+        v-model="config.gradient"
+        :options="radioConfigs.gradient.config"
+        :title="radioConfigs.gradient.title"
+        name="gradient"
       />
-      <ColorPicker
+      <!-- <ColorPicker
         v-model="config.lineColor"
         :options="colorOptions"
         title="Line Color"
         @colorChange="handleValue"
-      />
+      /> -->
     </template>
   </ChartContainer>
 </template>
@@ -92,7 +92,7 @@ import { lineProps } from "@/data/props";
 import { linePreview } from "@/data/previewData";
 
 // line color
-const lineColor = ref("#FF5733");
+const lineColor = ref("#41b883");
 
 const handleValue = (val) => {
   lineColor.value = val;
@@ -110,7 +110,7 @@ const formattedLineData = line1.map((item) => ({
 
 const lineData = ref([
   {
-    color: "#fffff",
+    color: "#41b883",
     values: formattedLineData,
   },
 ]);
@@ -176,7 +176,7 @@ const xAxisBoolean = computed(() => config.xAxis === "true");
 const yAxisBoolean = computed(() => config.yAxis === "true");
 const smoothBoolean = computed(() => config.smooth === "true");
 
-const colorOptions = ref([{ id: "color1", label: "Blue", value: "#0000FF" }]);
+const colorOptions = ref([{ id: "color1", label: "Blue", value: "#41b883" }]);
 
 const mapDisplayValue = (key, value) => {
   if (
@@ -195,7 +195,7 @@ const mapDisplayValue = (key, value) => {
 
 const config = reactive({
   data: "lineData",
-  lineColor: "#fff",
+  lineColor: "#41b883",
   tooltip: "false",
   gridlines: "true",
   animations: "false",
@@ -270,7 +270,7 @@ const formattedLineData = data.map((item) => ({
 
 const lineData = ref([
   {
-    color: "#fffff",
+    color: "#41b883",
     values: formattedLineData,
   },
 ]);

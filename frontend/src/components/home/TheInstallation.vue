@@ -184,7 +184,20 @@ const vgUsage = computed(() =>
 import { ref } from 'vue';
 import { LineChart } from 'vue-graphs';
 
-const chartData = ref();
+const chartData = ref([
+  {
+    x: 'foo',
+    y: 100
+  },
+  {
+    x: 'bar',
+    y: 120
+  },
+  {
+    x: 'baz',
+    y: 110
+  },
+]);
 </${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")
 );
 

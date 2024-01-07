@@ -21,15 +21,9 @@ const props = defineProps({
   },
   width: {
     type: Number,
-    default: 600,
   },
   height: {
     type: Number,
-    default: 400,
-  },
-  title: {
-    type: String,
-    default: "EPS",
   },
 });
 
@@ -46,10 +40,10 @@ watchEffect(() => {
 
   d3.select(graphContainer.value).selectAll("*").remove();
 
-  const epsValues = props.data.flatMap((d) => [d.EPS.Actual, d.EPS.Estimate]);
-  const maxEps = d3.max(epsValues);
-  const minEps = d3.min(epsValues);
-  const padding = (maxEps - minEps) * 0.5;
+  const yValues = props.data.flatMap((d) => [d.y.actual, d.y.estimate]);
+  const maxY = d3.max(yValues);
+  const minY = d3.min(yValues);
+  const padding = (maxY - minY) * 0.5;
 
   const svg = d3
     .select(graphContainer.value)
@@ -61,16 +55,15 @@ watchEffect(() => {
 
   const xScale = d3
     .scaleBand()
-    .domain(props.data.map((d) => d.Quarter))
+    .domain(props.data.map((d) => d.x))
     .range([0, width])
     .padding(0.1);
 
   const yScale = d3
     .scaleLinear()
-    .domain([minEps - padding, maxEps + padding])
+    .domain([minY - padding, maxY + padding])
     .range([height, 0]);
 
-  // Add horizontal gridlines
   svg
     .selectAll(".grid")
     .data(yScale.ticks(3).filter((tick) => tick !== 0))
@@ -82,6 +75,7 @@ watchEffect(() => {
     .attr("y1", (d) => yScale(d))
     .attr("y2", (d) => yScale(d))
     .attr("class", "stroke-slate-400 dark:stroke-slate-700")
+    .attr("stroke-width", "0.5")
     .attr("stroke-dasharray", "3,3");
 
   svg
@@ -89,20 +83,19 @@ watchEffect(() => {
     .data(props.data)
     .enter()
     .append("circle")
-    .attr("cx", (d) => xScale(d.Quarter) + xScale.bandwidth() / 2)
-    .attr("cy", (d) => yScale(d.EPS.Actual))
-    .attr("r", 5)
-    .attr("class", "dark:fill-harlequin-200 fill-harlequin-300");
+    .attr("cx", (d) => xScale(d.x) + xScale.bandwidth() / 2)
+    .attr("cy", (d) => yScale(d.y.actual))
+    .attr("r", 8)
+    .attr("class", d => d.y.actual > d.y.estimate ? "dark:fill-harlequin-200 fill-harlequin-400" : "fill-red-500");
 
-  // Draw dots for Estimate EPS
   svg
     .selectAll(".dot-estimate")
     .data(props.data)
     .enter()
     .append("circle")
-    .attr("cx", (d) => xScale(d.Quarter) + xScale.bandwidth() / 2)
-    .attr("cy", (d) => yScale(d.EPS.Estimate))
-    .attr("r", 5)
+    .attr("cx", (d) => xScale(d.x) + xScale.bandwidth() / 2)
+    .attr("cy", (d) => yScale(d.y.estimate))
+    .attr("r", 8)
     .attr("stroke-dasharray", "3,3")
     .attr("class", "stroke-slate-500 fill-transparent");
 
@@ -117,15 +110,16 @@ watchEffect(() => {
         .attr("class", "stroke-slate-400 dark:stroke-slate-500")
     )
     .selectAll(".tick text")
+    .attr("class", "text-[12px]")
     .attr("dy", "1.25em")
     .attr("fill", "#666");
 
-  // Add Y axis
   svg
     .append("g")
     .call(d3.axisLeft(yScale).ticks(4).tickSize(0))
     .call((g) => g.select(".domain").remove())
     .selectAll(".tick text")
+    .attr("class", "text-[12px]")
     .attr("dx", "-0.5em")
     .attr("fill", "#666");
 });

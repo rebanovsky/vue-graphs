@@ -10,7 +10,7 @@
         <g class="grid-lines" />
       </svg>
     </div>
-    <div id="bubble-tooltip" class="absolute"></div>
+    <div id="bubble-tooltip"></div>
   </div>
 </template>
 
@@ -36,16 +36,16 @@ onMounted(() => {
   const x = scaleLinear()
     .domain([
       min(props.data, function (d) {
-        return d.performancePercentage;
+        return d.x;
       }) -
         Math.abs(
           0.25 *
             min(props.data, function (d) {
-              return d.performancePercentage;
+              return d.x;
             })
         ),
       max(props.data, function (d) {
-        return d.performancePercentage;
+        return d.x;
       }) * 1.25,
     ])
     .range([0, width]);
@@ -54,10 +54,10 @@ onMounted(() => {
     .domain([
       -0.3 *
         max(props.data, function (d) {
-          return d.ownership;
+          return d.y;
         }),
       max(props.data, function (d) {
-        return d.ownership;
+        return d.y;
       }) * 1.25,
     ])
     .range([height, 0]);
@@ -65,10 +65,10 @@ onMounted(() => {
   const z = scaleLinear()
     .domain([
       min(props.data, function (d) {
-        return d.weight;
+        return d.z;
       }),
       max(props.data, function (d) {
-        return d.weight;
+        return d.z;
       }),
     ])
     .range([4, 40]);
@@ -124,7 +124,6 @@ onMounted(() => {
         .tickFormat((d) => (d === 0 ? "" : d + "%"))
     );
 
-  // -1- tooltip div that is hidden by default:
   let tooltip = select("#bubble-tooltip")
     .style("opacity", 0)
     .attr(
@@ -147,28 +146,28 @@ onMounted(() => {
         `<div class="flex flex-col gap-2">
             <div class="w-[100px] flex justify-between">
                 <strong class="text-[14px] font-normal">${
-                  d.securityName
+                  d.item
                 }</strong>
             </div>
             <div class="flex justify-between">
                 <span>performance:</span>
-                <strong class="font-semibold">${d.performancePercentage.toFixed(
+                <strong class="font-semibold">${d.x.toFixed(
                   2
                 )}%</strong>
             </div>
             <div class="flex justify-between">
                 <span>ownership:</span>
-                <strong class="font-semibold">${d.ownership.toFixed(
+                <strong class="font-semibold">${d.y.toFixed(
                   2
                 )}%</strong>
             </div>
             <div class="flex justify-between">
                 <span>portfolio weight:</span>
-                <strong class="font-semibold">${d.weight.toFixed(2)}%</strong>
+                <strong class="font-semibold">${d.z.toFixed(2)}%</strong>
             </div>
             <div class="flex justify-between">
                 <span>sector:</span>
-                <strong class="font-semibold">${d.sector}</strong>
+                <strong class="font-semibold">${d.color}</strong>
             </div>
         </div>`
       );
@@ -176,15 +175,21 @@ onMounted(() => {
   };
 
   const moveTooltip = function (event) {
-  const tooltip = select("#bubble-tooltip");
+    const tooltip = select("#bubble-tooltip");
 
-  const offsetX = 20;
-  const offsetY = -30;
+    const offsetX = 20;
+    const offsetY = 0;
 
-  tooltip
-    .style("left", (event.clientX - svgNode.getBoundingClientRect().left + offsetX) + "px")
-    .style("top", (event.clientY - svgNode.getBoundingClientRect().top + offsetY) + "px");
-};
+    tooltip
+      .style(
+        "left",
+        event.clientX - svgNode.getBoundingClientRect().left + offsetX + "px"
+      )
+      .style(
+        "top",
+        event.clientY - svgNode.getBoundingClientRect().top + offsetY + "px"
+      );
+  };
 
   const hideTooltip = (event, d) => {
     let tooltip = select("#bubble-tooltip");
@@ -201,7 +206,7 @@ onMounted(() => {
   //   .attr("y", height + 40)
   //   .html("X axis title");
 
-  let dots = svg
+  svg
     .selectAll(".dot")
     .data(props.data)
     .join("circle")
@@ -209,18 +214,13 @@ onMounted(() => {
       "class",
       "bubbles stroke-[0.75px] cursor-pointer stroke-slate-300 dark:stroke-slate-700 hover:stroke-slate-700 dark:hover:stroke-slate-300"
     )
-    .attr("cx", (d) => x(d.performancePercentage))
-    .attr("cy", (d) => y(d.ownership))
-    .attr("r", (d) => z(d.weight))
-    .style("fill", (d) => myColor(d.sector))
+    .attr("cx", (d) => x(d.x))
+    .attr("cy", (d) => y(d.y))
+    .attr("r", (d) => z(d.z))
+    .style("fill", (d) => myColor(d.color))
     .on("mouseover", showTooltip)
     .on("mousemove", moveTooltip)
     .on("mouseleave", hideTooltip);
-
-  dots.on("click", (event, d) => {
-    select(event.currentTarget);
-    document.location.href = "../../../company/" + d.symbol;
-  });
 });
 </script>
 
@@ -232,6 +232,7 @@ onMounted(() => {
   font-size: 12px;
   line-height: 24px;
   white-space: nowrap;
+  border: 0.5px solid gray;
 }
 
 .y-axis-bubble > path.domain,
@@ -243,12 +244,12 @@ onMounted(() => {
   transform: translateY(2px);
   font-size: 12px;
   font-weight: 400;
-  font-family: Poppins;
+  font-family: Inter;
 }
 
 .y-axis-bubble > g.tick > text {
   transform: translateX(-4px);
-  font-family: Poppins;
+  font-family: Inter;
   font-size: 12px;
 }
 </style>

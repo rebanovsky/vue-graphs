@@ -15,6 +15,7 @@
       :data="barData"
       :width="560"
       :height="280"
+      :palette="barColors"
       :tooltip="tooltipBoolean"
       :gridlines="gridlinesBoolean"
       :animations="animationsBoolean"
@@ -81,7 +82,18 @@ const barData = [
       { x: "Q4 2023", y: 100000000 },
     ],
   },
+  {
+    entity: "NVDA",
+    data: [
+      { x: "Q1 2023", y: 60000000 },
+      { x: "Q2 2023", y: 80000000 },
+      { x: "Q3 2023", y: 100000000 },
+      { x: "Q4 2023", y: 130000000 },
+    ],
+  },
 ];
+
+const barColors = ["#ccece6", "#65c2a3", "#228a44"];
 
 //Radio configs
 const radioConfigs = {
@@ -141,7 +153,7 @@ const mapDisplayValue = (key, value) => {
 
 const config = reactive({
   data: "barData",
-  lineColor: "#fff",
+  palette: "barColors",
   tooltip: "true",
   gridlines: "true",
   animations: "false",
@@ -214,7 +226,18 @@ const barData = ref([
       { x: "Q4 2023", y: 100000000 },
     ],
   },
+  {
+    entity: "NVDA",
+    data: [
+      { x: "Q1 2023", y: 60000000 },
+      { x: "Q2 2023", y: 80000000 },
+      { x: "Q3 2023", y: 100000000 },
+      { x: "Q4 2023", y: 130000000 },
+    ],
+  },
 ]);
+
+const barColors = ["#ccece6", "#65c2a3", "#228a44"];
 
 </${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")
 );

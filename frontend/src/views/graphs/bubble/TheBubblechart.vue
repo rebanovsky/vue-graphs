@@ -11,7 +11,7 @@
     <template #intro>
       <div v-html="texts.intro"></div>
     </template>
-    <BubbleChart :data="bubbleData" :width="560" :height="280" />
+    <BubbleChart :data="transformedData" :width="560" :height="280" />
     <template #config> </template>
   </ChartContainer>
 </template>
@@ -51,6 +51,16 @@ const radioConfigs = {
   },
 };
 
+const transformedData = computed(() => {
+  return bubbleData.map((item) => ({
+    x: item.performancePercentage,
+    y: item.ownership,
+    z: item.weight,
+    color: item.sector,
+    item: item.securityName,
+  }));
+});
+
 const tooltipBoolean = computed(() => config.tooltip === "on");
 const gridlinesBoolean = computed(() => config.gridlines === "on");
 const animationsBoolean = computed(() => config.animations === "on");
@@ -63,7 +73,7 @@ const mapDisplayValue = (key, value) => {
 };
 
 const config = reactive({
-  bubbleData: 'bubbleData',
+  data: "transformedData",
 });
 
 const chartProps = computed(() => {
@@ -107,7 +117,7 @@ const code = computed(() =>
   `</template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { BubbleChart } from 'vue-graphs';
 
 const bubbleData = [
@@ -144,6 +154,16 @@ const bubbleData = [
     symbol: "COMPD",
   },
 ];
+
+const transformedData = computed(() => {
+  return bubbleData.map((item) => ({
+    x: item.performancePercentage,
+    y: item.ownership,
+    z: item.weight,
+    color: item.sector,
+    item: item.securityName,
+  }));
+});
 
 
 </${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")

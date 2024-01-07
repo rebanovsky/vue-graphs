@@ -16,13 +16,13 @@
       </div>
       <div class="flex flex-col gap-[40px]">
         <div class="flex gap-[32px]">
-          <div class="flex flex-col gap-[20px]">
+          <div class="flex flex-col gap-[40px]">
             <slot></slot>
             <div
               class="props-wrapper w-[560px] gridlines flex flex-col gap-[8px]"
             >
               <div
-                class="props-data-header flex gap-[12px] px-[12px] text-[12px] text-slate-500"
+                class="props-data-header flex gap-[12px] px-[40px] text-[12px] text-slate-500"
               >
                 <RadioButton
                   :options="options"
@@ -31,7 +31,7 @@
                 />
               </div>
               <div
-                class="w-[100%] flex justify-center mt-[20px]"
+                class="w-[100%] flex justify-center mt-[28px]"
                 v-if="appendix == 'code'"
               >
                 <CodeBlock :code="code">

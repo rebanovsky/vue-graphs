@@ -1,19 +1,24 @@
 <template>
   <!-- TheHeatmap.vue -->
-  <ChartContainer title="Heat Map" chart-title="HeatMap" :code="code" :component-props="heatmapProps" :chart-props="chartProps">
+  <ChartContainer
+    title="Heat Map"
+    chart-title="HeatMap"
+    :code="code"
+    :component-props="heatmapProps"
+    :chart-props="chartProps"
+  >
     <template #intro>
       <div v-html="texts.intro"></div>
     </template>
-    <TheHeatmap :geo-json-data="geoJson"/>
-    <template #config>
-    </template>
+    <HeatMap :geo-json-data="geoJson" />
+    <template #config> </template>
   </ChartContainer>
 </template>
 
 <script setup>
 import { ref, computed, reactive } from "vue";
 import { geoJson } from "@/data/geoJson";
-import TheHeatmap from "@/graphs/TheHeatmap.vue";
+import HeatMap from "@/graphs/HeatMap.vue";
 import MultiSelect from "@/components/common/MultiSelect.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ColorPicker from "@/components/common/ColorPicker.vue";
@@ -61,9 +66,7 @@ const mapDisplayValue = (key, value) => {
 };
 
 const config = reactive({
-  geoJsonData: 'geoJson',
-  selectedStocks: [],
-  lineColor: "#fff",
+  geoJsonData: "geoJson",
   tooltip: "off",
   gridlines: "off",
   animations: "off",
@@ -114,7 +117,6 @@ import { geoJson } from '@/data'
 
 </${placeholder}>`.replace(new RegExp(placeholder, "g"), "script")
 );
-
 </script>
 
 <style lang="scss" scoped>

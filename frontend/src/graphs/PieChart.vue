@@ -15,17 +15,10 @@ const props = defineProps({
   animations: {
     type: Boolean,
   },
+  palette: Array
 });
 
 const chart = ref(null);
-
-const customColors = [
-  "#003f5c", // Yellow
-  "#58508d", // Orange
-  "#bc5090", // Green
-  "#ff6361", // Blue
-  "#ffa600", // Purple
-];
 
 const renderChart = () => {
   d3.select(chart.value).select("svg").remove();
@@ -59,7 +52,7 @@ const renderChart = () => {
     .data(sectors)
     .enter()
     .append("path")
-    .attr("fill", (d, i) => customColors[i % customColors.length]);
+    .attr("fill", (d, i) => props.palette[i % props.palette.length]);
 
   if (props.animations) {
     paths
@@ -110,7 +103,7 @@ const renderChart = () => {
         .attr("width", 10)
         .attr("height", 10)
         .attr("rx", 2)
-        .attr("fill", customColors[i % customColors.length]);
+        .attr("fill", props.palette[i % props.palette.length]);
 
       legendRow
         .append("text")

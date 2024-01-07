@@ -21,11 +21,9 @@ const props = defineProps({
   },
   width: {
     type: Number,
-    default: 500,
   },
   height: {
     type: Number,
-    default: 400,
   },
   margin: {
     type: Object,
@@ -58,7 +56,7 @@ const drawChart = () => {
     .padding(0.1);
 
   const priceRange = d3.max(data, (d) => d.High) - d3.min(data, (d) => d.Low);
-  const padding = priceRange * 0.2; // 5% padding
+  const padding = priceRange * 0.2;
 
   const yScale = d3
     .scaleLinear()
@@ -95,6 +93,7 @@ const drawChart = () => {
     .selectAll(".tick text")
     .attr("dy", "1.25em")
     .attr("fill", "#666")
+    .attr("class", "text-[12px]")
     .style("text-anchor", "middle");
 
   svg
@@ -103,6 +102,7 @@ const drawChart = () => {
     .call((g) => g.select(".domain").remove())
     .selectAll(".tick text")
     .attr("dx", "-0.5em")
+    .attr("class", "text-[12px]")
     .attr("fill", "#666");
 
   //

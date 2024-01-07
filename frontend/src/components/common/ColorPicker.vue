@@ -9,7 +9,7 @@
       <input
         type="color"
         class="cursor-pointer flex w-[14px] h-[14px] bg-transparent"
-        @input="updateColor"
+        @input="updateColor || '#41b883'"
       />
     </div>
   </div>
@@ -27,7 +27,7 @@ const props = defineProps({
 
 const emit = defineEmits(["colorChange"]);
 
-const color = ref("#ffffff");
+const color = ref("#41b883");
 
 const updateColor = (e) => {
   color.value = e.target.value;

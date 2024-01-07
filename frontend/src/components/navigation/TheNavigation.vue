@@ -50,7 +50,7 @@
       </div>
       <div class="right-side flex items-center gap-[24px]">
         <div class="beta-tag rounded text-red-500 bg-red-100 dark:text-red-100 dark:bg-red-900 leading-5 px-[6px]">Beta</div>
-        <div class="version-name font-medium text-500">version 07-Jan-24</div>
+        <div class="version-name font-medium text-500">version 08-Jan-24</div>
         <!-- Version History -->
         <!-- <div
           class="version-history w-[180px] gridlines dark:bg-slate-800 rounded-[12px] p-[12px]"
