@@ -14,8 +14,8 @@
       <div class="subsection">
         <h2>Bugs Reporting</h2>
         <div class="home-paragraph text-800 font-light text-[14px] leading-7">
-          Report bugs or issues on our
-          <a href="https://github.com/[your-repository]/issues" target="_blank"
+          Report bugs or issues on a
+          <a href="https://github.com/rebanovsky/vue-graphs/issues" target="_blank"
             >GitHub Issues page</a
           >.
         </div>
@@ -27,7 +27,7 @@
         <div class="home-paragraph text-800 font-light text-[14px] leading-7">
           Share your suggestions in the
           <a
-            href="https://github.com/[your-repository]/discussions"
+            href="https://github.com/rebanovsky/vue-graphs/discussions/1"
             target="_blank"
             >GitHub Discussions</a
           >.
@@ -36,13 +36,13 @@
 
       <!-- Contributing -->
       <div class="subsection">
-        <h2>Contributing to Our Project</h2>
+        <h2>Contributing to the Project</h2>
         <div class="home-paragraph text-800 font-light text-[14px] leading-7">
           Contribute via
-          <a href="https://github.com/[your-repository]/pulls" target="_blank"
+          <a href="https://github.com/rebanovsky/vue-graphs/pulls" target="_blank"
             >Pull Requests on GitHub</a
           >. 
-          <!-- Read our contribution guidelines first. -->
+          <!-- Read contribution guidelines first. -->
         </div>
       </div>
     </div>
@@ -55,9 +55,9 @@ import CodeBlock from "@/components/common/CodeBlock.vue";
 
 // Define text content as variables or use computed properties
 const contactInfo = `For any queries, reach out to us at support@[yourdomain].com`;
-const bugReportInfo = `Report bugs on our <a href="https://github.com/[your-repository]/issues">GitHub Issues</a>`;
-const featureSuggestionInfo = `Send suggestions to feedback@[yourdomain].com or discuss on <a href="https://github.com/[your-repository]/discussions">GitHub Discussions</a>`;
-const contributionInfo = `Contribute via <a href="https://github.com/[your-repository]/pulls">Pull Requests on GitHub</a>. Ensure to read our contribution guidelines.`;
+const bugReportInfo = `Report bugs on a <a href="https://github.com/vuegraphs/issues">GitHub Issues</a>`;
+const featureSuggestionInfo = `Send suggestions to feedback@[yourdomain].com or discuss on <a href="https://github.com/vuegraphs/discussions">GitHub Discussions</a>`;
+const contributionInfo = `Contribute via <a href="https://github.com/vuegraphs/pulls">Pull Requests on GitHub</a>. Ensure to read the contribution guidelines.`;
 </script>
 
 <style>

@@ -221,7 +221,7 @@ const texts = {
               <strong>Data Structure:</strong> It is crucial to format your data correctly for the line chart. Each data point in the series should be an object with <em>x</em> and <em>y</em> properties, where <em>x</em> represents the label (in this case, the month) and <em>y</em> is the corresponding value (monthly sales figures).
             </li>
             <li class=my-[20px]>
-              <strong>Component Usage:</strong> The <em>LineChart</em> component from our chart library is used to render the line chart. This component accepts props like <em>data</em>, <em>width</em>, <em>height</em>, <em>dotColor</em>, <em>lineColor</em>, and more, allowing for extensive customization of the chart's appearance.
+              <strong>Component Usage:</strong> The <em>LineChart</em> component from VueGraphs library is used to render the line chart. This component accepts props like <em>data</em>, <em>width</em>, <em>height</em>, <em>dotColor</em>, <em>lineColor</em>, and more, allowing for extensive customization of the chart's appearance.
             </li>
             <li class=my-[20px]>
               <strong>Responsive and Interactive:</strong> The chart is designed to be responsive and interactive, with features like tooltips and gridlines enabled for a better user experience.

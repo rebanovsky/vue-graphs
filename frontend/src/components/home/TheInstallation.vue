@@ -119,7 +119,7 @@ const installing = {
   id: 1,
   title: "Setup and Installation",
   subtitle: "Installing the Library",
-  content: `Quickly integrate our Vue3 Graphs Library into your project with a simple npm install vue-graphs command.`,
+  content: `Quickly integrate the VueGraphs Library into your project with a simple npm install vue-graphs command.`,
 };
 
 const importing = {
@@ -155,7 +155,7 @@ const responsiveness = {
 const interactivity = {
   subtitle: "Interactivity Features",
   content:
-    "Our charts support interactive features like tooltips and clickable elements, enhancing the data visualization experience. The exact interactivity options depend on the chart type.",
+    "VueGraphs support interactive features like tooltips and clickable elements, enhancing the data visualization experience. The exact interactivity options depend on the chart type.",
 };
 
 const updating = {
@@ -167,7 +167,7 @@ const updating = {
 const docs = {
   subtitle: "Documentation",
   content:
-    "For detailed documentation on each chart type, their props, and customization options, please refer to the specific documentation section for each chart type in our library.",
+    "For detailed documentation on each chart type, their props, and customization options, please refer to the specific documentation section for each chart type in the library.",
 };
 
 // Codeblocks
