@@ -12,7 +12,6 @@
 
 <script>
 import axios from "axios";
-import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import TheDropdown from "../common/TheDropdown.vue";
 

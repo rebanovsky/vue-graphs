@@ -115,7 +115,7 @@ const sections = {
   license: {
     id: 5,
     title: "License",
-    content: "State the type of license the library is released under.",
+    content: "This project is licensed under the MIT License.",
   },
 };
 </script>
