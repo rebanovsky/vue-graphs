@@ -1,6 +1,6 @@
 {
   "name": "vue-graphs",
-  "version": "0.9.s",
+  "version": "0.9.1",
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
