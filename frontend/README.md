@@ -17,7 +17,7 @@ Vue3 D3 Chart Library is a comprehensive and versatile charting library that lev
 To install the library, run:
 
 ```bash
-npm install vue3-d3-charts
+npm install vue-graphs
 ```
 
 In Vue 3's Composition API with the `script setup` syntax, you can import and use the `LineChart` component as follows:
