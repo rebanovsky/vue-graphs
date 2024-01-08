@@ -1,7 +1,7 @@
 {
   "name": "vue-graphs",
-  "version": "0.9.5",
-  "main": "dist/vue-graphs.js",
+  "version": "0.9.6",
+  "main": "dist/vue-graphs.umd.js",
   "files": [
     "dist/*",
     "src/*"
@@ -11,7 +11,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --mode production --config vue.config.lib.js",
-    "build-lib": "vue-cli-service build --mode production --config vue.config.lib.js"
+    "build-lib": "vue-cli-service build --target lib --name vue-graphs --dest dist ./src/index.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
