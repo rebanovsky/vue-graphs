@@ -1,7 +1,7 @@
 {
   "name": "vue-graphs",
   "version": "0.9.4",
-  "main": "dist/vue-graphs.js", 
+  "main": "dist/vue-graphs.js",
   "files": [
     "dist/*",
     "src/*"
@@ -10,7 +10,8 @@
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build --mode production --config vue.config.lib.js",
+    "build-lib": "vue-cli-service build --mode production --config vue.config.lib.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
