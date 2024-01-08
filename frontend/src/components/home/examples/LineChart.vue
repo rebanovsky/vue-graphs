@@ -61,7 +61,7 @@ const lineCode = computed(() => `<template>
 
 <script setup>
 import { ref } from "vue";
-import LineChart from "vue-graphs";
+import { LineChart } from "vue-graphs";
 
 const monthlySales = [
   { month: "January", sales: 262 },

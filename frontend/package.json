@@ -1,6 +1,6 @@
 {
   "name": "vue-graphs",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "main": "dist/vue-graphs.umd.js",
   "files": [
     "dist/*",
