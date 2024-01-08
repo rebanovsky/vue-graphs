@@ -1,13 +1,26 @@
-const { defineConfig } = require('@vue/cli-service')
+const { defineConfig } = require("@vue/cli-service");
+
 module.exports = defineConfig({
-  transpileDependencies: true,
-  devServer: {
-    port: 8080,
-    proxy: {
-      '^/api': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-      },
+  configureWebpack: {
+    entry: "./src/index.js",
+    output: {
+      filename: "vue-graphs.js",
+      libraryTarget: "umd",
+      library: "VueGraphs",
+      umdNamedDefine: true,
+    },
+    externals: {
+      vue: "Vue",
     },
   },
-})
+  filenameHashing: false,
+  chainWebpack: (config) => {
+    config.optimization.delete("splitChunks");
+    config.plugins.delete("html");
+    config.plugins.delete("preload");
+    config.plugins.delete("prefetch");
+  },
+  css: {
+    extract: true,
+  },
+});

@@ -10,7 +10,7 @@
     <template #intro>
       <div v-html="texts.intro"></div>
     </template>
-    <DotGraph :data="earnings.AppleEarningsData" :width="560" :height="280" />
+    <DotPlot :data="earnings.AppleEarningsData" :width="560" :height="280" />
     <template #config>
       <!-- <RadioButton
         v-model="config.tooltip"
@@ -36,7 +36,7 @@
 
 <script setup>
 import { ref, computed, reactive } from "vue";
-import DotGraph from "@/graphs/DotGraph.vue";
+import DotPlot from "@/graphs/DotPlot.vue";
 import RadioButton from "@/components/common/RadioButton.vue";
 import ChartContainer from "@/components/templates/ChartContainer.vue";
 import { nanoid } from "nanoid";

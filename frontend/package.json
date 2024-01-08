@@ -1,6 +1,11 @@
 {
   "name": "vue-graphs",
-  "version": "0.9.3",
+  "version": "0.9.4",
+  "main": "dist/vue-graphs.js", 
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
   "license": "MIT",
   "private": false,
   "scripts": {
